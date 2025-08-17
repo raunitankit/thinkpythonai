@@ -26,7 +26,7 @@ export default function FlyerPage() {
       {/* Flyer canvas */}
       <main className="py-6 md:py-10">
         <div
-          className="flyer mx-auto bg-white rounded-2xl shadow max-w-[850px] p-6 md:p-10"
+          className="flyer mx-auto bg-white rounded-2xl shadow max-w-[850px] p-6 md:p-10 print:p-6"
           /* 850px ~ 8.5in at 100px/in preview, good approximation on screen */
         >
           {/* Header block */}
@@ -48,16 +48,16 @@ export default function FlyerPage() {
           </div>
 
           {/* Big headline */}
-          <h1 className="mt-6 text-3xl md:text-5xl font-extrabold leading-tight">
+          <h1 className="mt-6 text-3xl md:text-5xl print:text-4xl font-extrabold leading-tight">
             Learn Python that gets you <span className="bg-gradient-to-r from-yellow-200 via-rose-200 to-sky-200 px-2 rounded">hired</span>
           </h1>
-          <p className="mt-3 text-slate-700 text-base md:text-lg">
+          <p className="mt-3 text-slate-700 text-base md:text-lg print:text-base">
             Hands-on coding for real outcomes — automation, AI basics, and portfolio projects. Built for busy students,
             professionals, and schools.
           </p>
 
           {/* QR + Contact row */}
-          <div className="mt-8 grid md:grid-cols-2 gap-8 items-start">
+          <div className="mt-8 print:mt-6 grid md:grid-cols-2 gap-8 md:gap-8 print:gap-6 items-start">
             {/* QR */}
             <div className="rounded-2xl border p-4">
               {/* Use the crisp SVG route we added */}
@@ -89,7 +89,7 @@ export default function FlyerPage() {
           </div>
 
           {/* Footer strip (print) */}
-          <div className="mt-10 border-t pt-4 text-xs text-slate-500">
+          <div className="mt-10 print:mt-6 border-t pt-4 text-xs text-slate-500">
             © {new Date().getFullYear()} ThinkPythonAI — Zelle accepted: +1 (603) 417-0825
           </div>
         </div>
@@ -97,10 +97,17 @@ export default function FlyerPage() {
 
       {/* Print CSS (page size/margins) */}
       <style>{`
-        @page { size: Letter; margin: 0.5in; }
+        /* One US Letter page with a bit less margin */
+        @page { size: Letter; margin: 0.4in; }
         @media print {
           .screen-only { display: none !important; }
-          .flyer { box-shadow: none !important; border-radius: 0 !important; }
+          .flyer {
+            box-shadow: none !important;
+            border-radius: 0 !important;
+            /* Keep width safely inside printable area */
+            width: 7.5in !important;          /* 8.5in - (0.4in*2) = 7.7in printable; use 7.5in to be safe */
+            break-inside: avoid;
+          }
           body { background: #fff !important; }
         }
       `}</style>
