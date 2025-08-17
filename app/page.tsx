@@ -1,6 +1,4 @@
-// app/page.tsx
 export const dynamic = "force-static";
-
 import Button from "@/components/ui/button";
 import Subscribe from "@/components/Subscribe";
 import {
@@ -97,7 +95,7 @@ export default function Page() {
                 </div>
              </div>
             </div>
-
+        </div>
           {/* Hero code card */}
           <div className="md:pl-8">
             <div className="card shadow">
