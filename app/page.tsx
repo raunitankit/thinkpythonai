@@ -1,9 +1,8 @@
 // app/page.tsx
-// Make the page static for deterministic HTML
-import Subscribe from "@/components/Subscribe";
 export const dynamic = "force-static";
 
 import Button from "@/components/ui/button";
+import Subscribe from "@/components/Subscribe";
 import {
   Check,
   Code,
