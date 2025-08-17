@@ -84,7 +84,19 @@ export default function Page() {
               <span className="badge">First 2 classes free*</span>
             </div>
             <div className="mt-3 text-sm text-slate-600">Email: <a className="underline" href="mailto:thinkpythonai@gmail.com">thinkpythonai@gmail.com</a> · Zelle accepted: <strong>+1 (603) 417-0825</strong></div>
-            <div className="mt-3 text-xs text-slate-600">No fluff. Practical skills. Friendly community. <span className="badge ml-2">Now booking school partnerships</span></div>
+            <div className="mt-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4">
+             {/* Left: No fluff… */}
+             <div className="text-xs text-slate-600">
+               No fluff. Practical skills. Friendly community.
+               <span className="badge ml-2">Now booking school partnerships</span>
+             </div>
+             {/* Right: Subscribe (compact) */}
+             <div className="md:w-[380px]">
+                <Subscribe compact label="Email" />
+                <div className="mt-1 text-[11px] text-slate-500">
+                  We’ll occasionally email demo dates and updates. Unsubscribe anytime.
+                </div>
+            </div>
           </div>
 
           {/* Hero code card */}
@@ -111,13 +123,6 @@ for u in urls:
           </div>
         </div>
       </section>
-
-      <div className="max-w-md">
-            <Subscribe label="Subscribe for demo updates" />
-            <div className="mt-1 text-xs text-slate-500">
-               We’ll occasionally email demo dates and updates. Unsubscribe anytime.
-      </div>
-      </div>
 
       {/* Trust strip */}
       <section className="bg-white border-y">
