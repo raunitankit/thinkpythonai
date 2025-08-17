@@ -2,3 +2,12 @@
 node_modules
 .env*
 .DS_Store
+.next
+node_modules
+.env*
+.DS_Store
+streamlit_chatbot_app/.venv/
+**/__pycache__/
+**/*.pyc
+**/*.pyc
+.streamlit/
