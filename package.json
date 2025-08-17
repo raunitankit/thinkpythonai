@@ -1,0 +1,31 @@
+{
+  "name": "thinkpythonai-site",
+  "private": true,
+  "version": "0.2.0",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "clean": "node -e \"fs=require('fs');['.next','node_modules','package-lock.json'].forEach(p=>{try{fs.rmSync(p,{recursive:true,force:true});console.log('removed',p)}catch(e){}})\""
+  },
+  "engines": {
+    "node": "20.x"
+  },
+  "dependencies": {
+    "next": "14.2.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "lucide-react": "0.441.0",
+    "classnames": "2.5.1"
+  },
+  "devDependencies": {
+    "typescript": "5.4.5",
+    "@types/node": "20.12.7",
+    "@types/react": "18.2.61",
+    "@types/react-dom": "18.2.19",
+    "tailwindcss": "3.4.10",
+    "postcss": "8.4.41",
+    "autoprefixer": "10.4.20"
+  }
+}

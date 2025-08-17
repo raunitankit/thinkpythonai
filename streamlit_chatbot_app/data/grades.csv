@@ -1,0 +1,13 @@
+Student,Date,Assignment,Score,MaxScore,Late,Attendance
+Alex,2025-07-01,Intro Quiz,8,10,No,Present
+Alex,2025-07-03,Loops HW,17,20,No,Present
+Alex,2025-07-05,Functions Lab,14,20,Yes,Absent
+Riya,2025-07-01,Intro Quiz,9,10,No,Present
+Riya,2025-07-03,Loops HW,18,20,No,Present
+Riya,2025-07-05,Functions Lab,19,20,No,Present
+Sam,2025-07-01,Intro Quiz,7,10,No,Present
+Sam,2025-07-03,Loops HW,12,20,Yes,Present
+Sam,2025-07-05,Functions Lab,15,20,No,Present
+Maya,2025-07-01,Intro Quiz,10,10,No,Present
+Maya,2025-07-03,Loops HW,20,20,No,Present
+Maya,2025-07-05,Functions Lab,0,20,Yes,Absent

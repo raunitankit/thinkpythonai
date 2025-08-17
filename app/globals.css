@@ -1,0 +1,11 @@
+@tailwind base;@tailwind components;@tailwind utilities;
+:root{--bg:#f8fafc;--ink:#0f172a;--muted:#475569}
+html,body{background:var(--bg);color:var(--ink)}
+.badge{@apply inline-block bg-fuchsia-100 text-fuchsia-700 rounded-full px-2 py-0.5 text-xs}
+.btn{@apply inline-flex items-center justify-center rounded-2xl px-4 py-2 text-sm font-medium transition}
+.btn-primary{@apply bg-slate-900 text-white hover:opacity-90}
+.btn-secondary{@apply border border-slate-300 bg-white hover:bg-white}
+.btn-outline{@apply border border-slate-300 text-slate-900 bg-transparent hover:bg-white}
+.card{@apply rounded-2xl border shadow bg-white overflow-hidden}
+.header{@apply sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/60 bg-white/70 border-b}
+.container{@apply mx-auto max-w-7xl px-4}
