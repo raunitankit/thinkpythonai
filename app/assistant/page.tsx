@@ -1,13 +1,14 @@
 // app/assistant/page.tsx
-// Make SSR output deterministic so hydration can match
 export const dynamic = "force-static";
 
 import dynamicImport from "next/dynamic";
 
-const ASSISTANT_URL =
-  process.env.NEXT_PUBLIC_ASSISTANT_URL || "http://localhost:8501/?embed=true";
+// IMPORTANT: no localhost default — empty means "not configured"
+const RAW_URL = process.env.NEXT_PUBLIC_ASSISTANT_URL ?? "";
+const hasUrl = RAW_URL.startsWith("http");
+const isLocalhost = RAW_URL.includes("localhost");
 
-// Client-only iframe (no SSR)
+// Client-only iframe (avoid SSR mismatch)
 const Embed = dynamicImport(() => import("./Embed"), { ssr: false });
 
 export default function AssistantPage() {
@@ -25,9 +26,11 @@ export default function AssistantPage() {
           </div>
           <div className="flex items-center gap-2">
             <a href="/" className="btn btn-secondary">Back to Home</a>
-            <a href={ASSISTANT_URL} target="_blank" rel="noreferrer" className="btn btn-primary">
-              Open in New Tab
-            </a>
+            {hasUrl && !isLocalhost && (
+              <a href={RAW_URL} target="_blank" rel="noreferrer" className="btn btn-primary">
+                Open in New Tab
+              </a>
+            )}
           </div>
         </div>
       </header>
@@ -38,14 +41,33 @@ export default function AssistantPage() {
           Chat with us for quick info on schedule, payments, and contacting ThinkPythonAI.
         </p>
 
-        <div className="mt-6 card">
-          <div className="p-3 border-b text-sm text-slate-600">
-            If you don’t see the chat, make sure Streamlit is running at{" "}
-            <code className="bg-slate-100 px-1 rounded">http://localhost:8501</code> or set{" "}
-            <code className="bg-slate-100 px-1 rounded">NEXT_PUBLIC_ASSISTANT_URL</code>.
+        {/* Show friendly guidance if not configured or pointing to localhost */}
+        {!hasUrl || isLocalhost ? (
+          <div className="mt-6 card">
+            <div className="p-5">
+              <h2 className="font-semibold">Assistant not configured for production</h2>
+              <p className="mt-2 text-sm text-slate-600">
+                Set <code className="bg-slate-100 px-1 rounded">NEXT_PUBLIC_ASSISTANT_URL</code> to your Streamlit Cloud URL
+                (must be <strong>https</strong> and end with <code>?embed=true</code>) and redeploy.
+              </p>
+              <ol className="mt-3 text-sm text-slate-600 list-decimal pl-5 space-y-1">
+                <li>Streamlit app → Settings → Advanced → <strong>Allow embedding</strong> = ON</li>
+                <li>Copy the URL, e.g. <em>https://your-app.streamlit.app/?embed=true</em></li>
+                <li>Vercel → Project → Settings → <strong>Environment Variables</strong>:
+                  <div className="mt-1"><code className="bg-slate-100 px-1 rounded">NEXT_PUBLIC_ASSISTANT_URL=https://your-app.streamlit.app/?embed=true</code></div>
+                </li>
+                <li>Redeploy (Vercel will pick it up at build time)</li>
+              </ol>
+            </div>
           </div>
-          <Embed src={ASSISTANT_URL} />
-        </div>
+        ) : (
+          <div className="mt-6 card">
+            <div className="p-3 border-b text-sm text-slate-600">
+              If you don’t see the chat, ensure your Streamlit app allows embedding in Settings → Advanced.
+            </div>
+            <Embed src={RAW_URL} />
+          </div>
+        )}
       </main>
     </div>
   );

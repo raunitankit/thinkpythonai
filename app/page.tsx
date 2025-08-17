@@ -87,13 +87,6 @@ export default function Page() {
             <div className="mt-3 text-xs text-slate-600">No fluff. Practical skills. Friendly community. <span className="badge ml-2">Now booking school partnerships</span></div>
           </div>
 
-          <div className="mt-4 max-w-md">
-            <Subscribe label="Subscribe for demo updates" />
-            <div className="mt-1 text-xs text-slate-500">
-               We’ll occasionally email demo dates and updates. Unsubscribe anytime.
-            </div>
-          </div>
-
           {/* Hero code card */}
           <div className="md:pl-8">
             <div className="card shadow">
@@ -107,7 +100,7 @@ Hello, ThinkPythonAI!
 
 # Mini automation example
 import webbrowser
-urls = ["https://chat.openai.com", "https://github.com", "https://python.org"]
+urls = ["https://google.com", "https://github.com", "https://python.org"]
 for u in urls:
     webbrowser.open(u)
 `}</pre>
@@ -118,6 +111,13 @@ for u in urls:
           </div>
         </div>
       </section>
+
+      <div className="max-w-md">
+            <Subscribe label="Subscribe for demo updates" />
+            <div className="mt-1 text-xs text-slate-500">
+               We’ll occasionally email demo dates and updates. Unsubscribe anytime.
+      </div>
+      </div>
 
       {/* Trust strip */}
       <section className="bg-white border-y">
