@@ -1,5 +1,6 @@
 // app/page.tsx
 // Make the page static for deterministic HTML
+import Subscribe from "@/components/Subscribe";
 export const dynamic = "force-static";
 
 import Button from "@/components/ui/button";
@@ -84,6 +85,13 @@ export default function Page() {
             </div>
             <div className="mt-3 text-sm text-slate-600">Email: <a className="underline" href="mailto:thinkpythonai@gmail.com">thinkpythonai@gmail.com</a> · Zelle accepted: <strong>+1 (603) 417-0825</strong></div>
             <div className="mt-3 text-xs text-slate-600">No fluff. Practical skills. Friendly community. <span className="badge ml-2">Now booking school partnerships</span></div>
+          </div>
+
+          <div className="mt-4 max-w-md">
+            <Subscribe label="Subscribe for demo updates" />
+            <div className="mt-1 text-xs text-slate-500">
+               We’ll occasionally email demo dates and updates. Unsubscribe anytime.
+            </div>
           </div>
 
           {/* Hero code card */}
@@ -353,6 +361,9 @@ for u in urls:
               <Button variant="brand" href="https://forms.gle/D8W6ePzfzeszgPFr6">Book a Seat</Button>
               <Button variant="outline" href="#sample">Watch Samples</Button>
               <Button variant="outline" href="/assistant" className="flex items-center gap-2"><MessageSquare className="w-4 h-4"/> Chat with us</Button>
+            </div>
+            <div className="mt-4 bg-white/10 backdrop-blur rounded-xl p-3 max-w-md">
+              <Subscribe compact label="Email" />
             </div>
           </div>
           <div className="card">
