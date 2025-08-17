@@ -78,7 +78,7 @@ export default function FlyerPage() {
 
               <ul className="mt-4 space-y-2 text-slate-700 text-sm">
                 <li>Beginner → Advanced Python: automation, APIs, data</li>
-                <li>AI & agents (intro) · real projects · certificate</li>
+                <li>AI & agents (intro) · real projects · Stock Automation</li>
                 <li>Live classes + recordings · school partnerships</li>
               </ul>
 
