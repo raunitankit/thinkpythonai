@@ -95,8 +95,8 @@ export default function Page() {
                 <div className="mt-1 text-[11px] text-slate-500">
                   We’ll occasionally email demo dates and updates. Unsubscribe anytime.
                 </div>
+             </div>
             </div>
-          </div>
 
           {/* Hero code card */}
           <div className="md:pl-8">
