@@ -109,7 +109,7 @@ Hello, ThinkPythonAI!
 
 # Mini automation example
 import webbrowser
-urls = ["https://google.com", "https://github.com", "https://python.org"]
+urls = ["https://thinkpythonai.com", "https://github.com", "https://python.org"]
 for u in urls:
     webbrowser.open(u)
 `}</pre>
