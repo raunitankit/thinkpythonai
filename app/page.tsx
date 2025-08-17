@@ -79,6 +79,9 @@ export default function Page() {
               <Button variant="outline" href="/assistant" className="px-5 py-2.5 text-base flex items-center gap-2"><MessageSquare className="w-4 h-4"/> Chat with us</Button>
               <a href="https://wa.me/16034170825" target="_blank" rel="noreferrer" className="text-sm underline flex items-center gap-2"><MessageCircle className="w-4 h-4"/> WhatsApp: +1 (603) 417-0825</a>
             </div>
+            <div className="mt-2">
+              <span className="badge">First 2 classes free*</span>
+            </div>
             <div className="mt-3 text-sm text-slate-600">Email: <a className="underline" href="mailto:thinkpythonai@gmail.com">thinkpythonai@gmail.com</a> · Zelle accepted: <strong>+1 (603) 417-0825</strong></div>
             <div className="mt-3 text-xs text-slate-600">No fluff. Practical skills. Friendly community. <span className="badge ml-2">Now booking school partnerships</span></div>
           </div>
@@ -118,7 +121,7 @@ for u in urls:
       </section>
 
       {/* Features */}
-      <section id="features" className="container py-16">
+      <section id="features" className="container py-16 scroll-mt-24">
         <h2 className="text-2xl md:text-4xl font-bold text-center">What you get</h2>
         <p className="text-center mt-2 text-slate-600">A tight curriculum that turns effort into results.</p>
         <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -137,7 +140,7 @@ for u in urls:
       </section>
 
       {/* Sample video */}
-      <section id="sample" className="container py-16">
+      <section id="sample" className="container py-16 scroll-mt-24">
         <h2 className="text-2xl md:text-4xl font-bold text-center">Watch a Sample Class</h2>
         <p className="text-center mt-2 text-slate-600">Get a feel for the pace, teaching style, and project-first approach.</p>
         <div className="mt-8 aspect-video w-full rounded-2xl overflow-hidden shadow bg-slate-900">
@@ -146,7 +149,7 @@ for u in urls:
       </section>
 
       {/* Schools */}
-      <section id="schools" className="container py-16">
+      <section id="schools" className="container py-16 scroll-mt-24">
         <h2 className="text-2xl md:text-4xl font-bold text-center">For Schools & Districts</h2>
         <p className="text-center mt-2 text-slate-700">Flexible delivery for public & private schools: after-school clubs, semester electives, or teacher PD.</p>
         <div className="mt-8 grid md:grid-cols-3 gap-4">
@@ -157,7 +160,7 @@ for u in urls:
       </section>
 
       {/* Curriculum */}
-      <section id="curriculum" className="container py-16">
+      <section id="curriculum" className="container py-16 scroll-mt-24">
         <h2 className="text-2xl md:text-4xl font-bold text-center">Curriculum at a glance</h2>
         <div className="mt-8 grid md:grid-cols-2 gap-4">
           {[
@@ -178,10 +181,148 @@ for u in urls:
         </div>
       </section>
 
+{/* FAQ */}
+<section id="faq" className="container py-16 scroll-mt-24">
+  <h2 className="text-2xl md:text-4xl font-bold text-center">Frequently Asked Questions</h2>
+  <p className="text-center mt-2 text-slate-600">
+    Quick answers. If you need more details, just <a href="/assistant" className="underline">chat with us</a>.
+  </p>
+
+  <div className="mt-8 grid md:grid-cols-2 gap-5 md:gap-6">
+    {/* Audience */}
+    <div className="card">
+      <div className="p-5">
+        <details className="group" open>
+          <summary className="cursor-pointer font-semibold list-none">Who is this for?</summary>
+          <div className="mt-2 text-slate-600 text-sm">
+            Anyone who wants practical Python + AI skills: working professionals, non-working moms returning to work,
+            career switchers (incl. AI/data roles), high-school students, kids preparing for college, and teachers/schools.
+          </div>
+        </details>
+      </div>
+    </div>
+
+    {/* Trial / Refund policy */}
+    <div className="card scroll-mt-28" id="refund-policy">
+      <div className="p-5">
+        <details className="group" open>
+          <summary className="cursor-pointer font-semibold list-none">What’s your trial / refund policy?</summary>
+          <div className="mt-2 text-slate-600 text-sm">
+          You can attend the first two live classes and, if it’s not a fit, request a <strong>full refund before the third class begins</strong>—no questions asked.
+  Refunds apply only to the program you enrolled in and <strong>can’t be transferred or credited to another program</strong>.
+  (Policy may evolve; email us for the most current terms.)
+          </div>
+        </details>
+      </div>
+    </div>
+
+    {/* Recordings */}
+    <div className="card">
+      <div className="p-5">
+        <details className="group" >
+          <summary className="cursor-pointer font-semibold list-none">Are classes recorded? What if I miss a session?</summary>
+          <div className="mt-2 text-slate-600 text-sm">
+            Yes—<strong>all sessions are recorded and shared daily</strong> so you can review or catch up anytime.
+            Recordings remain available for <strong>90 days</strong>.
+          </div>
+        </details>
+      </div>
+    </div>
+
+    {/* Time commitment */}
+    <div className="card"><div className="p-5">
+      <details className="group">
+        <summary className="cursor-pointer font-semibold list-none">How much time should I plan for each week?</summary>
+        <div className="mt-2 text-slate-600 text-sm">About <strong>3–5 hours/week</strong> (live class + practice). Go faster or slower—everything is recorded.</div>
+      </details>
+    </div></div>
+
+    {/* Prereqs / Tools */}
+    <div className="card"><div className="p-5">
+      <details className="group">
+        <summary className="cursor-pointer font-semibold list-none">Do I need prior coding experience or special tools?</summary>
+        <div className="mt-2 text-slate-600 text-sm">No prior coding required. You’ll need a laptop, Chrome/Edge, and we’ll help you install Python and VS Code in Week 1.</div>
+      </details>
+    </div></div>
+
+    {/* Payments */}
+    <div className="card"><div className="p-5">
+      <details className="group">
+        <summary className="cursor-pointer font-semibold list-none">How do payments work?</summary>
+        <div className="mt-2 text-slate-600 text-sm">
+          We currently accept <strong>Zelle: +1 (603) 417-0825</strong>. Email your receipt to <a className="underline" href="mailto:thinkpythonai@gmail.com">thinkpythonai@gmail.com</a>.
+          Stripe cards will be added soon.
+        </div>
+      </details>
+    </div></div>
+
+    {/* Certificate & portfolio */}
+    <div className="card"><div className="p-5">
+      <details className="group">
+        <summary className="cursor-pointer font-semibold list-none">Do I get a certificate and portfolio projects?</summary>
+        <div className="mt-2 text-slate-600 text-sm">Yes - In Progress!! — Pro/Elite tracks include a certificate and <strong>3 portfolio-ready projects</strong>, plus a mini-capstone in Week 4.</div>
+      </details>
+    </div></div>
+
+    {/* Formats */}
+    <div className="card"><div className="p-5">
+      <details className="group">
+        <summary className="cursor-pointer font-semibold list-none">What formats do you offer?</summary>
+        <div className="mt-2 text-slate-600 text-sm">Live cohorts with recordings, self-paced access, and school/district options (after-school, electives, PD).</div>
+      </details>
+    </div></div>
+
+    {/* Schools / POs */}
+    <div className="card"><div className="p-5">
+      <details className="group">
+        <summary className="cursor-pointer font-semibold list-none">Can schools use invoices/POs and align to standards?</summary>
+        <div className="mt-2 text-slate-600 text-sm">Yes—we support POs/invoices and align projects to <strong>ISTE</strong> & <strong>CSTA</strong> with clear rubrics and outcomes.</div>
+      </details>
+    </div></div>
+
+    {/* Support */}
+    <div className="card"><div className="p-5">
+      <details className="group">
+        <summary className="cursor-pointer font-semibold list-none">What support do I get between classes?</summary>
+        <div className="mt-2 text-slate-600 text-sm">
+          Community Q&A, code reviews, and office-hours style help. You can also message us on{" "}
+          <a className="underline" href="https://wa.me/16034170825" target="_blank" rel="noreferrer">WhatsApp</a>.
+        </div>
+      </details>
+    </div></div>
+
+    {/* Join demo */}
+    <div className="card"><div className="p-5">
+      <details className="group">
+        <summary className="cursor-pointer font-semibold list-none">How do I join the next live demo?</summary>
+        <div className="mt-2 text-slate-600 text-sm">
+          Use the form: <a className="underline" href="https://forms.gle/D8W6ePzfzeszgPFr6" target="_blank" rel="noreferrer">Join Live Demo</a>. We’ll send calendar details by email.
+        </div>
+      </details>
+    </div></div>
+
+    {/* Privacy / data */}
+    <div className="card"><div className="p-4">
+      <details className="group">
+        <summary className="cursor-pointer font-semibold list-none">How do you handle privacy and my data?</summary>
+        <div className="mt-2 text-slate-600 text-sm">
+          We store only what’s needed for classes and support. You can request data removal anytime via{" "}
+          <a className="underline" href="mailto:thinkpythonai@gmail.com">thinkpythonai@gmail.com</a>.
+        </div>
+      </details>
+    </div></div>
+  </div>
+</section>
+
       {/* Pricing */}
-      <section id="pricing" className="container py-16">
+      <section id="pricing" className="container py-16 scroll-mt-24">
         <h2 className="text-2xl md:text-4xl font-bold text-center">Simple, transparent pricing</h2>
         <p className="text-center mt-2 text-slate-600">Pick a track and get started today. Scholarships available.</p>
+        <div className="mt-3 text-center">
+        <a href="#refund-policy" className="inline-block rounded-full px-3 py-1 text-xs font-medium bg-indigo-50 text-indigo-700 border border-indigo-200">
+        First 2 classes free*
+        </a>
+        </div>
         <div className="mt-10 grid md:grid-cols-3 gap-4">
           {tiers.map((t) => (
             <div key={t.name} className={`card ${t.highlight ? "border-slate-900 shadow-lg" : ""}`}>
@@ -203,7 +344,7 @@ for u in urls:
       </section>
 
       {/* CTA row */}
-      <section className="container pb-4">
+      <section className="container pt-10 md:pt-14 pb-6">
         <div className="grid md:grid-cols-2 gap-4 items-center">
           <div className="p-6 rounded-2xl shadow text-white" style={{ background: "linear-gradient(135deg,#4f46e5,#db2777,#06b6d4)" }}>
             <h3 className="text-2xl font-bold">Join the next live demo</h3>
@@ -233,7 +374,7 @@ for u in urls:
       </a>
 
       {/* Footer */}
-      <footer className="mt-8 border-t">
+      <footer className="mt-12 border-t">
         <div className="container py-10 grid md:grid-cols-3 gap-6 items-center">
           <div className="text-sm text-slate-600">© {YEAR} ThinkPythonAI · Payments accepted: <strong>Zelle +1 (603) 417-0825</strong>. All rights reserved.</div>
           <div className="text-sm text-slate-600 flex flex-wrap gap-4 justify-center">
