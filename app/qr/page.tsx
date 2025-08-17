@@ -4,7 +4,8 @@ export const dynamic = "force-static";
 import QRCode from "qrcode";
 import Button from "@/components/ui/button";
 
-const TARGET = "https://thinkpythonai.vercel.app/";
+// app/qr/page.tsx
+const TARGET = "https://thinkpythonai.com/"; // was the vercel.app URL
 
 export default async function QRPage() {
   // big, print-friendly PNG; margin 1, scale 12 ≈ 1200px
