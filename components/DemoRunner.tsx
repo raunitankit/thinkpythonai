@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Play, RotateCcw } from "lucide-react";
 
 declare global {
@@ -16,41 +16,36 @@ type Props = {
 export default function DemoRunner({
   defaultCode = `print("Hello, ThinkPythonAI! 👋")
 for i in range(3):
-    print("Python is fun!", i+1)
-`,
+    print("Python is fun!", i+1)`,
 }: Props) {
   const [code, setCode] = useState(defaultCode);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [running, setRunning] = useState(false);
-  const [out, setOut] = useState<string>("");
-  const [err, setErr] = useState<string>("");
+  const [out, setOut] = useState("");
+  const [err, setErr] = useState("");
 
   const pyodideRef = useRef<any>(null);
 
-  // load pyodide once
-  useEffect(() => {
-    let cancelled = false;
-
-    async function boot() {
-      try {
-        // load script only if not present
-        if (!window.loadPyodide) {
-          await new Promise<void>((resolve, reject) => {
-            const s = document.createElement("script");
-            // v0.26.x is small & stable; adjust later if needed
-            s.src = "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js";
-            s.onload = () => resolve();
-            s.onerror = () => reject(new Error("Failed loading pyodide.js"));
-            document.head.appendChild(s);
-          });
-        }
-        const pyodide = await window.loadPyodide!({
-          indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/",
+  async function ensurePyodideReady() {
+    if (pyodideRef.current) return;
+    setLoading(true);
+    try {
+      if (!window.loadPyodide) {
+        await new Promise<void>((resolve, reject) => {
+          const s = document.createElement("script");
+          s.src = "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js";
+          s.onload = () => resolve();
+          s.onerror = () => reject(new Error("Failed loading pyodide.js"));
+          document.head.appendChild(s);
         });
+      }
+      const pyodide = await window.loadPyodide!({
+        indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/",
+      });
 
-        // define a helper in Python to capture stdout/stderr
-        await pyodide.runPythonAsync(`
-import sys, io, traceback, types
+      // Small helper to capture stdout/stderr
+      await pyodide.runPythonAsync(`
+import sys, io, traceback
 
 def __run_user_code__(code: str):
     stdout_buf, stderr_buf = io.StringIO(), io.StringIO()
@@ -64,47 +59,31 @@ def __run_user_code__(code: str):
     finally:
         sys.stdout, sys.stderr = old_out, old_err
     return {"stdout": stdout_buf.getvalue(), "stderr": stderr_buf.getvalue()}
-        `);
+      `);
 
-        if (!cancelled) {
-          pyodideRef.current = pyodide;
-          setLoading(false);
-        }
-      } catch (e: any) {
-        if (!cancelled) {
-          setErr("Failed to initialize Python runtime.");
-          setLoading(false);
-        }
-      }
+      pyodideRef.current = pyodide;
+    } finally {
+      setLoading(false);
     }
-
-    boot();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  }
 
   async function onRun() {
-    if (!pyodideRef.current) return;
-    setRunning(true);
     setOut("");
     setErr("");
+    setRunning(true);
     try {
+      await ensurePyodideReady();
       const fn = pyodideRef.current.globals.get("__run_user_code__");
       const resProxy = await fn(code);
-      const res = resProxy.toJs?.() ?? resProxy; // PyProxy -> JS
+      const res = resProxy.toJs?.() ?? resProxy;
       resProxy.destroy?.();
       setOut(String(res.stdout || ""));
-      // If there was stderr, show it
       if (res.stderr) setErr(String(res.stderr));
-      // Friendly success message if it ran without errors
       if (!res.stderr) {
-        setOut((prev) =>
-          prev + (prev.endsWith("\n") ? "" : "\n") + "✅ See—easy and fun! 🚀"
-        );
+        setOut((prev) => (prev.endsWith("\n") ? prev : prev + "\n") + "✅ See—easy and fun! 🚀");
       }
     } catch (e: any) {
-      setErr((e?.message as string) || "Error while running code.");
+      setErr(e?.message || "Error while running code.");
     } finally {
       setRunning(false);
     }
@@ -116,10 +95,8 @@ def __run_user_code__(code: str):
     setErr("");
   }
 
-  // Small on phones, comfy on desktop
   return (
     <div className="space-y-3">
-      {/* Editor */}
       <textarea
         value={code}
         onChange={(e) => setCode(e.target.value)}
@@ -130,7 +107,6 @@ def __run_user_code__(code: str):
                    min-h-[140px] md:min-h-[180px] resize-vertical"
       />
 
-      {/* Actions */}
       <div className="flex items-center gap-2">
         <button
           onClick={onRun}
@@ -152,7 +128,6 @@ def __run_user_code__(code: str):
         </button>
       </div>
 
-      {/* Output */}
       {out && (
         <div className="rounded-xl bg-slate-950 text-slate-100 font-mono
                         text-[11px] md:text-sm leading-relaxed p-3 md:p-4 overflow-auto">
