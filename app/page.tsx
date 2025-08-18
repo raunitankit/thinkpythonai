@@ -395,7 +395,8 @@ export default function Page() {
               <p className="text-slate-600">Message us and we’ll get back in a few hours.</p>
               <div className="mt-4 flex flex-wrap gap-3 text-sm">
                 <a className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border" href="mailto:thinkpythonai@gmail.com">thinkpythonai@gmail.com</a>
-                <a className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border" href="https://wa.me/16034170825" target="_blank" rel="noreferrer">+1 (603) 417-0825</a>
+                <a className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border" href="tel:+16034170825">Call us</a>
+                <a className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border" href="https://wa.me/16034170825" target="_blank" rel="noreferrer">WhatsApp</a>
               </div>
             </div>
           </div>
