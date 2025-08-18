@@ -9,9 +9,7 @@ declare global {
   }
 }
 
-type Props = {
-  defaultCode?: string;
-};
+type Props = { defaultCode?: string };
 
 export default function DemoRunner({
   defaultCode = `print("Hello, ThinkPythonAI! 👋")
@@ -23,7 +21,6 @@ for i in range(3):
   const [running, setRunning] = useState(false);
   const [out, setOut] = useState("");
   const [err, setErr] = useState("");
-
   const pyodideRef = useRef<any>(null);
 
   async function ensurePyodideReady() {
@@ -43,10 +40,8 @@ for i in range(3):
         indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/",
       });
 
-      // Small helper to capture stdout/stderr
       await pyodide.runPythonAsync(`
 import sys, io, traceback
-
 def __run_user_code__(code: str):
     stdout_buf, stderr_buf = io.StringIO(), io.StringIO()
     old_out, old_err = sys.stdout, sys.stderr
@@ -54,7 +49,7 @@ def __run_user_code__(code: str):
     try:
         ns = {}
         exec(code, ns, ns)
-    except Exception as e:
+    except Exception:
         traceback.print_exc()
     finally:
         sys.stdout, sys.stderr = old_out, old_err
@@ -96,22 +91,23 @@ def __run_user_code__(code: str):
   }
 
   return (
-    <div className="space-y-3">
+    <div className="rounded-xl bg-slate-950 p-3 md:p-4 text-slate-100">
       <textarea
         value={code}
         onChange={(e) => setCode(e.target.value)}
         spellCheck={false}
-        className="w-full rounded-xl border bg-slate-900 text-slate-100 font-mono
-                   text-[11px] md:text-sm leading-relaxed p-3 md:p-4
-                   focus:outline-none focus:ring-2 focus:ring-indigo-400
-                   min-h-[140px] md:min-h-[180px] resize-vertical"
+        className="w-full rounded-lg border border-slate-800 bg-slate-900/80
+                   text-slate-100 font-mono text-[12px] md:text-sm leading-relaxed
+                   p-3 md:p-4 focus:outline-none focus:ring-2 focus:ring-indigo-500
+                   min-h-[150px] md:min-h-[180px] resize-vertical"
       />
 
-      <div className="flex items-center gap-2">
+      <div className="mt-3 flex items-center gap-2">
         <button
           onClick={onRun}
           disabled={loading || running}
-          className="inline-flex items-center gap-2 rounded-xl bg-slate-900 text-white
+          className="inline-flex items-center gap-2 rounded-lg
+                     bg-gradient-to-r from-indigo-600 to-fuchsia-600 text-white
                      px-3 py-2 md:px-4 md:py-2.5 disabled:opacity-50"
           title={loading ? "Loading Python…" : "Run (Cmd/Ctrl + Enter)"}
         >
@@ -120,7 +116,9 @@ def __run_user_code__(code: str):
         </button>
         <button
           onClick={onReset}
-          className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 md:px-4 md:py-2.5"
+          className="inline-flex items-center gap-2 rounded-lg
+                     border border-slate-700 bg-slate-900/60 text-slate-200
+                     px-3 py-2 md:px-4 md:py-2.5"
           title="Reset to example"
         >
           <RotateCcw className="w-4 h-4" />
@@ -129,13 +127,12 @@ def __run_user_code__(code: str):
       </div>
 
       {out && (
-        <div className="rounded-xl bg-slate-950 text-slate-100 font-mono
-                        text-[11px] md:text-sm leading-relaxed p-3 md:p-4 overflow-auto">
+        <div className="mt-3 rounded-lg bg-slate-900/70 p-3 md:p-4 font-mono text-[12px] md:text-sm overflow-auto">
           <pre>{out}</pre>
         </div>
       )}
       {err && (
-        <div className="rounded-xl bg-rose-50 text-rose-700 border border-rose-200 p-3 md:p-4 text-xs md:text-sm">
+        <div className="mt-3 rounded-lg border border-rose-400/30 bg-rose-900/30 p-3 md:p-4 text-rose-200 text-xs md:text-sm">
           <div className="font-semibold mb-1">Traceback (most recent call last):</div>
           <pre className="whitespace-pre-wrap">{err}</pre>
         </div>
