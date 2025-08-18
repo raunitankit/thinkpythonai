@@ -13,49 +13,48 @@ declare global {
 type Snippet = { key: string; title: string; code: string; };
 
 const SNIPPETS: Snippet[] = [
-    {
-      key: "fortune",
-      title: "🥠 AI Fortune Cookie",
-      code: `import random
-  messages = [
-    "You will squash a bug on the first try.",
-    "A clean commit brings a clear mind.",
-    "Your next project gets 🌟🌟🌟🌟🌟",
-    "You debug with the elegance of a zen master.",
-    "An opportunity pings your inbox soon."
-  ]
-  print("🥠 Your AI fortune:")
-  print(random.choice(messages))`,
-    },
-    {
-      key: "confetti",
-      title: "🎉 Emoji Confetti",
-      code: `import random
-  emojis = ["🎉","✨","💥","🎈","💫","🥳","🎊"]
-  print("Party time! 🎉\\n")
-  for _ in range(5):
-      row = "".join(random.choice(emojis) for _ in range(24))
-      print(row)`,
-    },
-    {
-      key: "rocket",
-      title: "🚀 Rocket Countdown",
-      code: `import time
-  print("🚀 Launching in...")
-  for i in range(3, 0, -1):
-      print(f"{i}…")
-      time.sleep(0.2)
-  print("Liftoff! ✨")`,
-    },
-    {
-      key: "hello",
-      title: "👋 Classic Hello + Loop",
-      code: `print("Hello, ThinkPythonAI! 👋")
-  for i in range(3):
-      print("Python is fun!", i+1)`,
-    },
-  ];
-  
+  {
+    key: "confetti",
+    title: "🎉 Emoji Confetti",
+    code: `import random
+emojis = ["🎉","✨","💥","🎈","💫","🥳","🎊"]
+print("Party time! 🎉\\n")
+for _ in range(5):
+    row = "".join(random.choice(emojis) for _ in range(24))
+    print(row)`,
+  },
+  {
+    key: "rocket",
+    title: "🚀 Rocket Countdown",
+    code: `import time
+print("🚀 Launching in...")
+for i in range(3, 0, -1):
+    print(f"{i}…")
+    time.sleep(0.2)
+print("Liftoff! ✨")`,
+  },
+  {
+    key: "fortune",
+    title: "🥠 AI Fortune Cookie",
+    code: `import random
+messages = [
+  "You will squash a bug on the first try.",
+  "A clean commit brings a clear mind.",
+  "Your next project gets 🌟🌟🌟🌟🌟",
+  "You debug with the elegance of a zen master.",
+  "An opportunity pings your inbox soon."
+]
+print("🥠 Your AI fortune:")
+print(random.choice(messages))`,
+  },
+  {
+    key: "hello",
+    title: "👋 Classic Hello + Loop",
+    code: `print("Hello, ThinkPythonAI! 👋")
+for i in range(3):
+    print("Python is fun!", i+1)`,
+  },
+];
 
 export default function DemoRunner() {
   const [snip, setSnip] = useState<Snippet>(SNIPPETS[0]);
