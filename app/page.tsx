@@ -77,7 +77,7 @@ export default function Page() {
               <Button href="https://forms.gle/D8W6ePzfzeszgPFr6" className="px-5 py-2.5 text-base">Join the Next Live Demo</Button>
               <Button variant="secondary" href="#sample" className="px-5 py-2.5 text-base flex items-center gap-2"><Youtube className="w-4 h-4"/> Watch a Sample Class</Button>
               <Button variant="outline" href="/assistant" className="px-5 py-2.5 text-base flex items-center gap-2"><MessageSquare className="w-4 h-4"/> Chat with us</Button>
-              <a href="https://wa.me/16034170825" target="_blank" rel="noreferrer" className="text-sm underline flex items-center gap-2"><MessageCircle className="w-4 h-4"/> WhatsApp: +1 (603) 417-0825</a>
+              <a href="https://wa.me/16034170825" target="_blank" rel="noreferrer" className="text-sm underline flex items-center gap-2"><MessageCircle className="w-4 h-4"/> Call or WhatsApp: +1 (603) 417-0825</a>
             </div>
             <div className="mt-2">
               <span className="badge">First 2 classes free*</span>
@@ -302,7 +302,7 @@ for u in urls:
             <details className="group">
               <summary className="cursor-pointer font-semibold list-none">What support do I get between classes?</summary>
               <div className="mt-2 text-slate-600 text-sm">
-                Community Q&A, code reviews, and office-hours style help. You can also message us on{" "}
+                Community Q&A, code reviews, and office-hours style help. You can also call or message us on{" "}
                 <a className="underline" href="https://wa.me/16034170825" target="_blank" rel="noreferrer">WhatsApp</a>.
               </div>
             </details>
