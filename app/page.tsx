@@ -96,15 +96,19 @@ export default function Page() {
              </div>
             </div>
         </div>
-          {/* Hero code card */}
-          <div className="md:pl-8">
+        {/* Hero code card */}
+        <div className="md:pl-8">
             <div className="card shadow">
-              <div className="p-4 border-b">
-                <div className="text-base font-semibold flex items-center gap-2"><Code className="w-5 h-5"/> Demo Preview</div>
-              </div>
-              <div className="p-4">
-                <div className="bg-slate-950 text-slate-100 rounded-xl p-4 font-mono text-sm overflow-auto">
-                  <pre>{`$ python hello.py
+                <div className="p-3 md:p-4 border-b">
+                    <div className="text-sm md:text-base font-semibold flex items-center gap-2">
+                        <Code className="w-5 h-5" /> Demo Preview
+                    </div>
+                </div>
+
+                <div className="p-3 md:p-4">
+                    {/* Smaller text + tighter padding + capped height on mobile */}
+                    <div className="bg-slate-950 text-slate-100 rounded-xl p-3 md:p-4 font-mono text-[11px] md:text-sm leading-relaxed overflow-auto max-h-[220px] md:max-h-none">
+                        <pre>{`$ python hello.py
 Hello, ThinkPythonAI!
 
 # Mini automation example
@@ -113,13 +117,15 @@ urls = ["https://thinkpythonai.com", "https://github.com", "https://python.org"]
 for u in urls:
     webbrowser.open(u)
 `}</pre>
-                </div>
-                <p className="mt-3 text-slate-600 text-sm">Real code, real outcomes. Build tools you can actually use at work or school.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
+
+      <p className="mt-3 text-slate-600 text-xs md:text-sm">
+        Real code, real outcomes. Build tools you can actually use at work or school.
+      </p>
+    </div>
+  </div>
+</div>
+
 
       {/* Trust strip */}
       <section className="bg-white border-y">
