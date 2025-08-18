@@ -1,6 +1,4 @@
-// app/page.tsx
 export const dynamic = "force-static";
-
 import Button from "@/components/ui/button";
 import Subscribe from "@/components/Subscribe";
 import {
@@ -12,10 +10,9 @@ import {
   MessageSquare,
   Rocket,
   Youtube,
-  Menu,
 } from "lucide-react";
 
-// compute once on the server (avoids hydration drift)
+// FIX: compute the year once on the server (no client-only differences)
 const YEAR = new Date().getFullYear();
 
 const features = [
@@ -37,7 +34,6 @@ export default function Page() {
       {/* Header */}
       <header className="header">
         <div className="container py-3 flex items-center justify-between">
-          {/* Brand */}
           <div className="flex items-center gap-2">
             <div className="w-9 h-9 rounded-xl grid place-items-center bg-gradient-to-br from-indigo-600 via-fuchsia-600 to-cyan-500 text-white">
               <svg viewBox="0 0 48 48" className="w-7 h-7" aria-hidden>
@@ -46,8 +42,6 @@ export default function Page() {
             </div>
             <span className="font-semibold">ThinkPythonAI</span>
           </div>
-
-          {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-6 text-sm">
             <a href="#features" className="hover:text-slate-700">Features</a>
             <a href="#curriculum" className="hover:text-slate-700">Curriculum</a>
@@ -57,105 +51,52 @@ export default function Page() {
             <a href="#faq" className="hover:text-slate-700">FAQ</a>
             <a href="/assistant" className="hover:text-slate-700">Assistant</a>
           </nav>
-
-          {/* Desktop CTAs */}
-          <div className="hidden md:flex items-center gap-2">
+          <div className="flex items-center gap-2">
             <Button href="https://forms.gle/D8W6ePzfzeszgPFr6">Join Live Demo</Button>
             <Button variant="secondary" href="/assistant" className="flex items-center gap-2">
               <MessageSquare className="w-4 h-4" /> Chat with us
             </Button>
           </div>
-
-          {/* Mobile menu (no JS) */}
-          <details className="md:hidden">
-            <summary className="list-none inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm">
-              <Menu className="w-4 h-4" /> Menu
-            </summary>
-            <div className="mt-2 rounded-xl border bg-white p-3 flex flex-col gap-2 text-sm">
-              <a href="#features" className="px-2 py-1 rounded hover:bg-slate-50">Features</a>
-              <a href="#curriculum" className="px-2 py-1 rounded hover:bg-slate-50">Curriculum</a>
-              <a href="#sample" className="px-2 py-1 rounded hover:bg-slate-50">Sample Class</a>
-              <a href="#schools" className="px-2 py-1 rounded hover:bg-slate-50">For Schools</a>
-              <a href="#pricing" className="px-2 py-1 rounded hover:bg-slate-50">Pricing</a>
-              <a href="#faq" className="px-2 py-1 rounded hover:bg-slate-50">FAQ</a>
-              <a href="/assistant" className="px-2 py-1 rounded hover:bg-slate-50">Assistant</a>
-              <Button href="https://forms.gle/D8W6ePzfzeszgPFr6" className="w-full mt-2">Join Live Demo</Button>
-              <Button variant="secondary" href="/assistant" className="w-full">Chat with us</Button>
-            </div>
-          </details>
         </div>
       </header>
 
       {/* Hero */}
-      <section className="container pt-10 pb-14 md:pt-20">
+      <section className="container pt-12 pb-16 md:pt-20">
         <div className="grid md:grid-cols-2 gap-8 items-center">
-          {/* Left column */}
           <div>
-            <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
+            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">
               Learn Python that gets you{" "}
               <span className="bg-gradient-to-r from-yellow-200 via-rose-200 to-sky-200 px-2 rounded">hired</span>.
             </h1>
-            <p className="mt-3 text-base sm:text-lg text-slate-700">
+            <p className="mt-4 text-lg text-slate-700">
               Hands-on coding for real outcomes—automation, AI basics, and portfolio projects. Built for busy students, professionals, and schools.
             </p>
-
-            {/* CTAs: tidy 2-col grid on phones */}
-            <div className="mt-5 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-3">
-              <Button
-                href="https://forms.gle/D8W6ePzfzeszgPFr6"
-                className="col-span-2 sm:col-span-1 px-4 py-2 text-sm sm:text-base"
-              >
-                Join the Next Live Demo
-              </Button>
-              <Button
-                variant="secondary"
-                href="#sample"
-                className="px-4 py-2 text-sm sm:text-base flex items-center gap-2"
-              >
-                <Youtube className="w-4 h-4"/> Watch a Sample Class
-              </Button>
-              <Button
-                variant="outline"
-                href="/assistant"
-                className="px-4 py-2 text-sm sm:text-base flex items-center gap-2"
-              >
-                <MessageSquare className="w-4 h-4"/> Chat with us
-              </Button>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <Button href="https://forms.gle/D8W6ePzfzeszgPFr6" className="px-5 py-2.5 text-base">Join the Next Live Demo</Button>
+              <Button variant="secondary" href="#sample" className="px-5 py-2.5 text-base flex items-center gap-2"><Youtube className="w-4 h-4"/> Watch a Sample Class</Button>
+              <Button variant="outline" href="/assistant" className="px-5 py-2.5 text-base flex items-center gap-2"><MessageSquare className="w-4 h-4"/> Chat with us</Button>
+              <a href="https://wa.me/16034170825" target="_blank" rel="noreferrer" className="text-sm underline flex items-center gap-2"><MessageCircle className="w-4 h-4"/> WhatsApp: +1 (603) 417-0825</a>
             </div>
-
-            {/* WhatsApp moved under CTAs for clarity */}
-            <div className="mt-3">
-              <a href="https://wa.me/16034170825" target="_blank" rel="noreferrer" className="text-sm underline inline-flex items-center gap-2">
-                <MessageCircle className="w-4 h-4"/> WhatsApp: +1 (603) 417-0825
-              </a>
-            </div>
-
-            {/* Badge */}
             <div className="mt-2">
               <span className="badge">First 2 classes free*</span>
             </div>
-
-            {/* Contact line */}
-            <div className="mt-3 text-sm text-slate-600">
-              Email: <a className="underline" href="mailto:thinkpythonai@gmail.com">thinkpythonai@gmail.com</a> · Zelle accepted: <strong>+1 (603) 417-0825</strong>
-            </div>
-
-            {/* No fluff + Subscribe row */}
+            <div className="mt-3 text-sm text-slate-600">Email: <a className="underline" href="mailto:thinkpythonai@gmail.com">thinkpythonai@gmail.com</a> · Zelle accepted: <strong>+1 (603) 417-0825</strong></div>
             <div className="mt-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4">
-              <div className="text-xs text-slate-600">
-                No fluff. Practical skills. Friendly community.
-                <span className="badge ml-2">Now booking school partnerships</span>
-              </div>
-              <div className="md:w-[380px] w-full">
+             {/* Left: No fluff… */}
+             <div className="text-xs text-slate-600">
+               No fluff. Practical skills. Friendly community.
+               <span className="badge ml-2">Now booking school partnerships</span>
+             </div>
+             {/* Right: Subscribe (compact) */}
+             <div className="md:w-[380px]">
                 <Subscribe compact label="Email" />
                 <div className="mt-1 text-[11px] text-slate-500">
                   We’ll occasionally email demo dates and updates. Unsubscribe anytime.
                 </div>
-              </div>
+             </div>
             </div>
-          </div>
-
-          {/* Right column – Hero code card */}
+        </div>
+          {/* Hero code card */}
           <div className="md:pl-8">
             <div className="card shadow">
               <div className="p-4 border-b">
@@ -250,136 +191,147 @@ for u in urls:
         </div>
       </section>
 
-      {/* FAQ */}
-      <section id="faq" className="container py-16 scroll-mt-24">
-        <h2 className="text-2xl md:text-4xl font-bold text-center">Frequently Asked Questions</h2>
-        <p className="text-center mt-2 text-slate-600">Quick answers. If you need more details, just <a href="/assistant" className="underline">chat with us</a>.</p>
+{/* FAQ */}
+<section id="faq" className="container py-16 scroll-mt-24">
+  <h2 className="text-2xl md:text-4xl font-bold text-center">Frequently Asked Questions</h2>
+  <p className="text-center mt-2 text-slate-600">
+    Quick answers. If you need more details, just <a href="/assistant" className="underline">chat with us</a>.
+  </p>
 
-        <div className="mt-8 grid md:grid-cols-2 gap-5 md:gap-6">
-          {/* Audience */}
-          <div className="card"><div className="p-5">
-            <details className="group" open>
-              <summary className="cursor-pointer font-semibold list-none">Who is this for?</summary>
-              <div className="mt-2 text-slate-600 text-sm">
-                Anyone who wants practical Python + AI skills: working professionals, non-working moms returning to work,
-                career switchers (incl. AI/data roles), high-school students, kids preparing for college, and teachers/schools.
-              </div>
-            </details>
-          </div></div>
+  <div className="mt-8 grid md:grid-cols-2 gap-5 md:gap-6">
+    {/* Audience */}
+    <div className="card">
+      <div className="p-5">
+        <details className="group" open>
+          <summary className="cursor-pointer font-semibold list-none">Who is this for?</summary>
+          <div className="mt-2 text-slate-600 text-sm">
+            Anyone who wants practical Python + AI skills: working professionals, non-working moms returning to work,
+            career switchers (incl. AI/data roles), high-school students, kids preparing for college, and teachers/schools.
+          </div>
+        </details>
+      </div>
+    </div>
 
-          {/* Trial / Refund policy */}
-          <div className="card scroll-mt-28" id="refund-policy"><div className="p-5">
-            <details className="group" open>
-              <summary className="cursor-pointer font-semibold list-none">What’s your trial / refund policy?</summary>
-              <div className="mt-2 text-slate-600 text-sm">
-                You can attend the first two live classes and, if it’s not a fit, request a <strong>full refund before the third class begins</strong>—no questions asked.
-                Refunds apply only to the program you enrolled in and <strong>can’t be transferred or credited to another program</strong>. (Policy may evolve; email us for the most current terms.)
-              </div>
-            </details>
-          </div></div>
+    {/* Trial / Refund policy */}
+    <div className="card scroll-mt-28" id="refund-policy">
+      <div className="p-5">
+        <details className="group" open>
+          <summary className="cursor-pointer font-semibold list-none">What’s your trial / refund policy?</summary>
+          <div className="mt-2 text-slate-600 text-sm">
+          You can attend the first two live classes and, if it’s not a fit, request a <strong>full refund before the third class begins</strong>—no questions asked.
+  Refunds apply only to the program you enrolled in and <strong>can’t be transferred or credited to another program</strong>.
+  (Policy may evolve; email us for the most current terms.)
+          </div>
+        </details>
+      </div>
+    </div>
 
-          {/* Recordings */}
-          <div className="card"><div className="p-5">
-            <details className="group">
-              <summary className="cursor-pointer font-semibold list-none">Are classes recorded? What if I miss a session?</summary>
-              <div className="mt-2 text-slate-600 text-sm">
-                Yes—<strong>all sessions are recorded and shared daily</strong> so you can review or catch up anytime.
-                Recordings remain available for <strong>90 days</strong>.
-              </div>
-            </details>
-          </div></div>
+    {/* Recordings */}
+    <div className="card">
+      <div className="p-5">
+        <details className="group" >
+          <summary className="cursor-pointer font-semibold list-none">Are classes recorded? What if I miss a session?</summary>
+          <div className="mt-2 text-slate-600 text-sm">
+            Yes—<strong>all sessions are recorded and shared daily</strong> so you can review or catch up anytime.
+            Recordings remain available for <strong>90 days</strong>.
+          </div>
+        </details>
+      </div>
+    </div>
 
-          {/* Time commitment */}
-          <div className="card"><div className="p-5">
-            <details className="group">
-              <summary className="cursor-pointer font-semibold list-none">How much time should I plan for each week?</summary>
-              <div className="mt-2 text-slate-600 text-sm">About <strong>3–5 hours/week</strong> (live class + practice). Go faster or slower—everything is recorded.</div>
-            </details>
-          </div></div>
+    {/* Time commitment */}
+    <div className="card"><div className="p-5">
+      <details className="group">
+        <summary className="cursor-pointer font-semibold list-none">How much time should I plan for each week?</summary>
+        <div className="mt-2 text-slate-600 text-sm">About <strong>3–5 hours/week</strong> (live class + practice). Go faster or slower—everything is recorded.</div>
+      </details>
+    </div></div>
 
-          {/* Prereqs / Tools */}
-          <div className="card"><div className="p-5">
-            <details className="group">
-              <summary className="cursor-pointer font-semibold list-none">Do I need prior coding experience or special tools?</summary>
-              <div className="mt-2 text-slate-600 text-sm">No prior coding required. You’ll need a laptop, Chrome/Edge, and we’ll help you install Python and VS Code in Week 1.</div>
-            </details>
-          </div></div>
+    {/* Prereqs / Tools */}
+    <div className="card"><div className="p-5">
+      <details className="group">
+        <summary className="cursor-pointer font-semibold list-none">Do I need prior coding experience or special tools?</summary>
+        <div className="mt-2 text-slate-600 text-sm">No prior coding required. You’ll need a laptop, Chrome/Edge, and we’ll help you install Python and VS Code in Week 1.</div>
+      </details>
+    </div></div>
 
-          {/* Payments */}
-          <div className="card"><div className="p-5">
-            <details className="group">
-              <summary className="cursor-pointer font-semibold list-none">How do payments work?</summary>
-              <div className="mt-2 text-slate-600 text-sm">
-                We currently accept <strong>Zelle: +1 (603) 417-0825</strong>. Email your receipt to <a className="underline" href="mailto:thinkpythonai@gmail.com">thinkpythonai@gmail.com</a>.
-                Stripe cards will be added soon.
-              </div>
-            </details>
-          </div></div>
-
-          {/* Certificate & portfolio */}
-          <div className="card"><div className="p-5">
-            <details className="group">
-              <summary className="cursor-pointer font-semibold list-none">Do I get a certificate and portfolio projects?</summary>
-              <div className="mt-2 text-slate-600 text-sm">Yes — Pro/Elite tracks include a certificate and <strong>3 portfolio-ready projects</strong>, plus a mini-capstone in Week 4.</div>
-            </details>
-          </div></div>
-
-          {/* Formats */}
-          <div className="card"><div className="p-5">
-            <details className="group">
-              <summary className="cursor-pointer font-semibold list-none">What formats do you offer?</summary>
-              <div className="mt-2 text-slate-600 text-sm">Live cohorts with recordings, self-paced access, and school/district options (after-school, electives, PD).</div>
-            </details>
-          </div></div>
-
-          {/* Schools / POs */}
-          <div className="card"><div className="p-5">
-            <details className="group">
-              <summary className="cursor-pointer font-semibold list-none">Can schools use invoices/POs and align to standards?</summary>
-              <div className="mt-2 text-slate-600 text-sm">Yes—we support POs/invoices and align projects to <strong>ISTE</strong> & <strong>CSTA</strong> with clear rubrics and outcomes.</div>
-            </details>
-          </div></div>
-
-          {/* Support */}
-          <div className="card"><div className="p-5">
-            <details className="group">
-              <summary className="cursor-pointer font-semibold list-none">What support do I get between classes?</summary>
-              <div className="mt-2 text-slate-600 text-sm">
-                Community Q&A, code reviews, and office-hours style help. You can also message us on{" "}
-                <a className="underline" href="https://wa.me/16034170825" target="_blank" rel="noreferrer">WhatsApp</a>.
-              </div>
-            </details>
-          </div></div>
-
-          {/* Join demo */}
-          <div className="card"><div className="p-5">
-            <details className="group">
-              <summary className="cursor-pointer font-semibold list-none">How do I join the next live demo?</summary>
-              <div className="mt-2 text-slate-600 text-sm">
-                Use the form: <a className="underline" href="https://forms.gle/D8W6ePzfzeszgPFr6" target="_blank" rel="noreferrer">Join Live Demo</a>. We’ll send calendar details by email.
-              </div>
-            </details>
-          </div></div>
-
-          {/* Privacy / data */}
-          <div className="card"><div className="p-4">
-            <details className="group">
-              <summary className="cursor-pointer font-semibold list-none">How do you handle privacy and my data?</summary>
-              <div className="mt-2 text-slate-600 text-sm">
-                We store only what’s needed for classes and support. You can request data removal anytime via{" "}
-                <a className="underline" href="mailto:thinkpythonai@gmail.com">thinkpythonai@gmail.com</a>.
-              </div>
-            </details>
-          </div></div>
+    {/* Payments */}
+    <div className="card"><div className="p-5">
+      <details className="group">
+        <summary className="cursor-pointer font-semibold list-none">How do payments work?</summary>
+        <div className="mt-2 text-slate-600 text-sm">
+          We currently accept <strong>Zelle: +1 (603) 417-0825</strong>. Email your receipt to <a className="underline" href="mailto:thinkpythonai@gmail.com">thinkpythonai@gmail.com</a>.
+          Stripe cards will be added soon.
         </div>
-      </section>
+      </details>
+    </div></div>
+
+    {/* Certificate & portfolio */}
+    <div className="card"><div className="p-5">
+      <details className="group">
+        <summary className="cursor-pointer font-semibold list-none">Do I get a certificate and portfolio projects?</summary>
+        <div className="mt-2 text-slate-600 text-sm">Yes - In Progress!! — Pro/Elite tracks include a certificate and <strong>3 portfolio-ready projects</strong>, plus a mini-capstone in Week 4.</div>
+      </details>
+    </div></div>
+
+    {/* Formats */}
+    <div className="card"><div className="p-5">
+      <details className="group">
+        <summary className="cursor-pointer font-semibold list-none">What formats do you offer?</summary>
+        <div className="mt-2 text-slate-600 text-sm">Live cohorts with recordings, self-paced access, and school/district options (after-school, electives, PD).</div>
+      </details>
+    </div></div>
+
+    {/* Schools / POs */}
+    <div className="card"><div className="p-5">
+      <details className="group">
+        <summary className="cursor-pointer font-semibold list-none">Can schools use invoices/POs and align to standards?</summary>
+        <div className="mt-2 text-slate-600 text-sm">Yes—we support POs/invoices and align projects to <strong>ISTE</strong> & <strong>CSTA</strong> with clear rubrics and outcomes.</div>
+      </details>
+    </div></div>
+
+    {/* Support */}
+    <div className="card"><div className="p-5">
+      <details className="group">
+        <summary className="cursor-pointer font-semibold list-none">What support do I get between classes?</summary>
+        <div className="mt-2 text-slate-600 text-sm">
+          Community Q&A, code reviews, and office-hours style help. You can also message us on{" "}
+          <a className="underline" href="https://wa.me/16034170825" target="_blank" rel="noreferrer">WhatsApp</a>.
+        </div>
+      </details>
+    </div></div>
+
+    {/* Join demo */}
+    <div className="card"><div className="p-5">
+      <details className="group">
+        <summary className="cursor-pointer font-semibold list-none">How do I join the next live demo?</summary>
+        <div className="mt-2 text-slate-600 text-sm">
+          Use the form: <a className="underline" href="https://forms.gle/D8W6ePzfzeszgPFr6" target="_blank" rel="noreferrer">Join Live Demo</a>. We’ll send calendar details by email.
+        </div>
+      </details>
+    </div></div>
+
+    {/* Privacy / data */}
+    <div className="card"><div className="p-4">
+      <details className="group">
+        <summary className="cursor-pointer font-semibold list-none">How do you handle privacy and my data?</summary>
+        <div className="mt-2 text-slate-600 text-sm">
+          We store only what’s needed for classes and support. You can request data removal anytime via{" "}
+          <a className="underline" href="mailto:thinkpythonai@gmail.com">thinkpythonai@gmail.com</a>.
+        </div>
+      </details>
+    </div></div>
+  </div>
+</section>
 
       {/* Pricing */}
       <section id="pricing" className="container py-16 scroll-mt-24">
         <h2 className="text-2xl md:text-4xl font-bold text-center">Simple, transparent pricing</h2>
         <p className="text-center mt-2 text-slate-600">Pick a track and get started today. Scholarships available.</p>
         <div className="mt-3 text-center">
-          <a href="#refund-policy" className="inline-block rounded-full px-3 py-1 text-xs font-medium bg-indigo-50 text-indigo-700 border border-indigo-200">First 2 classes free*</a>
+        <a href="#refund-policy" className="inline-block rounded-full px-3 py-1 text-xs font-medium bg-indigo-50 text-indigo-700 border border-indigo-200">
+        First 2 classes free*
+        </a>
         </div>
         <div className="mt-10 grid md:grid-cols-3 gap-4">
           {tiers.map((t) => (
@@ -429,14 +381,9 @@ for u in urls:
         </div>
       </section>
 
-      {/* Floating chat button (moved up on phones so it doesn't cover content) */}
-      <a
-        href="/assistant"
-        className="fixed z-40 sm:bottom-6 sm:right-6 bottom-20 right-4 inline-flex items-center gap-2 rounded-full shadow-lg px-4 py-2 sm:px-5 sm:py-3 bg-slate-900 text-white text-sm sm:text-base hover:opacity-90"
-        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
-      >
-        <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5" />
-        <span className="hidden sm:inline">Chat with us</span>
+      {/* Floating chat button */}
+      <a href="/assistant" className="fixed bottom-6 right-6 inline-flex items-center gap-2 rounded-full shadow-lg px-5 py-3 bg-slate-900 text-white hover:opacity-90">
+        <MessageSquare className="w-5 h-5" /> Chat with us
       </a>
 
       {/* Footer */}
