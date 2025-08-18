@@ -1,4 +1,17 @@
+
 // app/page.tsx
+import dynamic from "next/dynamic";
+const DemoRunner = dynamic(() => import("@/components/DemoRunner"), {
+  ssr: false,
+  loading: () => (
+    <div className="bg-slate-950 text-slate-100 rounded-xl p-3 md:p-4 font-mono text-[11px] md:text-sm leading-relaxed">
+      <pre>{`$ python hello.py
+Hello, ThinkPythonAI!
+# Loading interactive runner…`}</pre>
+    </div>
+  ),
+});
+
 export const dynamic = "force-static";
 
 import Button from "@/components/ui/button";
@@ -102,30 +115,23 @@ export default function Page() {
           </div>
 
           {/* Hero code card (smaller on mobile) */}
-          <div className="md:pl-8">
+            {/* Hero code card (interactive) */}
+            <div className="md:pl-8">
             <div className="card shadow">
-              <div className="p-3 md:p-4 border-b">
+                <div className="p-3 md:p-4 border-b">
                 <div className="text-sm md:text-base font-semibold flex items-center gap-2">
-                  <Code className="w-5 h-5"/> Demo Preview
+                    <Code className="w-5 h-5" /> Demo Preview
                 </div>
-              </div>
-              <div className="p-3 md:p-4">
-                <div className="bg-slate-950 text-slate-100 rounded-xl p-3 md:p-4 font-mono text-[11px] md:text-sm leading-relaxed overflow-auto max-h-[220px] md:max-h-none">
-                  <pre>{`$ python hello.py
-Hello, ThinkPythonAI!
-
-# Mini automation example
-import webbrowser
-urls = ["https://thinkpythonai.com", "https://github.com", "https://python.org"]
-for u in urls:
-    webbrowser.open(u)
-`}</pre>
                 </div>
-                <p className="mt-3 text-slate-600 text-xs md:text-sm">Real code, real outcomes. Build tools you can actually use at work or school.</p>
-              </div>
+                <div className="p-3 md:p-4">
+                <DemoRunner />
+                <p className="mt-3 text-slate-600 text-xs md:text-sm">
+                    Run it right here—see how easy and fun learning Python can be.
+                </p>
+                </div>
             </div>
-          </div>
-        </div>
+            </div>
+
       </section>
 
       {/* Trust strip */}
