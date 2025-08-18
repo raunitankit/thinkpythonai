@@ -57,7 +57,7 @@ for i in range(3):
 ];
 
 export default function DemoRunner() {
-  const [snip, setSnip] = useState<Snippet>(SNIPPETS[0]);
+  const [snip, setSnip] = useState<Snippet>(SNIPPETS[2]);
   const [code, setCode] = useState(snip.code);
   const [loading, setLoading] = useState(false);
   const [running, setRunning] = useState(false);
