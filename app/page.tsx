@@ -85,7 +85,9 @@ export default function Page() {
   href="tel:+16034170825"
   className="px-5 py-2.5 text-base flex items-center gap-2"
 >
-  <Phone className="w-4 h-4" /> Call us
+  <Phone className="w-4 h-4" /> 
+  <span className="hidden sm:inline">Call:</span>
+    <span>+1 (603) 417-0825</span>
 </Button>
 
 <Button
@@ -95,7 +97,9 @@ export default function Page() {
   target="_blank"
   rel="noreferrer"
 >
-  <MessageCircle className="w-4 h-4" /> WhatsApp
+  <MessageCircle className="w-4 h-4" />
+  <span className="hidden sm:inline">WhatsApp:</span>
+  <span>+1 (603) 417-0825</span>
 </Button>
 
 
@@ -394,10 +398,17 @@ export default function Page() {
             <div className="p-4">
               <p className="text-slate-600">Message us and we’ll get back in a few hours.</p>
               <div className="mt-4 flex flex-wrap gap-3 text-sm">
-                <a className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border" href="mailto:thinkpythonai@gmail.com">thinkpythonai@gmail.com</a>
-                <a className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border" href="tel:+16034170825">Call us</a>
-                <a className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border" href="https://wa.me/16034170825" target="_blank" rel="noreferrer">WhatsApp</a>
+                <a className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border" href="mailto:thinkpythonai@gmail.com">
+                    thinkpythonai@gmail.com
+                </a>
+                <a className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border" href="tel:+16034170825">
+                    <Phone className="w-4 h-4" /> +1 (603) 417-0825
+                </a>
+                <a className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border" href="https://wa.me/16034170825" target="_blank" rel="noreferrer">
+                    <MessageCircle className="w-4 h-4" /> WhatsApp: +1 (603) 417-0825
+                </a>
               </div>
+
             </div>
           </div>
         </div>
