@@ -1,7 +1,8 @@
+// components/DemoRunner.tsx
 "use client";
 
-import { useRef, useState } from "react";
-import { Play, RotateCcw } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Play, RotateCcw, Sparkles } from "lucide-react";
 
 declare global {
   interface Window {
@@ -9,19 +10,67 @@ declare global {
   }
 }
 
-type Props = { defaultCode?: string };
+type Snippet = { key: string; title: string; code: string; };
 
-export default function DemoRunner({
-  defaultCode = `print("Hello, ThinkPythonAI! 👋")
+const SNIPPETS: Snippet[] = [
+  {
+    key: "confetti",
+    title: "🎉 Emoji Confetti",
+    code: `import random
+emojis = ["🎉","✨","💥","🎈","💫","🥳","🎊"]
+print("Party time! 🎉\\n")
+for _ in range(5):
+    row = "".join(random.choice(emojis) for _ in range(24))
+    print(row)`,
+  },
+  {
+    key: "rocket",
+    title: "🚀 Rocket Countdown",
+    code: `import time
+print("🚀 Launching in...")
+for i in range(3, 0, -1):
+    print(f"{i}…")
+    time.sleep(0.2)
+print("Liftoff! ✨")`,
+  },
+  {
+    key: "fortune",
+    title: "🥠 AI Fortune Cookie",
+    code: `import random
+messages = [
+  "You will squash a bug on the first try.",
+  "A clean commit brings a clear mind.",
+  "Your next project gets 🌟🌟🌟🌟🌟",
+  "You debug with the elegance of a zen master.",
+  "An opportunity pings your inbox soon."
+]
+print("🥠 Your AI fortune:")
+print(random.choice(messages))`,
+  },
+  {
+    key: "hello",
+    title: "👋 Classic Hello + Loop",
+    code: `print("Hello, ThinkPythonAI! 👋")
 for i in range(3):
     print("Python is fun!", i+1)`,
-}: Props) {
-  const [code, setCode] = useState(defaultCode);
+  },
+];
+
+export default function DemoRunner() {
+  const [snip, setSnip] = useState<Snippet>(SNIPPETS[0]);
+  const [code, setCode] = useState(snip.code);
   const [loading, setLoading] = useState(false);
   const [running, setRunning] = useState(false);
   const [out, setOut] = useState("");
   const [err, setErr] = useState("");
   const pyodideRef = useRef<any>(null);
+
+  // When user switches snippet, reset editor & output
+  useEffect(() => {
+    setCode(snip.code);
+    setOut("");
+    setErr("");
+  }, [snip]);
 
   async function ensurePyodideReady() {
     if (pyodideRef.current) return;
@@ -85,13 +134,36 @@ def __run_user_code__(code: str):
   }
 
   function onReset() {
-    setCode(defaultCode);
+    setCode(snip.code);
     setOut("");
     setErr("");
   }
 
   return (
     <div className="rounded-xl bg-slate-950 p-3 md:p-4 text-slate-100">
+      {/* Toolbar */}
+      <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3 mb-3">
+        <div className="inline-flex items-center gap-2">
+          <Sparkles className="w-4 h-4 text-fuchsia-400" />
+          <span className="text-xs md:text-sm text-slate-300">Try a fun example:</span>
+        </div>
+        <select
+          value={snip.key}
+          onChange={(e) => {
+            const next = SNIPPETS.find(s => s.key === e.target.value)!;
+            setSnip(next);
+          }}
+          className="w-full md:w-auto rounded-lg bg-slate-900/70 border border-slate-700
+                     px-3 py-2 text-sm"
+          aria-label="Choose example"
+        >
+          {SNIPPETS.map(s => (
+            <option key={s.key} value={s.key}>{s.title}</option>
+          ))}
+        </select>
+      </div>
+
+      {/* Editor */}
       <textarea
         value={code}
         onChange={(e) => setCode(e.target.value)}
@@ -102,6 +174,7 @@ def __run_user_code__(code: str):
                    min-h-[150px] md:min-h-[180px] resize-vertical"
       />
 
+      {/* Actions */}
       <div className="mt-3 flex items-center gap-2">
         <button
           onClick={onRun}
@@ -126,6 +199,7 @@ def __run_user_code__(code: str):
         </button>
       </div>
 
+      {/* Output */}
       {out && (
         <div className="mt-3 rounded-lg bg-slate-900/70 p-3 md:p-4 font-mono text-[12px] md:text-sm overflow-auto">
           <pre>{out}</pre>

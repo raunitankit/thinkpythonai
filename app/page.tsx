@@ -14,6 +14,7 @@ import {
   MessageSquare,
   Rocket,
   Youtube,
+  Phone,
 } from "lucide-react";
 
 const YEAR = new Date().getFullYear();
@@ -73,13 +74,32 @@ export default function Page() {
               <span className="bg-gradient-to-r from-yellow-200 via-rose-200 to-sky-200 px-2 rounded">hired</span>.
             </h1>
             <p className="mt-4 text-lg text-slate-700">
-              Hands-on coding for real outcomes—automation, AI basics, and portfolio projects. Built for busy students, professionals, and schools.
+              Hands-on coding for real outcomes—automation, AI, and stock portfolio projects. Built for busy students, IT professionals, and schools.
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <Button href="https://forms.gle/D8W6ePzfzeszgPFr6" className="px-5 py-2.5 text-base">Join the Next Live Demo</Button>
               <Button variant="secondary" href="#sample" className="px-5 py-2.5 text-base flex items-center gap-2"><Youtube className="w-4 h-4"/> Watch a Sample Class</Button>
               <Button variant="outline" href="/assistant" className="px-5 py-2.5 text-base flex items-center gap-2"><MessageSquare className="w-4 h-4"/> Chat with us</Button>
-              <a href="https://wa.me/16034170825" target="_blank" rel="noreferrer" className="text-sm underline flex items-center gap-2"><MessageCircle className="w-4 h-4"/> WhatsApp: +1 (603) 417-0825</a>
+              <Button
+  variant="outline"
+  href="tel:+16034170825"
+  className="px-5 py-2.5 text-base flex items-center gap-2"
+>
+  <Phone className="w-4 h-4" /> Call us
+</Button>
+
+<Button
+  variant="secondary"
+  href="https://wa.me/16034170825"
+  className="px-5 py-2.5 text-base flex items-center gap-2"
+  target="_blank"
+  rel="noreferrer"
+>
+  <MessageCircle className="w-4 h-4" /> WhatsApp
+</Button>
+
+
+
             </div>
             <div className="mt-2">
               <span className="badge">First 2 classes free*</span>
