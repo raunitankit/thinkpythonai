@@ -1,17 +1,4 @@
-
 // app/page.tsx
-import dynamic from "next/dynamic";
-const DemoRunner = dynamic(() => import("@/components/DemoRunner"), {
-  ssr: false,
-  loading: () => (
-    <div className="bg-slate-950 text-slate-100 rounded-xl p-3 md:p-4 font-mono text-[11px] md:text-sm leading-relaxed">
-      <pre>{`$ python hello.py
-Hello, ThinkPythonAI!
-# Loading interactive runner…`}</pre>
-    </div>
-  ),
-});
-
 export const dynamic = "force-static";
 
 import Button from "@/components/ui/button";
@@ -27,7 +14,6 @@ import {
   Youtube,
 } from "lucide-react";
 
-// Compute once on the server (avoids hydration drift)
 const YEAR = new Date().getFullYear();
 
 const features = [
@@ -78,6 +64,7 @@ export default function Page() {
       {/* Hero */}
       <section className="container pt-12 pb-16 md:pt-20">
         <div className="grid md:grid-cols-2 gap-8 items-center">
+          {/* Left column */}
           <div>
             <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">
               Learn Python that gets you{" "}
@@ -90,7 +77,7 @@ export default function Page() {
               <Button href="https://forms.gle/D8W6ePzfzeszgPFr6" className="px-5 py-2.5 text-base">Join the Next Live Demo</Button>
               <Button variant="secondary" href="#sample" className="px-5 py-2.5 text-base flex items-center gap-2"><Youtube className="w-4 h-4"/> Watch a Sample Class</Button>
               <Button variant="outline" href="/assistant" className="px-5 py-2.5 text-base flex items-center gap-2"><MessageSquare className="w-4 h-4"/> Chat with us</Button>
-              <a href="https://wa.me/16034170825" target="_blank" rel="noreferrer" className="text-sm underline flex items-center gap-2"><MessageCircle className="w-4 h-4"/> Call or WhatsApp: +1 (603) 417-0825</a>
+              <a href="https://wa.me/16034170825" target="_blank" rel="noreferrer" className="text-sm underline flex items-center gap-2"><MessageCircle className="w-4 h-4"/> WhatsApp: +1 (603) 417-0825</a>
             </div>
             <div className="mt-2">
               <span className="badge">First 2 classes free*</span>
@@ -114,24 +101,33 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Hero code card (smaller on mobile) */}
-            {/* Hero code card (interactive) */}
-            <div className="md:pl-8">
+          {/* Right column — Hero code card (smaller on mobile) */}
+          <div className="md:pl-8">
             <div className="card shadow">
-                <div className="p-3 md:p-4 border-b">
+              <div className="p-3 md:p-4 border-b">
                 <div className="text-sm md:text-base font-semibold flex items-center gap-2">
-                    <Code className="w-5 h-5" /> Demo Preview
+                  <Code className="w-5 h-5"/> Demo Preview
                 </div>
-                </div>
-                <div className="p-3 md:p-4">
-                <DemoRunner />
-                <p className="mt-3 text-slate-600 text-xs md:text-sm">
-                    Run it right here—see how easy and fun learning Python can be.
-                </p>
-                </div>
-            </div>
-            </div>
+              </div>
+              <div className="p-3 md:p-4">
+                <div className="bg-slate-950 text-slate-100 rounded-xl p-3 md:p-4 font-mono text-[11px] md:text-sm leading-relaxed overflow-auto max-h-[220px] md:max-h-none">
+                  <pre>{`$ python hello.py
+Hello, ThinkPythonAI!
 
+# Mini automation example
+import webbrowser
+urls = ["https://thinkpythonai.com", "https://github.com", "https://python.org"]
+for u in urls:
+    webbrowser.open(u)
+`}</pre>
+                </div>
+                <p className="mt-3 text-slate-600 text-xs md:text-sm">
+                  Real code, real outcomes. Build tools you can actually use at work or school.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Trust strip */}
@@ -308,7 +304,7 @@ export default function Page() {
             <details className="group">
               <summary className="cursor-pointer font-semibold list-none">What support do I get between classes?</summary>
               <div className="mt-2 text-slate-600 text-sm">
-                Community Q&A, code reviews, and office-hours style help. You can also call or message us on{" "}
+                Community Q&A, code reviews, and office-hours style help. You can also message us on{" "}
                 <a className="underline" href="https://wa.me/16034170825" target="_blank" rel="noreferrer">WhatsApp</a>.
               </div>
             </details>
