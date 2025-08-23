@@ -1,22 +1,21 @@
 // app/layout.tsx
-import "./globals.css";
-import { Analytics } from "@vercel/analytics/react";
-
-export const metadata = {
-  metadataBase: new URL("https://thinkpythonai.com"),
-  title: "ThinkPythonAI — Python, Automation & AI",
-  description: "Hands-on Python + AI with real projects. First 2 classes free.",
-  openGraph: { url: "/", images: ["/og.png"], siteName: "ThinkPythonAI" },
-  alternates: { canonical: "/" },
-};
-
+import Link from "next/link";
+import "./globals.css"; // if you have it
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth scroll-pt-[88px] md:scroll-pt-[104px]">
+    <html lang="en">
       <body>
+        <header style={{padding:"10px 16px", borderBottom:"1px solid #e5e7eb"}}>
+          <nav style={{display:"flex", gap:16, alignItems:"center", flexWrap:"wrap"}}>
+            <Link href="/">Home</Link>
+            <Link href="/teen-gist">Teen Gist 🎧</Link>
+          </nav>
+        </header>
         {children}
-        <Analytics />
+        <footer style={{padding:"24px 16px", borderTop:"1px solid #e5e7eb", marginTop:24, fontSize:12, color:"#6b7280"}}>
+          © {new Date().getFullYear()} ThinkPythonAI — Built for learners.
+        </footer>
       </body>
     </html>
   );

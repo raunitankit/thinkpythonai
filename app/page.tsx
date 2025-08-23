@@ -1,4 +1,5 @@
 // app/page.tsx
+
 export const dynamic = "force-static";
 import NextDynamic from "next/dynamic";
 const DemoRunner = NextDynamic(() => import("@/components/DemoRunner"), { ssr: false });
@@ -54,6 +55,7 @@ export default function Page() {
             <a href="#pricing" className="hover:text-slate-700">Pricing</a>
             <a href="#faq" className="hover:text-slate-700">FAQ</a>
             <a href="/assistant" className="hover:text-slate-700">Assistant</a>
+            <a href="/teen-gist" className="hover:text-slate-700">Teen Gist 🎧</a>
           </nav>
           <div className="flex items-center gap-2">
             <Button href="https://forms.gle/D8W6ePzfzeszgPFr6">Join Live Demo</Button>
