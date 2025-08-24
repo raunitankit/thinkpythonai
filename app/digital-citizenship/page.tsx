@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import BackHeader from "@/components/BackHeader";
+import Link from "next/link";
 
 // Your Streamlit URL (or set NEXT_PUBLIC_DC_URL in Vercel)
 const TARGET =
@@ -40,8 +40,7 @@ export default function DigitalCitizenshipEmbed() {
     };
   }, []);
 
-  // If iframe fails to load (e.g., X-Frame-Options DENY), onLoad never fires.
-  // Use a timeout as a heuristic and show a helpful fallback.
+  // Iframe load handlers / fallback
   const handleFrameLoad = () => {
     setLoading(false);
     if (loadTimer.current) window.clearTimeout(loadTimer.current);
@@ -49,14 +48,13 @@ export default function DigitalCitizenshipEmbed() {
   };
 
   useEffect(() => {
-    if (awake === null) return; // still checking
-    // Start a timer; if onLoad doesn't fire in time, assume blocked.
+    if (awake === null) return;
     setLoading(true);
     setBlocked(false);
     loadTimer.current = window.setTimeout(() => {
       setLoading(false);
       setBlocked(true);
-    }, 3500); // ~3.5s feels okay for cold starts
+    }, 3500);
     return () => {
       if (loadTimer.current) window.clearTimeout(loadTimer.current);
     };
@@ -80,7 +78,22 @@ export default function DigitalCitizenshipEmbed() {
             marginBottom: 12,
           }}
         >
-          <BackHeader href="/" label="Back to ThinkPythonAI" />
+          <Link
+            href="/"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              background: "#e2e8f0",
+              color: "#0f172a",
+              textDecoration: "none",
+              padding: "9px 14px",
+              borderRadius: 10,
+              fontWeight: 700,
+            }}
+          >
+            🔙 Back to ThinkPythonAI
+          </Link>
 
           <a
             href={TARGET}
@@ -136,7 +149,6 @@ export default function DigitalCitizenshipEmbed() {
             background: "#fff",
           }}
         >
-          {/* Loading overlay */}
           {loading && (
             <div
               style={{
@@ -171,15 +183,12 @@ export default function DigitalCitizenshipEmbed() {
             </div>
           )}
 
-          {/* IFRAME — may be blocked by X-Frame-Options on some deployments */}
           <iframe
             src={TARGET}
             onLoad={handleFrameLoad}
-            // Don’t set sandbox unless you add all needed permissions; Streamlit needs scripts & same-origin.
-            style={{ width: "100%", height: "100%", border: "0" }}
+            style={{ width: "100%", height: "100%", border: 0 }}
           />
 
-          {/* Blocked fallback overlay */}
           {blocked && (
             <div
               style={{
@@ -236,7 +245,7 @@ export default function DigitalCitizenshipEmbed() {
 
         {/* Bottom back button */}
         <div style={{ marginTop: 14, textAlign: "center" }}>
-          <a
+          <Link
             href="/"
             style={{
               display: "inline-block",
@@ -249,7 +258,7 @@ export default function DigitalCitizenshipEmbed() {
             }}
           >
             🔙 Back to ThinkPythonAI
-          </a>
+          </Link>
         </div>
       </div>
     </main>
