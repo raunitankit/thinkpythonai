@@ -1,240 +1,257 @@
 "use client";
+
 import { useEffect, useRef, useState } from "react";
 import BackHeader from "@/components/BackHeader";
 
+// Your Streamlit URL (or set NEXT_PUBLIC_DC_URL in Vercel)
 const TARGET =
   process.env.NEXT_PUBLIC_DC_URL ||
   "https://digital-citizenship-ai-auehbputrz3jyadpcnnukp.streamlit.app/";
 
-// Normalize + build health path
-const base = TARGET.replace(/\/+$/, "");
-const HEALTH = `${base}/_stcore/health`;
+type PingResp = { ok: boolean; status: number; error?: string };
 
-type PingResp = { ok: boolean; status: number; where?: string; error?: string };
+export default function DigitalCitizenshipEmbed() {
+  const [awake, setAwake] = useState<boolean | null>(null);
+  const [blocked, setBlocked] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const loadTimer = useRef<number | null>(null);
 
-export default function DigitalCitizenshipRedirect() {
-  const [checking, setChecking] = useState(true);
-  const [ok, setOk] = useState<boolean | null>(null);
-  const [status, setStatus] = useState<number | null>(null);
-  const tries = useRef(0);
-
-  // ---- server ping (our Next.js API) ----
-  async function serverPing(): Promise<PingResp> {
-    try {
-      const u = `/api/ping-external?url=${encodeURIComponent(TARGET)}`;
-      const r = await fetch(u, { cache: "no-store" });
-      return (await r.json()) as PingResp;
-    } catch (e: any) {
-      return { ok: false, status: 0, error: e?.message || "server fetch failed" };
-    }
-  }
-
-  // ---- image ping fallback (bypasses CORS) ----
-  function imagePing(url: string, ms = 5000): Promise<boolean> {
-    return new Promise((resolve) => {
-      const img = new Image();
-      const timer = setTimeout(() => {
-        img.onload = null;
-        img.onerror = null;
-        resolve(false);
-      }, ms);
-      const done = (val: boolean) => {
-        clearTimeout(timer);
-        resolve(val);
-      };
-      img.onload = () => done(true);   // reachable
-      img.onerror = () => done(true);  // also proves network reachability!
-      img.src = `${url}${url.includes("?") ? "&" : "?"}cb=${Date.now()}`;
+  async function ping(): Promise<PingResp> {
+    const r = await fetch(`/api/ping-external?url=${encodeURIComponent(TARGET)}`, {
+      cache: "no-store",
     });
-  }
-
-  // ---- fetch no-cors probe ----
-  async function fetchPing(url: string, ms = 6000): Promise<boolean> {
-    try {
-      const ctl = new AbortController();
-      const t = setTimeout(() => ctl.abort(), ms);
-      await fetch(url, { method: "GET", mode: "no-cors", cache: "no-store", signal: ctl.signal });
-      clearTimeout(t);
-      return true; // if no exception, network path is good
-    } catch {
-      return false;
-    }
-  }
-
-  async function clientReachable(): Promise<boolean> {
-    // Race multiple strategies; any success = reachable
-    const candidates = [
-      fetchPing(HEALTH),
-      fetchPing(base),
-      imagePing(base),
-    ];
-    // Fastest wins
-    const results = await Promise.allSettled(candidates);
-    return results.some((r) => r.status === "fulfilled" && r.value === true);
-  }
-
-  async function checkAndGo() {
-    setChecking(true);
-
-    // 1) Client reachability
-    if (await clientReachable()) {
-      setOk(true);
-      setStatus(200);
-      setTimeout(() => window.location.replace(TARGET), 250);
-      return;
-    }
-
-    // 2) Server ping fallback
-    const res = await serverPing();
-    setOk(res.ok);
-    setStatus(res.status ?? null);
-    setChecking(false);
-    if (res.ok) {
-      setTimeout(() => window.location.replace(TARGET), 250);
-    }
+    return (await r.json()) as PingResp;
   }
 
   useEffect(() => {
-    const run = async () => {
-      for (tries.current = 0; tries.current < 3; tries.current++) {
-        if (await clientReachable()) {
-          setOk(true);
-          setStatus(200);
-          window.location.replace(TARGET);
-          return;
-        }
-        const res = await serverPing();
-        setOk(res.ok);
-        setStatus(res.status ?? null);
-        if (res.ok) {
-          window.location.replace(TARGET);
-          return;
-        }
-        await new Promise((r) => setTimeout(r, 800 * (tries.current + 1)));
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await ping();
+        if (cancelled) return;
+        setAwake(!!res.ok);
+      } catch {
+        if (cancelled) return;
+        setAwake(false);
       }
-      setChecking(false);
+    })();
+    return () => {
+      cancelled = true;
     };
-    run();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // If iframe fails to load (e.g., X-Frame-Options DENY), onLoad never fires.
+  // Use a timeout as a heuristic and show a helpful fallback.
+  const handleFrameLoad = () => {
+    setLoading(false);
+    if (loadTimer.current) window.clearTimeout(loadTimer.current);
+    setBlocked(false);
+  };
+
+  useEffect(() => {
+    if (awake === null) return; // still checking
+    // Start a timer; if onLoad doesn't fire in time, assume blocked.
+    setLoading(true);
+    setBlocked(false);
+    loadTimer.current = window.setTimeout(() => {
+      setLoading(false);
+      setBlocked(true);
+    }, 3500); // ~3.5s feels okay for cold starts
+    return () => {
+      if (loadTimer.current) window.clearTimeout(loadTimer.current);
+    };
+  }, [awake]);
+
   return (
-    <>
-      <BackHeader />
-      <main
-        style={{
-          minHeight: "70vh",
-          display: "grid",
-          placeItems: "center",
-          padding: "24px",
-          background:
-            "linear-gradient(180deg, rgba(236,253,245,0.9), rgba(219,234,254,0.9))",
-        }}
-      >
+    <main
+      style={{
+        minHeight: "85vh",
+        background: "linear-gradient(180deg,#f8fafc,#ffffff)",
+      }}
+    >
+      <div style={{ maxWidth: 1080, margin: "0 auto", padding: "20px 16px 28px" }}>
+        {/* Top bar with back + open-in-tab */}
         <div
           style={{
-            maxWidth: 720,
-            textAlign: "center",
-            background: "#fff",
-            border: "1px solid #e5e7eb",
-            borderRadius: 16,
-            padding: 24,
-            boxShadow: "0 6px 24px rgba(0,0,0,0.06)",
+            display: "flex",
+            gap: 10,
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: 12,
           }}
         >
-          <h1 style={{ fontSize: 28, fontWeight: 800, color: "#0f172a" }}>
-            Taking you to Digital Citizenship…
-          </h1>
+          <BackHeader href="/" label="Back to ThinkPythonAI" />
 
-          {checking && (
-            <>
-              <p style={{ color: "#475569", marginTop: 10 }}>
-                We’re checking that the app is awake. This can take a moment.
-              </p>
-              <div
-                style={{
-                  margin: "16px auto 0",
-                  width: 42,
-                  height: 42,
-                  border: "3px solid #e2e8f0",
-                  borderTopColor: "#4f46e5",
-                  borderRadius: "50%",
-                  animation: "spin 0.9s linear infinite",
-                }}
-              />
-              <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
-              <p style={{ fontSize: 12, color: "#94a3b8", marginTop: 8 }}>
-                Tip: if it seems slow, you can open it directly below.
-              </p>
-            </>
-          )}
-
-          {!checking && ok === false && (
-            <>
-              <p style={{ color: "#b91c1c", marginTop: 12, fontWeight: 600 }}>
-                The app didn’t respond yet{typeof status === "number" ? ` (status ${status})` : ""}.
-              </p>
-              <p style={{ color: "#475569", marginTop: 6 }}>
-                It might be waking up or temporarily unavailable. You can retry or open it
-                in a new tab.
-              </p>
-            </>
-          )}
-
-          <div
+          <a
+            href={TARGET}
+            target="_blank"
+            rel="noreferrer"
             style={{
-              marginTop: 16,
-              display: "flex",
-              gap: 10,
-              justifyContent: "center",
-              flexWrap: "wrap",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              background: "#0f172a",
+              color: "#fff",
+              textDecoration: "none",
+              padding: "9px 14px",
+              borderRadius: 10,
+              fontWeight: 700,
             }}
           >
-            <a
-              href={TARGET}
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                background: "#4f46e5",
-                color: "#fff",
-                textDecoration: "none",
-                padding: "10px 14px",
-                borderRadius: 12,
-                fontWeight: 700,
-              }}
-            >
-              Open in new tab ↗
-            </a>
-            <button
-              onClick={checkAndGo}
-              style={{
-                background: "#e2e8f0",
-                color: "#0f172a",
-                padding: "10px 14px",
-                borderRadius: 12,
-                border: "none",
-                fontWeight: 700,
-                cursor: "pointer",
-              }}
-            >
-              Retry check
-            </button>
-            <a
-              href="/"
-              style={{
-                background: "#f1f5f9",
-                color: "#0f172a",
-                textDecoration: "none",
-                padding: "10px 14px",
-                borderRadius: 12,
-                fontWeight: 700,
-              }}
-            >
-              Back to ThinkPythonAI
-            </a>
-          </div>
+            Open full app ↗
+          </a>
         </div>
-      </main>
-    </>
+
+        <h1 style={{ fontSize: 28, fontWeight: 800, color: "#0f172a" }}>
+          🛡️ Digital Citizenship Detector (Embedded)
+        </h1>
+        <p style={{ color: "#475569", marginTop: 6 }}>
+          This is the live Streamlit app embedded below. If your browser or the app blocks
+          embedding, use the “Open full app” button above.
+        </p>
+
+        {/* Status strip */}
+        <div
+          style={{
+            marginTop: 14,
+            marginBottom: 10,
+            fontSize: 13,
+            color: awake === null ? "#64748b" : awake ? "#059669" : "#b91c1c",
+          }}
+        >
+          {awake === null && "Checking app status…"}
+          {awake === true && "App looks awake ✅"}
+          {awake === false && "The app may be waking up… trying to load ⚡"}
+        </div>
+
+        {/* Frame or fallback */}
+        <div
+          style={{
+            position: "relative",
+            width: "100%",
+            height: "78vh",
+            border: "1px solid #e5e7eb",
+            borderRadius: 12,
+            overflow: "hidden",
+            background: "#fff",
+          }}
+        >
+          {/* Loading overlay */}
+          {loading && (
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                display: "grid",
+                placeItems: "center",
+                background: "linear-gradient(180deg,#f1f5f9,rgba(255,255,255,0.8))",
+                zIndex: 1,
+              }}
+            >
+              <div style={{ textAlign: "center" }}>
+                <div
+                  style={{
+                    margin: "0 auto 10px",
+                    width: 44,
+                    height: 44,
+                    border: "3px solid #e2e8f0",
+                    borderTopColor: "#4f46e5",
+                    borderRadius: "50%",
+                    animation: "spin 0.9s linear infinite",
+                  }}
+                />
+                <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+                <div style={{ color: "#334155" }}>
+                  Loading the embedded app…
+                  <div style={{ fontSize: 12, color: "#64748b", marginTop: 4 }}>
+                    If this takes too long, click “Open full app”.
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* IFRAME — may be blocked by X-Frame-Options on some deployments */}
+          <iframe
+            src={TARGET}
+            onLoad={handleFrameLoad}
+            // Don’t set sandbox unless you add all needed permissions; Streamlit needs scripts & same-origin.
+            style={{ width: "100%", height: "100%", border: "0" }}
+          />
+
+          {/* Blocked fallback overlay */}
+          {blocked && (
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                display: "grid",
+                placeItems: "center",
+                background: "linear-gradient(180deg,#fff,#f8fafc)",
+                padding: 20,
+                textAlign: "center",
+              }}
+            >
+              <div
+                style={{
+                  maxWidth: 520,
+                  background: "#ffffff",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: 14,
+                  padding: 18,
+                  boxShadow: "0 8px 24px rgba(0,0,0,0.06)",
+                }}
+              >
+                <h2 style={{ fontSize: 18, fontWeight: 800, color: "#0f172a" }}>
+                  Embedding is blocked by the app/browser
+                </h2>
+                <p style={{ color: "#475569", marginTop: 8 }}>
+                  Some Streamlit apps disallow iframes (security setting). No worries—open
+                  it in a new tab and you’ll be right there.
+                </p>
+                <div style={{ marginTop: 12 }}>
+                  <a
+                    href={TARGET}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 8,
+                      background: "#4f46e5",
+                      color: "#fff",
+                      textDecoration: "none",
+                      padding: "10px 14px",
+                      borderRadius: 10,
+                      fontWeight: 700,
+                    }}
+                  >
+                    Open full app ↗
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Bottom back button */}
+        <div style={{ marginTop: 14, textAlign: "center" }}>
+          <a
+            href="/"
+            style={{
+              display: "inline-block",
+              background: "#0f172a",
+              color: "#fff",
+              textDecoration: "none",
+              padding: "10px 16px",
+              borderRadius: 10,
+              fontWeight: 700,
+            }}
+          >
+            🔙 Back to ThinkPythonAI
+          </a>
+        </div>
+      </div>
+    </main>
   );
 }
