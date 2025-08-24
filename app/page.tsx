@@ -173,10 +173,11 @@ export default function Page() {
         </div>
       </div>
       <div className="p-4 text-sm text-slate-600 space-y-2">
-        <p>Paste any public article URL (or your own text), get a quick gist, and play it back with YouTube‑style speeds and keyboard shortcuts.</p>
+        <p>Paste any public article URL (or your own text), get a quick gist, and play it back with YouTube‑style speeds.<br /> <br />
+          It's like having your personal <strong> webscaper (python) </strong> in your back pocket!</p>
         <ul className="list-disc pl-5">
           <li>URL or Paste‑Text modes</li>
-          <li>Voice picker + saved speed</li>
+          <li>Voice picker (try spanish or other languages)</li>
           <li>Copy & save gist as .txt</li>
         </ul>
       </div>
