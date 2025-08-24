@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-// Your Streamlit URL
+// Direct Streamlit URL (no share.streamlit.io)
 const TARGET =
   process.env.NEXT_PUBLIC_DC_URL ||
   "https://digital-citizenship-ai-auehbputrz3jyadpcnnukp.streamlit.app/";
@@ -16,9 +16,22 @@ export default function DigitalCitizenshipRedirect() {
   const tries = useRef(0);
 
   async function pingOnce(): Promise<PingResp> {
-    const u = `/api/ping-external?url=${encodeURIComponent(TARGET)}`;
-    const r = await fetch(u, { cache: "no-store" });
-    return (await r.json()) as PingResp;
+    try {
+      const r = await fetch(`/api/ping-external?url=${encodeURIComponent(TARGET)}`, {
+        cache: "no-store",
+      });
+      return (await r.json()) as PingResp;
+    } catch {
+      // Network error on our own API → report as status 0
+      return { ok: false, status: 0, error: "client fetch error" };
+    }
+  }
+
+  function go() {
+    // Small delay so the message isn't jarring
+    setTimeout(() => {
+      window.location.href = TARGET;
+    }, 300);
   }
 
   async function checkAndGo() {
@@ -28,25 +41,25 @@ export default function DigitalCitizenshipRedirect() {
     setOk(res.ok);
     setChecking(false);
 
-    if (res.ok) {
-      setTimeout(() => {
-        window.location.href = TARGET;
-      }, 400);
-    }
+    // If API says OK -> go
+    if (res.ok) return go();
+
+    // Heuristic: sometimes we get status 0 even when the app is fine (privacy/network quirks)
+    // Offer a "Try anyway" auto-redirect path.
+    // (Kids still have Open-in-new-tab as a guaranteed escape hatch.)
   }
 
   useEffect(() => {
-    // Try up to 3 times with backoff
     const run = async () => {
-      for (tries.current = 0; tries.current < 3; tries.current++) {
+      for (tries.current = 0; tries.current < 2; tries.current++) {
         const res = await pingOnce();
         setStatus(res.status ?? null);
         setOk(res.ok);
         if (res.ok) {
-          window.location.href = TARGET;
-          return;
+          return go();
         }
-        await new Promise((r) => setTimeout(r, 1000 * (tries.current + 1)));
+        // brief backoff
+        await new Promise((r) => setTimeout(r, 700 * (tries.current + 1)));
       }
       setChecking(false);
     };
@@ -102,15 +115,15 @@ export default function DigitalCitizenshipRedirect() {
           </>
         )}
 
-        {!checking && ok === false && (
+        {!checking && (
           <>
             <p style={{ color: "#b91c1c", marginTop: 12, fontWeight: 600 }}>
-              The app didn’t respond yet
-              {typeof status === "number" ? ` (status ${status})` : ""}.
+              {ok
+                ? "Ready!"
+                : `The app didn’t confirm yet${typeof status === "number" ? ` (status ${status})` : ""}.`}
             </p>
             <p style={{ color: "#475569", marginTop: 6 }}>
-              It might be waking up or temporarily unavailable. You can retry or
-              open it in a new tab.
+              It might be waking up or blocking pings. You can retry, try anyway, or open it in a new tab.
             </p>
           </>
         )}
@@ -139,6 +152,7 @@ export default function DigitalCitizenshipRedirect() {
           >
             Open in new tab ↗
           </a>
+
           <button
             onClick={checkAndGo}
             style={{
@@ -153,6 +167,24 @@ export default function DigitalCitizenshipRedirect() {
           >
             Retry check
           </button>
+
+          {!ok && (
+            <button
+              onClick={go}
+              style={{
+                background: "#10b981",
+                color: "white",
+                padding: "10px 14px",
+                borderRadius: 12,
+                border: "none",
+                fontWeight: 700,
+                cursor: "pointer",
+              }}
+            >
+              Try anyway →
+            </button>
+          )}
+
           <a
             href="/"
             style={{
