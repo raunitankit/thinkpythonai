@@ -3,10 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
-// Your Streamlit URL (or set NEXT_PUBLIC_DC_URL in Vercel)
 const TARGET =
   process.env.NEXT_PUBLIC_DC_URL ||
-  "https://digital-citizenship-ai-auehbputrz3jyadpcnnukp.streamlit.app/";
+  "https://digital-citizenship-ai-auehbputrz3jyadpcnnukp.streamlit.app/?embed=true";
 
 type PingResp = { ok: boolean; status: number; error?: string };
 
@@ -40,7 +39,6 @@ export default function DigitalCitizenshipEmbed() {
     };
   }, []);
 
-  // Iframe load handlers / fallback
   const handleFrameLoad = () => {
     setLoading(false);
     if (loadTimer.current) window.clearTimeout(loadTimer.current);
@@ -51,6 +49,7 @@ export default function DigitalCitizenshipEmbed() {
     if (awake === null) return;
     setLoading(true);
     setBlocked(false);
+    // If the iframe doesn't complete load quickly, assume blocked (cookies / X-Frame)
     loadTimer.current = window.setTimeout(() => {
       setLoading(false);
       setBlocked(true);
@@ -61,23 +60,10 @@ export default function DigitalCitizenshipEmbed() {
   }, [awake]);
 
   return (
-    <main
-      style={{
-        minHeight: "85vh",
-        background: "linear-gradient(180deg,#f8fafc,#ffffff)",
-      }}
-    >
+    <main style={{ minHeight: "85vh", background: "linear-gradient(180deg,#f8fafc,#ffffff)" }}>
       <div style={{ maxWidth: 1080, margin: "0 auto", padding: "20px 16px 28px" }}>
-        {/* Top bar with back + open-in-tab */}
-        <div
-          style={{
-            display: "flex",
-            gap: 10,
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginBottom: 12,
-          }}
-        >
+        {/* Top bar */}
+        <div style={{ display: "flex", gap: 10, alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
           <Link
             href="/"
             style={{
@@ -96,7 +82,7 @@ export default function DigitalCitizenshipEmbed() {
           </Link>
 
           <a
-            href={TARGET}
+            href={TARGET.replace(/\?embed=true$/, "")} // open full app (no embed mode)
             target="_blank"
             rel="noreferrer"
             style={{
@@ -119,25 +105,15 @@ export default function DigitalCitizenshipEmbed() {
           🛡️ Digital Citizenship Detector (Embedded)
         </h1>
         <p style={{ color: "#475569", marginTop: 6 }}>
-          This is the live Streamlit app embedded below. If your browser or the app blocks
-          embedding, use the “Open full app” button above.
+          If the embed is blocked by your browser or privacy settings, use “Open full app”.
         </p>
 
-        {/* Status strip */}
-        <div
-          style={{
-            marginTop: 14,
-            marginBottom: 10,
-            fontSize: 13,
-            color: awake === null ? "#64748b" : awake ? "#059669" : "#b91c1c",
-          }}
-        >
+        <div style={{ marginTop: 14, marginBottom: 10, fontSize: 13, color: awake === null ? "#64748b" : awake ? "#059669" : "#b91c1c" }}>
           {awake === null && "Checking app status…"}
           {awake === true && "App looks awake ✅"}
           {awake === false && "The app may be waking up… trying to load ⚡"}
         </div>
 
-        {/* Frame or fallback */}
         <div
           style={{
             position: "relative",
@@ -186,6 +162,7 @@ export default function DigitalCitizenshipEmbed() {
           <iframe
             src={TARGET}
             onLoad={handleFrameLoad}
+            // NOTE: if third-party cookies are blocked, Streamlit may redirect endlessly; our timeout shows fallback.
             style={{ width: "100%", height: "100%", border: 0 }}
           />
 
@@ -203,7 +180,7 @@ export default function DigitalCitizenshipEmbed() {
             >
               <div
                 style={{
-                  maxWidth: 520,
+                  maxWidth: 540,
                   background: "#ffffff",
                   border: "1px solid #e5e7eb",
                   borderRadius: 14,
@@ -212,15 +189,15 @@ export default function DigitalCitizenshipEmbed() {
                 }}
               >
                 <h2 style={{ fontSize: 18, fontWeight: 800, color: "#0f172a" }}>
-                  Embedding is blocked by the app/browser
+                  Embed blocked by privacy settings
                 </h2>
                 <p style={{ color: "#475569", marginTop: 8 }}>
-                  Some Streamlit apps disallow iframes (security setting). No worries—open
-                  it in a new tab and you’ll be right there.
+                  Your browser is likely blocking third‑party cookies, which Streamlit Cloud
+                  needs inside iframes. Open the app in a new tab:
                 </p>
                 <div style={{ marginTop: 12 }}>
                   <a
-                    href={TARGET}
+                    href={TARGET.replace(/\?embed=true$/, "")}
                     target="_blank"
                     rel="noreferrer"
                     style={{
@@ -238,12 +215,14 @@ export default function DigitalCitizenshipEmbed() {
                     Open full app ↗
                   </a>
                 </div>
+                <div style={{ marginTop: 8, fontSize: 12, color: "#64748b" }}>
+                  Tip: Allow third‑party cookies for <code>*.streamlit.app</code> to enable embedding.
+                </div>
               </div>
             </div>
           )}
         </div>
 
-        {/* Bottom back button */}
         <div style={{ marginTop: 14, textAlign: "center" }}>
           <Link
             href="/"
