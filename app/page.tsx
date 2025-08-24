@@ -188,28 +188,44 @@ export default function Page() {
       </div>
     </div>
 
-    {/* Card 2 — Digital Citizenship */}
-    <div className="card hover:shadow-md transition-shadow">
-      <div className="p-4 border-b">
-        <div className="text-base font-semibold flex items-center gap-2">
-          <span className="inline-flex w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-100 via-sky-100 to-amber-100 items-center justify-center">🛡️</span>
-          Digital Citizenship
-        </div>
-      </div>
-      <div className="p-4 text-sm text-slate-600 space-y-2">
-        <p>Learn safe, smart, and kind internet habits: strong passwords, phishing red flags, privacy settings, and respectful posting.</p>
-        <ul className="list-disc pl-5">
-          <li>Password manager basics</li>
-          <li>Spotting scams & fake news</li>
-          <li>Sharing thoughtfully online</li>
-        </ul>
-      </div>
-      <div className="p-4">
-        <a href="/assistant" className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-semibold">
-          Explore Digital Citizenship
-        </a>
-      </div>
+{/* Card 2 — Digital Citizenship AI Explorer */}
+{/* Card 2 — Digital Citizenship AI Explorer */}
+<div className="card hover:shadow-md transition-shadow">
+  <div className="p-4 border-b">
+    <div className="text-base font-semibold flex items-center gap-2">
+      <span className="inline-flex w-9 h-9 rounded-xl bg-gradient-to-br from-yellow-100 via-orange-100 to-rose-100 items-center justify-center">🤖</span>
+      AI Digital Citizenship Detector
     </div>
+  </div>
+
+  <div className="p-4 text-sm text-slate-600 space-y-2">
+    <p>
+      Students not only learn <strong>AI</strong> and how to build apps like a
+      <strong> Digital Citizenship Detector</strong>, but also how AI can be used
+      <strong> responsibly, safely, and respectfully</strong>.
+    </p>
+    <p>
+      We explore real‑world topics like <strong>misinformation</strong>, <strong>algorithmic bias</strong>,
+      <strong> cyberbullying</strong>, and <strong>digital footprints</strong>—then practice making thoughtful,
+      ethical choices when creating and using technology.
+    </p>
+    <ul className="list-disc pl-5">
+      <li>Build a “Digital mirror” that flags risky or misleading content</li>
+      <li>Discuss AI ethics, privacy, and healthy online behavior</li>
+      <li>Turn critical thinking into practical, kid‑safe tech habits</li>
+    </ul>
+  </div>
+
+  <div className="p-4">
+    <a
+      href="/digital-citizenship"
+      className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-semibold"
+    >
+      Explore Digital Citizenship
+    </a>
+  </div>
+</div>
+
 
     {/* Card 3 — AI Fortune Cookie (interactive) */}
     <div className="card hover:shadow-md transition-shadow">
