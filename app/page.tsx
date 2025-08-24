@@ -1,8 +1,9 @@
 // app/page.tsx
-
 export const dynamic = "force-static";
 import NextDynamic from "next/dynamic";
 const DemoRunner = NextDynamic(() => import("@/components/DemoRunner"), { ssr: false });
+const FortuneCookie = NextDynamic(() => import("@/components/FortuneCookie"), { ssr: false }); 
+import Link from "next/link";
 
 import Button from "@/components/ui/button";
 import Subscribe from "@/components/Subscribe";
@@ -39,14 +40,16 @@ export default function Page() {
       {/* Header */}
       <header className="header">
         <div className="container py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2 hover:opacity-80">
             <div className="w-9 h-9 rounded-xl grid place-items-center bg-gradient-to-br from-indigo-600 via-fuchsia-600 to-cyan-500 text-white">
               <svg viewBox="0 0 48 48" className="w-7 h-7" aria-hidden>
                 <path d="M10 12h28v6H28v18h-8V18H10z M30 24h8v6h-8z" fill="#fff" />
               </svg>
             </div>
             <span className="font-semibold">ThinkPythonAI</span>
-          </div>
+          </Link>
+        </div>
           <nav className="hidden md:flex items-center gap-6 text-sm">
             <a href="#features" className="hover:text-slate-700">Features</a>
             <a href="#curriculum" className="hover:text-slate-700">Curriculum</a>
@@ -55,7 +58,8 @@ export default function Page() {
             <a href="#pricing" className="hover:text-slate-700">Pricing</a>
             <a href="#faq" className="hover:text-slate-700">FAQ</a>
             <a href="/assistant" className="hover:text-slate-700">Assistant</a>
-            <a href="/teen-gist" className="hover:text-slate-700">Teen Gist 🎧</a>
+            <a href="/instagist" className="hover:text-slate-700">InstaGist 🚀</a>
+            <a href="#projects" className="hover:text-slate-700">Fun Projects</a>
           </nav>
           <div className="flex items-center gap-2">
             <Button href="https://forms.gle/D8W6ePzfzeszgPFr6">Join Live Demo</Button>
@@ -81,31 +85,9 @@ export default function Page() {
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <Button href="https://forms.gle/D8W6ePzfzeszgPFr6" className="px-5 py-2.5 text-base">Join the Next Live Demo</Button>
               <Button variant="secondary" href="#sample" className="px-5 py-2.5 text-base flex items-center gap-2"><Youtube className="w-4 h-4"/> Watch a Sample Class</Button>
-              <Button variant="outline" href="/assistant" className="px-5 py-2.5 text-base flex items-center gap-2"><MessageSquare className="w-4 h-4"/> Chat with us</Button>
-              <Button
-  variant="outline"
-  href="tel:+16034170825"
-  className="px-5 py-2.5 text-base flex items-center gap-2"
->
-  <Phone className="w-4 h-4" /> 
-  <span className="hidden sm:inline">Call:</span>
-    <span>+1 (603) 417-0825</span>
-</Button>
-
-<Button
-  variant="secondary"
-  href="https://wa.me/16034170825"
-  className="px-5 py-2.5 text-base flex items-center gap-2"
-  target="_blank"
-  rel="noreferrer"
->
-  <MessageCircle className="w-4 h-4" />
-  <span className="hidden sm:inline">WhatsApp:</span>
-  <span>+1 (603) 417-0825</span>
-</Button>
-
-
-
+              <Button variant="outline" href="#projects" className="px-5 py-2.5 text-base flex items-center gap-2"><Rocket className="w-4 h-4" />Fun Projects</Button>
+              <Button variant="outline" href="tel:+16034170825" className="px-5 py-2.5 text-base flex items-center gap-2"><Phone className="w-4 h-4" /><span className="hidden sm:inline">Call:</span><span>+1 (603) 417-0825</span></Button>
+              <Button variant="secondary" href="https://wa.me/16034170825" className="px-5 py-2.5 text-base flex items-center gap-2" target="_blank" rel="noreferrer"><MessageCircle className="w-4 h-4" /><span className="hidden sm:inline">WhatsApp:</span><span>+1 (603) 417-0825</span></Button>
             </div>
             <div className="mt-2">
               <span className="badge">First 2 classes free*</span>
@@ -175,6 +157,76 @@ export default function Page() {
           ))}
         </div>
       </section>
+{/* Some of the projects kids will learn through this program */}
+<section id="projects" className="container py-16 scroll-mt-24">
+  <h2 className="text-2xl md:text-4xl font-bold text-center">From Ideas to Apps: Where Fun Builds Serious Skills!</h2>
+  <p className="text-center mt-2 text-slate-600">
+  Hands-on mini-projects—like the <strong>apps below</strong>—that build real confidence
+</p>
+  <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    {/* Card 1 — InstaGist 🚀 */}
+    <div className="card hover:shadow-md transition-shadow">
+      <div className="p-4 border-b">
+        <div className="text-base font-semibold flex items-center gap-2">
+          <span className="inline-flex w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-100 via-fuchsia-100 to-cyan-100 items-center justify-center">🎧</span>
+          InstaGist 🚀
+        </div>
+      </div>
+      <div className="p-4 text-sm text-slate-600 space-y-2">
+        <p>Paste any public article URL (or your own text), get a quick gist, and play it back with YouTube‑style speeds and keyboard shortcuts.</p>
+        <ul className="list-disc pl-5">
+          <li>URL or Paste‑Text modes</li>
+          <li>Voice picker + saved speed</li>
+          <li>Copy & save gist as .txt</li>
+        </ul>
+      </div>
+      <div className="p-4">
+        <a href="/instagist" className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-semibold">
+          Try InstaGist 🚀
+        </a>
+      </div>
+    </div>
+
+    {/* Card 2 — Digital Citizenship */}
+    <div className="card hover:shadow-md transition-shadow">
+      <div className="p-4 border-b">
+        <div className="text-base font-semibold flex items-center gap-2">
+          <span className="inline-flex w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-100 via-sky-100 to-amber-100 items-center justify-center">🛡️</span>
+          Digital Citizenship
+        </div>
+      </div>
+      <div className="p-4 text-sm text-slate-600 space-y-2">
+        <p>Learn safe, smart, and kind internet habits: strong passwords, phishing red flags, privacy settings, and respectful posting.</p>
+        <ul className="list-disc pl-5">
+          <li>Password manager basics</li>
+          <li>Spotting scams & fake news</li>
+          <li>Sharing thoughtfully online</li>
+        </ul>
+      </div>
+      <div className="p-4">
+        <a href="/assistant" className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-semibold">
+          Explore Digital Citizenship
+        </a>
+      </div>
+    </div>
+
+    {/* Card 3 — AI Fortune Cookie (interactive) */}
+    <div className="card hover:shadow-md transition-shadow">
+      <div className="p-4 border-b">
+        <div className="text-base font-semibold flex items-center gap-2">
+          <span className="inline-flex w-9 h-9 rounded-xl bg-gradient-to-br from-rose-100 via-violet-100 to-cyan-100 items-center justify-center">🥠</span>
+          AI Fortune Cookie
+        </div>
+      </div>
+      <div className="p-4 text-sm text-slate-600 space-y-3">
+        <p>Type your name (or a lucky word) and crack a cookie for a coding‑inspired “fortune”. A fun warm‑up before class! Try "Python"</p>
+        {/* Client widget */}
+        <FortuneCookie />
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* Sample video */}
       <section id="sample" className="container py-16 scroll-mt-24">

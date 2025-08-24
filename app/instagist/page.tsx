@@ -1,4 +1,6 @@
 "use client";
+import Link from "next/link";
+import { Home } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 type SummResp = { title?: string; gist?: string; error?: string; teach?: string };
@@ -46,7 +48,7 @@ function summarizeLocal(text: string, max = 5, minLen = 40): string {
   return top.map(x => x[2]).join(" ");
 }
 
-export default function TeenGist() {
+export default function InstaGist() {
   const [url, setUrl] = useState("");
   const [sentences, setSentences] = useState(5);
   const [minLen, setMinLen] = useState(40);
@@ -196,20 +198,52 @@ export default function TeenGist() {
 
   return (
     <div style={{minHeight:"100vh", background:"linear-gradient(180deg,#fae8ff,#e0f2fe)"}}>
+      {/* Back to main site */}
+      <div style={{ maxWidth: 900, margin: "0 auto", padding: "16px 20px 0", display: "flex", alignItems: "center", gap: 8 }}>
+        {/* Emoji link */}
+        <Link href="/" style={{ fontSize: "20px", textDecoration: "none" }}>
+         🔙
+        </Link>
+        <Link
+          href="/"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            padding: "8px 12px",
+            borderRadius: 12,
+            background: "#4f46e5",
+            color: "#fff",
+            fontWeight: 700,
+            textDecoration: "none",
+          }}
+        >
+          <Home width={16} height={16} />
+          Back to ThinkPythonAI
+        </Link>
+      </div>
       <div style={{maxWidth:900, margin:"0 auto", padding:"40px 20px"}}>
-        <h1 style={{fontSize:36, fontWeight:800, color:"#0f172a"}}>🎧 Teen Article Gist</h1>
-        <p style={{color:"#334155", marginTop:6}}>
-          Paste a public article URL or switch to{" "}
-          <button
-            onClick={()=>setPasteMode(!pasteMode)}
-            style={{color:"#0ea5e9", textDecoration:"underline", background:"transparent", border:"none", cursor:"pointer"}}
-          >
-            {pasteMode ? "URL mode" : "Paste Text mode"}
-          </button>.
-          <span style={{marginLeft:8, fontSize:12, color:"#64748b"}}>
-            Tips: [ = slower, ] = faster, Space = play/stop
-          </span>
-        </p>
+      <h1 style={{fontSize:36, fontWeight:800, color:"#0f172a"}}>🎧 InstaGist🚀</h1>
+      <p style={{color:"#334155", marginTop:6}}>
+        Paste a public article URL or switch to{" "}
+        <button
+          onClick={() => setPasteMode(!pasteMode)}
+          style={{
+            color: "#0ea5e9",
+            textDecoration: "underline",
+            background: "transparent",
+            border: "none",
+            cursor: "pointer",
+            fontWeight: 600
+          }}
+        >
+          {pasteMode ? "URL mode" : "Paste Text mode"}
+        </button>.
+        <span style={{marginLeft:8, fontSize:12, color:"#64748b"}}>
+          Tips: [ = slower, ] = faster, Space = play/stop
+        </span>
+      </p>  
+
 
         <form onSubmit={handleSummarize} style={{background:"rgba(255,255,255,0.9)", borderRadius:16, padding:16, marginTop:16}}>
           {!pasteMode ? (
@@ -314,6 +348,49 @@ export default function TeenGist() {
             {loading ? "Summarizing…" : "Summarize"}
           </button>
         </form>
+{/* Help (collapsible) */}
+<details
+  style={{
+    marginTop: 20,
+    background: "#ffffff",
+    border: "1px solid #e5e7eb",
+    borderRadius: 16,
+    padding: 12,
+  }}
+>
+  <summary
+    style={{
+      cursor: "pointer",
+      fontWeight: 800,
+      color: "#0f172a",
+      listStyle: "none",
+      display: "flex",
+      alignItems: "center",
+      gap: 8,
+      outline: "none",
+    }}
+  >
+    <span aria-hidden>❓</span> Need help? <span style={{opacity:0.6}}>▼</span>
+  </summary>
+
+  <div style={{ marginTop: 10, padding: "4px 4px 0 4px" }}>
+    <ul style={{ color: "#334155", lineHeight: 1.6, paddingLeft: 20, marginTop: 4 }}>
+      <li>Paste a <strong>URL</strong> to an article (or switch to <strong>Paste Text</strong>).</li>
+      <li>Pick how many <strong>sentences</strong> you want in your gist.</li>
+      <li>Click <strong>Summarize</strong> — then press <strong>▶️ Play</strong> to listen.</li>
+      <li>Adjust <strong>speed</strong> with buttons or keys: <code>[</code> / <code>]</code> and <code>Space</code>.</li>
+    </ul>
+
+    <div style={{ marginTop: 10, fontSize: 13, color: "#64748b" }}>
+      <strong>Tips:</strong>
+      <ul style={{ marginTop: 6, paddingLeft: 20 }}>
+        <li>Works best on <em>public</em> articles (no paywall/login).</li>
+        <li>If you see “401” (login) or “403” (blocked) errors, try <strong>Paste Text mode</strong>.</li>
+        <li>You can <strong>copy</strong> or <strong>save</strong> the gist for homework notes.</li>
+      </ul>
+    </div>
+  </div>
+</details>
 
         {resp && (
           <section style={{marginTop:20, background:"#fff", borderRadius:16, padding:16}}>

@@ -7,6 +7,6 @@ export default function sitemap() {
     { url: `${base}/`, lastModified: now },
     { url: `${base}/assistant`, lastModified: now },
     { url: `${base}/qr`, lastModified: now },
-    { url: `${base}/teen-gist`, lastModified: now }, // 👈 new page
+    { url: `${base}/instagist`, lastModified: now }, 
   ];
 }
