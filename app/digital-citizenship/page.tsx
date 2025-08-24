@@ -2,12 +2,15 @@
 import { useEffect, useRef, useState } from "react";
 import BackHeader from "@/components/BackHeader";
 
-// Put your Streamlit URL here or via env var NEXT_PUBLIC_DC_URL
 const TARGET =
   process.env.NEXT_PUBLIC_DC_URL ||
   "https://digital-citizenship-ai-auehbputrz3jyadpcnnukp.streamlit.app/";
 
-type PingResp = { ok: boolean; status: number; error?: string };
+// Build health URL safely (no double slashes)
+const base = TARGET.replace(/\/+$/, "");
+const HEALTH = `${base}/_stcore/health`;
+
+type PingResp = { ok: boolean; status: number; where?: string; error?: string };
 
 export default function DigitalCitizenshipRedirect() {
   const [checking, setChecking] = useState(true);
@@ -15,34 +18,59 @@ export default function DigitalCitizenshipRedirect() {
   const [status, setStatus] = useState<number | null>(null);
   const tries = useRef(0);
 
-  async function pingOnce(): Promise<PingResp> {
-    const u = `/api/ping-external?url=${encodeURIComponent(TARGET)}`;
-    const r = await fetch(u, { cache: "no-store" });
-    return (await r.json()) as PingResp;
+  async function serverPing(): Promise<PingResp> {
+    try {
+      const u = `/api/ping-external?url=${encodeURIComponent(TARGET)}`;
+      const r = await fetch(u, { cache: "no-store" });
+      return (await r.json()) as PingResp;
+    } catch (e: any) {
+      return { ok: false, status: 0, error: e?.message || "server fetch failed" };
+    }
+  }
+
+  // Client-side health probe: no-cors fetch resolves if reachable (status is opaque)
+  async function clientPing(): Promise<boolean> {
+    try {
+      const res = await fetch(HEALTH, { method: "GET", mode: "no-cors", cache: "no-store" });
+      // If we got here without throwing, the network path is OK; count as healthy.
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   async function checkAndGo() {
     setChecking(true);
-    const res = await pingOnce();
-    setStatus(res.status ?? null);
+    // 1) Try client ping first for quick success
+    if (await clientPing()) {
+      setOk(true);
+      setStatus(200);
+      setTimeout(() => (window.location.href = TARGET), 300);
+      return;
+    }
+    // 2) Fallback to server ping
+    const res = await serverPing();
     setOk(res.ok);
+    setStatus(res.status ?? null);
     setChecking(false);
-
     if (res.ok) {
-      // small delay so users see the message
-      setTimeout(() => {
-        window.location.href = TARGET;
-      }, 400);
+      setTimeout(() => (window.location.href = TARGET), 300);
     }
   }
 
   useEffect(() => {
-    // Try up to 3 times with simple backoff
     const run = async () => {
+      // Try up to 3 rounds: client ping → (if needed) server ping → short backoff
       for (tries.current = 0; tries.current < 3; tries.current++) {
-        const res = await pingOnce();
-        setStatus(res.status ?? null);
+        if (await clientPing()) {
+          setOk(true);
+          setStatus(200);
+          window.location.href = TARGET;
+          return;
+        }
+        const res = await serverPing();
         setOk(res.ok);
+        setStatus(res.status ?? null);
         if (res.ok) {
           window.location.href = TARGET;
           return;
@@ -57,9 +85,7 @@ export default function DigitalCitizenshipRedirect() {
 
   return (
     <>
-      {/* Sticky back/home header */}
       <BackHeader />
-
       <main
         style={{
           minHeight: "70vh",
