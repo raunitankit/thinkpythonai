@@ -6,7 +6,7 @@ const TARGET =
   process.env.NEXT_PUBLIC_DC_URL ||
   "https://digital-citizenship-ai-auehbputrz3jyadpcnnukp.streamlit.app/";
 
-// Build health URL safely (no double slashes)
+// Normalize + build health path
 const base = TARGET.replace(/\/+$/, "");
 const HEALTH = `${base}/_stcore/health`;
 
@@ -18,6 +18,7 @@ export default function DigitalCitizenshipRedirect() {
   const [status, setStatus] = useState<number | null>(null);
   const tries = useRef(0);
 
+  // ---- server ping (our Next.js API) ----
   async function serverPing(): Promise<PingResp> {
     try {
       const u = `/api/ping-external?url=${encodeURIComponent(TARGET)}`;
@@ -28,54 +29,88 @@ export default function DigitalCitizenshipRedirect() {
     }
   }
 
-  // Client-side health probe: no-cors fetch resolves if reachable (status is opaque)
-  async function clientPing(): Promise<boolean> {
+  // ---- image ping fallback (bypasses CORS) ----
+  function imagePing(url: string, ms = 5000): Promise<boolean> {
+    return new Promise((resolve) => {
+      const img = new Image();
+      const timer = setTimeout(() => {
+        img.onload = null;
+        img.onerror = null;
+        resolve(false);
+      }, ms);
+      const done = (val: boolean) => {
+        clearTimeout(timer);
+        resolve(val);
+      };
+      img.onload = () => done(true);   // reachable
+      img.onerror = () => done(true);  // also proves network reachability!
+      img.src = `${url}${url.includes("?") ? "&" : "?"}cb=${Date.now()}`;
+    });
+  }
+
+  // ---- fetch no-cors probe ----
+  async function fetchPing(url: string, ms = 6000): Promise<boolean> {
     try {
-      const res = await fetch(HEALTH, { method: "GET", mode: "no-cors", cache: "no-store" });
-      // If we got here without throwing, the network path is OK; count as healthy.
-      return true;
+      const ctl = new AbortController();
+      const t = setTimeout(() => ctl.abort(), ms);
+      await fetch(url, { method: "GET", mode: "no-cors", cache: "no-store", signal: ctl.signal });
+      clearTimeout(t);
+      return true; // if no exception, network path is good
     } catch {
       return false;
     }
   }
 
+  async function clientReachable(): Promise<boolean> {
+    // Race multiple strategies; any success = reachable
+    const candidates = [
+      fetchPing(HEALTH),
+      fetchPing(base),
+      imagePing(base),
+    ];
+    // Fastest wins
+    const results = await Promise.allSettled(candidates);
+    return results.some((r) => r.status === "fulfilled" && r.value === true);
+  }
+
   async function checkAndGo() {
     setChecking(true);
-    // 1) Try client ping first for quick success
-    if (await clientPing()) {
+
+    // 1) Client reachability
+    if (await clientReachable()) {
       setOk(true);
       setStatus(200);
-      setTimeout(() => (window.location.href = TARGET), 300);
+      setTimeout(() => window.location.replace(TARGET), 250);
       return;
     }
-    // 2) Fallback to server ping
+
+    // 2) Server ping fallback
     const res = await serverPing();
     setOk(res.ok);
     setStatus(res.status ?? null);
     setChecking(false);
     if (res.ok) {
-      setTimeout(() => (window.location.href = TARGET), 300);
+      setTimeout(() => window.location.replace(TARGET), 250);
     }
   }
 
   useEffect(() => {
     const run = async () => {
-      // Try up to 3 rounds: client ping → (if needed) server ping → short backoff
       for (tries.current = 0; tries.current < 3; tries.current++) {
-        if (await clientPing()) {
+        if (await clientReachable()) {
           setOk(true);
           setStatus(200);
-          window.location.href = TARGET;
+          window.location.replace(TARGET);
           return;
         }
         const res = await serverPing();
         setOk(res.ok);
         setStatus(res.status ?? null);
         if (res.ok) {
-          window.location.href = TARGET;
+          window.location.replace(TARGET);
           return;
         }
-        await new Promise((r) => setTimeout(r, 1000 * (tries.current + 1)));
+        await new Promise((r) => setTimeout(r, 800 * (tries.current + 1)));
       }
       setChecking(false);
     };
@@ -137,12 +172,11 @@ export default function DigitalCitizenshipRedirect() {
           {!checking && ok === false && (
             <>
               <p style={{ color: "#b91c1c", marginTop: 12, fontWeight: 600 }}>
-                The app didn’t respond yet
-                {typeof status === "number" ? ` (status ${status})` : ""}.
+                The app didn’t respond yet{typeof status === "number" ? ` (status ${status})` : ""}.
               </p>
               <p style={{ color: "#475569", marginTop: 6 }}>
-                It might be waking up or temporarily unavailable. You can retry
-                or open it in a new tab.
+                It might be waking up or temporarily unavailable. You can retry or open it
+                in a new tab.
               </p>
             </>
           )}
