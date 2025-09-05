@@ -49,13 +49,11 @@ export default function CoursesPage() {
               <li>School-friendly delivery: after-school clubs, electives, or workshops</li>
               <li>Focus on <span className="font-semibold">responsible AI </span> & teamwork</li>
             </ul>
-
-            <div className="mt-6"><a href="/" className="inline-block bg-slate-900 text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90">
-              🔙 Back to ThinkPythonAI </a>
-            </div>
           </div>
         </div>
       </section>
+      <div className="mt-6"><a href="/" className="inline-block bg-slate-900 text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90">
+              🔙 Back to ThinkPythonAI </a></div>
     </main>
   );
 }
