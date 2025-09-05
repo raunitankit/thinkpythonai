@@ -31,24 +31,24 @@ export default function TestimonialsPage() {
 
   // 🖼️ Screenshots go to /public/testimonials and list them here
   const shots = [
-    { src: "/testimonials/Satya.jpg", alt: "WhatsApp feedback\nShared by carrer-switcher (Non-IT to IT)" },
-    { src: "/testimonials/Effective_approachable.jpg", alt: "WhatsApp feedback\nShared by current batch student" },
-    { src: "/testimonials/Passion.jpg", alt: "WhatsApp feedback\nShared by current batch student" },
-    { src: "/testimonials/complex.jpg", alt: "WhatsApp feedback\nShared by current batch student" },
-    { src: "/testimonials/shweta.jpg", alt: "WhatsApp feedback\nShared by current batch student" },
-    { src: "/testimonials/hackerrank.jpg", alt: "WhatsApp feedback\nShared by current batch student" },
-    { src: "/testimonials/dedication.jpg", alt: "WhatsApp feedback\nShared by former batch student" },
-    { src: "/testimonials/quiz.jpg", alt: "WhatsApp feedback\nShared by current batch student" },
-    { src: "/testimonials/strong_foundation.jpg", alt: "WhatsApp feedback\nShared by current batch student" },
-    { src: "/testimonials/fav.jpg", alt: "WhatsApp feedback\nShared by former batch  student" },
-    { src: "/testimonials/Aug.jpg", alt: "WhatsApp feedback\nShared by group batch of August 2025" },
-    { src: "/testimonials/awesome.jpg", alt: "WhatsApp feedback\nShared by current batch student" },
-    { src: "/testimonials/fan.jpg", alt: "WhatsApp feedback\nShared by earlier student" },
-    { src: "/testimonials/interactive.jpg", alt: "WhatsApp feedback\nShared by former batch student" },
-    { src: "/testimonials/HTD.jpg", alt: "WhatsApp feedback\nShared by former batch  student" },
-    { src: "/testimonials/chandu.jpg", alt: "WhatsApp feedback\nShared by former batch  student" },
-    { src: "/testimonials/Hari.jpg", alt: "WhatsApp feedback\nShared by former batch student" },
-    { src: "/testimonials/clear.jpg", alt: "WhatsApp feedback\nShared by former batch student" },
+    { src: "/testimonials/Satya.jpeg", alt: "WhatsApp feedback\nShared by carrer-switcher (Non-IT to IT)" },
+    { src: "/testimonials/Effective_approachable.jpeg", alt: "WhatsApp feedback\nShared by current batch student" },
+    { src: "/testimonials/Passion.jpeg", alt: "WhatsApp feedback\nShared by current batch student" },
+    { src: "/testimonials/complex.jpeg", alt: "WhatsApp feedback\nShared by current batch student" },
+    { src: "/testimonials/shweta.jpeg", alt: "WhatsApp feedback\nShared by current batch student" },
+    { src: "/testimonials/hackerrank.jpeg", alt: "WhatsApp feedback\nShared by current batch student" },
+    { src: "/testimonials/dedication.jpeg", alt: "WhatsApp feedback\nShared by former batch student" },
+    { src: "/testimonials/quiz.jpeg", alt: "WhatsApp feedback\nShared by current batch student" },
+    { src: "/testimonials/strong_foundation.jpeg", alt: "WhatsApp feedback\nShared by current batch student" },
+    { src: "/testimonials/fav.jpeg", alt: "WhatsApp feedback\nShared by former batch  student" },
+    { src: "/testimonials/Aug.jpeg", alt: "WhatsApp feedback\nShared by group batch of August 2025" },
+    { src: "/testimonials/awesome.jpeg", alt: "WhatsApp feedback\nShared by current batch student" },
+    { src: "/testimonials/fan.jpeg", alt: "WhatsApp feedback\nShared by earlier student" },
+    { src: "/testimonials/interactive.jpeg", alt: "WhatsApp feedback\nShared by former batch student" },
+    { src: "/testimonials/HTD.jpeg", alt: "WhatsApp feedback\nShared by former batch  student" },
+    { src: "/testimonials/chandu.jpeg", alt: "WhatsApp feedback\nShared by former batch  student" },
+    { src: "/testimonials/Hari.jpeg", alt: "WhatsApp feedback\nShared by former batch student" },
+    { src: "/testimonials/clear.jpeg", alt: "WhatsApp feedback\nShared by former batch student" },
 
 
   ];
@@ -91,16 +91,13 @@ export default function TestimonialsPage() {
         ))}
       </section>
 
-      {/* Screenshot gallery */}
-      <section className="mt-10">
-        <div className="p-4 border-b font-semibold card">Screenshots (WhatsApp & Forms)</div>
-        <div className="p-4 card">
-          <p className="text-sm text-slate-600 mb-4">
-            We’ve blurred/removed personal details for privacy. Click any image to view full size.
-          </p>
-          <ScreenshotGallery items={shots} />
-        </div>
-      </section>
+{/* Screenshot gallery */}
+<section className="mt-10">
+  <div className="p-4 border-b font-semibold card">Screenshots (WhatsApp & Forms)</div>
+  <div className="p-4 card">
+    <ScreenshotGallery items={shots} />
+  </div>
+</section>
 
       {/* Bottom back button */}
       <div className="mt-8 text-center">

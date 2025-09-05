@@ -1,4 +1,5 @@
 // app/page.tsx
+import SiteHeader from "@/components/SiteHeader";
 import TestimonialsSection from "@/components/TestimonialsSection";
 export const dynamic = "force-static";
 import NextDynamic from "next/dynamic";
@@ -41,39 +42,7 @@ export default function Page() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-50 via-sky-50 to-fuchsia-50 text-slate-900">
       {/* Header */}
-      <header className="header">
-        <div className="container py-3 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Link href="/" className="flex items-center gap-2 hover:opacity-80">
-            <div className="w-9 h-9 rounded-xl grid place-items-center bg-gradient-to-br from-indigo-600 via-fuchsia-600 to-cyan-500 text-white">
-              <svg viewBox="0 0 48 48" className="w-7 h-7" aria-hidden>
-                <path d="M10 12h28v6H28v18h-8V18H10z M30 24h8v6h-8z" fill="#fff" />
-              </svg>
-            </div>
-            <span className="font-semibold">ThinkPythonAI</span>
-          </Link>
-        </div>
-          <nav className="hidden md:flex items-center gap-6 text-sm">
-            <a href="#features" className="hover:text-slate-700">Features</a>
-            <a href="#curriculum" className="hover:text-slate-700">Curriculum</a>
-            <a href="#sample" className="hover:text-slate-700">Sample Class</a>
-            <a href="#schools" className="hover:text-slate-700">For Schools</a>
-            <a href="#pricing" className="hover:text-slate-700">Pricing</a>
-            <a href="#faq" className="hover:text-slate-700">FAQ</a>
-            <a href="/testimonials" className="hover:text-slate-700">Testimonials</a>
-            <a href="/assistant" className="hover:text-slate-700">Assistant</a>
-            <a href="/instagist" className="hover:text-slate-700">InstaGist 🚀</a>
-            <a href="#projects" className="hover:text-slate-700">Fun Projects</a>
-          </nav>
-          <div className="flex items-center gap-2">
-            <Button href="https://forms.gle/D8W6ePzfzeszgPFr6">Join Live Demo</Button>
-            <Button variant="secondary" href="/assistant" className="flex items-center gap-2">
-              <MessageSquare className="w-4 h-4" /> Chat with us
-            </Button>
-          </div>
-        </div>
-      </header>
-
+      <SiteHeader />
       {/* Hero */}
       <section className="container pt-12 pb-16 md:pt-20">
         <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -288,9 +257,6 @@ export default function Page() {
     <CourseTiles />
   </div>
 </section>
-
-<TrainerCard />
-<CourseTiles />
 
 <TestimonialsSection />
 
