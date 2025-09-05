@@ -83,9 +83,11 @@ export default function Page() {
               Hands-on coding for real outcomes—automation, AI, and stock portfolio projects. Built for busy students, IT professionals, and schools.
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-3">
+              <Button variant="outline" href="#trainer" className="px-5 py-2.5 text-base flex items-center gap-2"><span>Know your trainer</span></Button>
               <Button href="https://forms.gle/D8W6ePzfzeszgPFr6" className="px-5 py-2.5 text-base">Join the Next Live Demo</Button>
               <Button variant="secondary" href="#sample" className="px-5 py-2.5 text-base flex items-center gap-2"><Youtube className="w-4 h-4"/> Watch a Sample Class</Button>
               <Button variant="outline" href="#projects" className="px-5 py-2.5 text-base flex items-center gap-2"><Rocket className="w-4 h-4" />Fun Projects</Button>
+              <Button variant="outline" href="/courses#kids" className="px-5 py-2.5 text-base flex items-center gap-2 border-green-600 text-green-700 hover:bg-green-50">🎓 Kids & Schools</Button>
               <Button variant="outline" href="tel:+16034170825" className="px-5 py-2.5 text-base flex items-center gap-2"><Phone className="w-4 h-4" /><span className="hidden sm:inline">Call:</span><span>+1 (603) 417-0825</span></Button>
               <Button variant="secondary" href="https://wa.me/16034170825" className="px-5 py-2.5 text-base flex items-center gap-2" target="_blank" rel="noreferrer"><MessageCircle className="w-4 h-4" /><span className="hidden sm:inline">WhatsApp:</span><span>+1 (603) 417-0825</span></Button>
             </div>
@@ -245,14 +247,48 @@ export default function Page() {
 </section>
 
 
-      {/* Sample video */}
-      <section id="sample" className="container py-16 scroll-mt-24">
-        <h2 className="text-2xl md:text-4xl font-bold text-center">Watch a Sample Class</h2>
-        <p className="text-center mt-2 text-slate-600">Get a feel for the pace, teaching style, and project-first approach.</p>
-        <div className="mt-8 aspect-video w-full rounded-2xl overflow-hidden shadow bg-slate-900">
-          <iframe className="w-full h-full" src="https://www.youtube.com/embed/T-bV1kp7oeo?si=S8Y7MmWI93Fzo5u4" title="ThinkPythonAI Sample Class" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
-        </div>
-      </section>
+{/* Sample video (smaller card) */}
+<section id="sample" className="container py-12 scroll-mt-24">
+  <h2 className="text-2xl md:text-4xl font-bold text-center">Watch a Sample Class</h2>
+  <p className="text-center mt-2 text-slate-600">A short preview of our style and pace.</p>
+
+  <div className="mt-6 grid md:grid-cols-[1fr] place-items-center">
+    <div className="rounded-2xl overflow-hidden shadow bg-slate-900 max-w-3xl w-full">
+      <div className="aspect-video">
+        <iframe
+          className="w-full h-full"
+          src="https://www.youtube.com/embed/T-bV1kp7oeo?si=S8Y7MmWI93Fzo5u4"
+          title="ThinkPythonAI Sample Class"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+{/* Trainer + Find your courses */}
+<section id="trainer" className="container py-12">
+  <h2 className="text-2xl md:text-4xl font-bold text-center">Meet Your Trainer & Find Your Track</h2>
+  <p className="text-center mt-2 text-slate-600">
+    Learn from a director‑level QA/Automation architect. Choose the path that matches your goals.
+  </p>
+
+  <div className="mt-8 grid md:grid-cols-2 gap-4">
+    {/* left: trainer */}
+    <div>
+      {/* @ts-expect-error server/client mix accepted for this simple card */}
+      {(await import("@/components/TrainerCard")).default()}
+    </div>
+
+    {/* right: course tiles */}
+    <div>
+      {/* @ts-expect-error server/client mix accepted for this simple card */}
+      {(await import("@/components/CourseTiles")).default()}
+    </div>
+  </div>
+</section>
+
 
       {/* Schools */}
       <section id="schools" className="container py-16 scroll-mt-24">
