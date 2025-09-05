@@ -4,6 +4,8 @@ import NextDynamic from "next/dynamic";
 const DemoRunner = NextDynamic(() => import("@/components/DemoRunner"), { ssr: false });
 const FortuneCookie = NextDynamic(() => import("@/components/FortuneCookie"), { ssr: false }); 
 import Link from "next/link";
+import TrainerCard from "@/components/TrainerCard";
+import CourseTiles from "@/components/CourseTiles";
 
 import Button from "@/components/ui/button";
 import Subscribe from "@/components/Subscribe";
@@ -268,24 +270,16 @@ export default function Page() {
 </section>
 
 {/* Trainer + Find your courses */}
+{/* Trainer + Find your courses */}
 <section id="trainer" className="container py-12">
   <h2 className="text-2xl md:text-4xl font-bold text-center">Meet Your Trainer & Find Your Track</h2>
   <p className="text-center mt-2 text-slate-600">
-    Learn from a director‑level QA/Automation architect. Choose the path that matches your goals.
+    Learn directly from Ankit — a Senior Architect and a Python mentor. Choose the path that matches your goals.
   </p>
 
   <div className="mt-8 grid md:grid-cols-2 gap-4">
-    {/* left: trainer */}
-    <div>
-      {/* @ts-expect-error server/client mix accepted for this simple card */}
-      {(await import("@/components/TrainerCard")).default()}
-    </div>
-
-    {/* right: course tiles */}
-    <div>
-      {/* @ts-expect-error server/client mix accepted for this simple card */}
-      {(await import("@/components/CourseTiles")).default()}
-    </div>
+    <TrainerCard />
+    <CourseTiles />
   </div>
 </section>
 
