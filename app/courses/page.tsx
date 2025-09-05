@@ -3,6 +3,9 @@ export const metadata = { title: "Courses | ThinkPythonAI" };
 export default function CoursesPage() {
   return (
     <main className="container py-10">
+      <div className="mb-6"><a href="/" className="inline-block bg-slate-900 text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90">
+      🔙 Back to ThinkPythonAI</a></div>
+
       <h1 className="text-3xl font-extrabold">Courses</h1>
       <p className="text-slate-600 mt-2">Pick a path that fits your goals. For detailed outlines please send us a message.</p>
 
@@ -44,8 +47,12 @@ export default function CoursesPage() {
             <ul className="list-disc ml-5">
               <li>Fun projects: chatbots, InstaGist, digital citizenship detector</li>
               <li>School-friendly delivery: after-school clubs, electives, or workshops</li>
-              <li>Focus on responsible AI & teamwork</li>
+              <li>Focus on <span className="font-semibold">responsible AI </span> & teamwork</li>
             </ul>
+
+            <div className="mt-6"><a href="/" className="inline-block bg-slate-900 text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90">
+              🔙 Back to ThinkPythonAI </a>
+            </div>
           </div>
         </div>
       </section>
