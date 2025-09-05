@@ -10,5 +10,6 @@ export default function sitemap() {
     { url: `${base}/instagist`, lastModified: now },
     { url: `${base}/digital-citizenship`, lastModified: now },
     { url: `${base}/courses`, lastModified: now },  
+    { url: `${base}/testimonials`, lastModified: now },
   ];
 }

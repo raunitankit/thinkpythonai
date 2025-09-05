@@ -1,4 +1,5 @@
 // app/page.tsx
+import TestimonialsSection from "@/components/TestimonialsSection";
 export const dynamic = "force-static";
 import NextDynamic from "next/dynamic";
 const DemoRunner = NextDynamic(() => import("@/components/DemoRunner"), { ssr: false });
@@ -59,6 +60,7 @@ export default function Page() {
             <a href="#schools" className="hover:text-slate-700">For Schools</a>
             <a href="#pricing" className="hover:text-slate-700">Pricing</a>
             <a href="#faq" className="hover:text-slate-700">FAQ</a>
+            <a href="/testimonials" className="hover:text-slate-700">Testimonials</a>
             <a href="/assistant" className="hover:text-slate-700">Assistant</a>
             <a href="/instagist" className="hover:text-slate-700">InstaGist 🚀</a>
             <a href="#projects" className="hover:text-slate-700">Fun Projects</a>
@@ -287,6 +289,10 @@ export default function Page() {
   </div>
 </section>
 
+<TrainerCard />
+<CourseTiles />
+
+<TestimonialsSection />
 
       {/* Schools */}
       <section id="schools" className="container py-16 scroll-mt-24">
@@ -532,6 +538,7 @@ export default function Page() {
             <a href="#features" className="hover:underline">Features</a>
             <a href="#pricing" className="hover:underline">Pricing</a>
             <a href="#faq" className="hover:underline">FAQ</a>
+            <a href="/testimonials" className="hover:text-slate-700">Testimonials</a>
             <a href="https://linktr.ee/thinkpythonAI" target="_blank" rel="noreferrer" className="hover:underline">Linktree</a>
           </div>
           <div className="justify-self-end">
