@@ -4,22 +4,30 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
+// normalize path (strip trailing slash)
+const normalize = (p?: string) => (p ?? "").replace(/\/$/, "");
+
+// base styling shared by all nav links
 const baseLink =
-  "px-2 py-1 rounded-md text-sm font-medium hover:text-slate-900 hover:bg-slate-100 whitespace-nowrap";
+  "px-2 py-1 rounded-md text-sm font-medium whitespace-nowrap hover:text-slate-900 hover:bg-slate-100";
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [mobileCoursesOpen, setMobileCoursesOpen] = useState(false);
-  const pathname = usePathname();
 
-  console.log("DEBUG pathname:", pathname);
-  
-  // helper for active styling
-  const linkClass = (href: string, extra = "") =>
-    `px-2 py-1 rounded-md text-sm font-medium whitespace-nowrap
-     hover:text-slate-900 hover:bg-slate-100
-     ${pathname === href ? "text-indigo-700 font-semibold bg-indigo-50" : "text-slate-800"}
-     ${extra}`;
+  const pathname = normalize(usePathname());
+
+  // active checker for full routes (not for hash anchors)
+  const isActive = (href: string, { includeChildren = false } = {}) => {
+    const h = normalize(href);
+    return includeChildren ? pathname === h || pathname.startsWith(h + "/") : pathname === h;
+  };
+
+  // route-aware class helper
+  const linkClass = (href: string, opts?: { includeChildren?: boolean; extra?: string }) =>
+    `${baseLink} ${
+      isActive(href, opts) ? "text-indigo-700 font-semibold bg-indigo-50" : "text-slate-800"
+    } ${opts?.extra ?? ""}`;
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-white/70 backdrop-blur">
@@ -37,14 +45,15 @@ export default function SiteHeader() {
 
         {/* Center: Desktop nav */}
         <nav className="hidden lg:flex flex-1 items-center justify-center gap-1">
-          <Link href="#features" className={linkClass("#features")}>Features</Link>
-          <Link href="#curriculum" className={linkClass("#curriculum")}>Curriculum</Link>
-          <Link href="#sample" className={linkClass("#sample")}>Sample&nbsp;Class</Link>
+          {/* Hash anchors use baseLink (pathname doesn't change on hashes) */}
+          <a href="#features" className={`${baseLink} text-slate-800`}>Features</a>
+          <a href="#curriculum" className={`${baseLink} text-slate-800`}>Curriculum</a>
+          <a href="#sample" className={`${baseLink} text-slate-800`}>Sample&nbsp;Class</a>
 
           {/* Courses dropdown */}
           <div className="relative group">
             <button
-              className={`${baseLink} inline-flex items-center gap-1`}
+              className={`${baseLink} text-slate-800 inline-flex items-center gap-1`}
               aria-haspopup="menu"
               aria-expanded="false"
             >
@@ -78,12 +87,15 @@ export default function SiteHeader() {
             </div>
           </div>
 
-          <Link href="#pricing" className={linkClass("#pricing")}>Pricing</Link>
-          <Link href="#faq" className={linkClass("#faq")}>FAQ</Link>
+          {/* Real routes use linkClass (active state) */}
+          <a href="#pricing" className={`${baseLink} text-slate-800`}>Pricing</a>
+          <a href="#faq" className={`${baseLink} text-slate-800`}>FAQ</a>
           <Link href="/testimonials" className={linkClass("/testimonials")}>Testimonials</Link>
           <Link href="/assistant" className={linkClass("/assistant")}>Assistant</Link>
-          <Link href="/teen-gist" className={linkClass("/teen-gist")}>InstaGist 🚀</Link>
-          <Link href="#projects" className={linkClass("#projects")}>Fun&nbsp;Projects</Link>
+          <Link href="/teen-gist" className={linkClass("/teen-gist", { includeChildren: true })}>
+            InstaGist 🚀
+          </Link>
+          <a href="#projects" className={`${baseLink} text-slate-800`}>Fun&nbsp;Projects</a>
         </nav>
 
         {/* Right: CTAs */}
@@ -118,13 +130,14 @@ export default function SiteHeader() {
       {open && (
         <div className="lg:hidden border-t bg-white">
           <div className="container mx-auto px-4 py-3 grid gap-2">
-            <Link href="#features" className={navLink} onClick={() => setOpen(false)}>Features</Link>
-            <Link href="#curriculum" className={navLink} onClick={() => setOpen(false)}>Curriculum</Link>
-            <Link href="#sample" className={navLink} onClick={() => setOpen(false)}>Sample Class</Link>
+            {/* Hash anchors */}
+            <a href="#features" className={`${baseLink} text-slate-800`} onClick={() => setOpen(false)}>Features</a>
+            <a href="#curriculum" className={`${baseLink} text-slate-800`} onClick={() => setOpen(false)}>Curriculum</a>
+            <a href="#sample" className={`${baseLink} text-slate-800`} onClick={() => setOpen(false)}>Sample Class</a>
 
             {/* Mobile Courses collapsible */}
             <button
-              className={`${navLink} flex items-center justify-between`}
+              className={`${baseLink} text-slate-800 flex items-center justify-between`}
               onClick={() => setMobileCoursesOpen((v) => !v)}
               aria-expanded={mobileCoursesOpen}
             >
@@ -135,8 +148,12 @@ export default function SiteHeader() {
             </button>
             {mobileCoursesOpen && (
               <div className="ml-2 grid">
-                <Link href="/courses#pros" className={navLink} onClick={() => setOpen(false)}>• Working Professionals</Link>
-                <Link href="/courses#freshers" className={navLink} onClick={() => setOpen(false)}>• Freshers / Graduates</Link>
+                <Link href="/courses#pros" className={`${baseLink} text-slate-800`} onClick={() => setOpen(false)}>
+                  • Working Professionals
+                </Link>
+                <Link href="/courses#freshers" className={`${baseLink} text-slate-800`} onClick={() => setOpen(false)}>
+                  • Freshers / Graduates
+                </Link>
                 <Link
                   href="/courses#kids"
                   className="px-2 py-1 rounded-md text-sm font-semibold text-green-700 hover:bg-green-50"
@@ -144,17 +161,33 @@ export default function SiteHeader() {
                 >
                   • Kids &amp; Schools
                 </Link>
-                <Link href="/courses" className={`${navLink} font-semibold`} onClick={() => setOpen(false)}>View All Courses →</Link>
+                <Link href="/courses" className={`${baseLink} text-slate-800 font-semibold`} onClick={() => setOpen(false)}>
+                  View All Courses →
+                </Link>
               </div>
             )}
 
-            <Link href="#pricing" className={navLink} onClick={() => setOpen(false)}>Pricing</Link>
-            <Link href="#faq" className={navLink} onClick={() => setOpen(false)}>FAQ</Link>
-            <Link href="/testimonials" className={navLink} onClick={() => setOpen(false)}>Testimonials</Link>
-            <Link href="/assistant" className={navLink} onClick={() => setOpen(false)}>Assistant</Link>
-            <Link href="/teen-gist" className={navLink} onClick={() => setOpen(false)}>InstaGist 🚀</Link>
-            <Link href="#projects" className={navLink} onClick={() => setOpen(false)}>Fun Projects</Link>
+            {/* Real routes */}
+            <Link href="/testimonials" className={linkClass("/testimonials")} onClick={() => setOpen(false)}>
+              Testimonials
+            </Link>
+            <Link href="/assistant" className={linkClass("/assistant")} onClick={() => setOpen(false)}>
+              Assistant
+            </Link>
+            <Link
+              href="/teen-gist"
+              className={linkClass("/teen-gist", { includeChildren: true })}
+              onClick={() => setOpen(false)}
+            >
+              InstaGist 🚀
+            </Link>
 
+            {/* Hash anchor */}
+            <a href="#projects" className={`${baseLink} text-slate-800`} onClick={() => setOpen(false)}>
+              Fun Projects
+            </a>
+
+            {/* CTAs */}
             <div className="mt-2 flex gap-2">
               <a
                 href="https://forms.gle/D8W6ePzfzeszgPFr6"
