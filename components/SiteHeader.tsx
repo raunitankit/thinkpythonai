@@ -4,8 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-// normalize path (strip trailing slash)
-const normalize = (p?: string) => (p ?? "").replace(/\/$/, "");
+// normalize path (strip trailing slash) — accept null/undefined safely
+const normalize = (p?: string | null) => (p ?? "").replace(/\/$/, "");
 
 // base styling shared by all nav links
 const baseLink =
