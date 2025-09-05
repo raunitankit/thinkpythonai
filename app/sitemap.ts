@@ -8,6 +8,7 @@ export default function sitemap() {
     { url: `${base}/assistant`, lastModified: now },
     { url: `${base}/qr`, lastModified: now },
     { url: `${base}/instagist`, lastModified: now },
-    { url: `${base}/digital-citizenship`, lastModified: now },  
+    { url: `${base}/digital-citizenship`, lastModified: now },
+    { url: `${base}/courses`, lastModified: now },  
   ];
 }

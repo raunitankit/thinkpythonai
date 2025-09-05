@@ -84,12 +84,17 @@ export default function Page() {
             <p className="mt-4 text-lg text-slate-700">
               Hands-on coding for real outcomes—automation, AI, and stock portfolio projects. Built for busy students, IT professionals, and schools.
             </p>
+            <p className="mt-4 text-lg">
+              <span className="inline-block px-3 py-1 rounded-full bg-green-100 text-green-700 font-semibold">
+                 👨‍🏫 Trainer: Ankit — Sr. Automation Architect · Director Level Leader
+              </span>
+            </p>
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <Button variant="outline" href="#trainer" className="px-5 py-2.5 text-base flex items-center gap-2"><span>Know your trainer</span></Button>
               <Button href="https://forms.gle/D8W6ePzfzeszgPFr6" className="px-5 py-2.5 text-base">Join the Next Live Demo</Button>
               <Button variant="secondary" href="#sample" className="px-5 py-2.5 text-base flex items-center gap-2"><Youtube className="w-4 h-4"/> Watch a Sample Class</Button>
               <Button variant="outline" href="#projects" className="px-5 py-2.5 text-base flex items-center gap-2"><Rocket className="w-4 h-4" />Fun Projects</Button>
-              <Button variant="outline" href="/courses#kids" className="px-5 py-2.5 text-base flex items-center gap-2 border-green-600 text-green-700 hover:bg-green-50">🎓 Kids & Schools</Button>
+              <Button variant="outline" href="/courses#kids" className="px-5 py-2.5 text-base flex items-center gap-2 border-green-600 text-white hover:bg-green-700">🎓 Kids & Schools</Button>
               <Button variant="outline" href="tel:+16034170825" className="px-5 py-2.5 text-base flex items-center gap-2"><Phone className="w-4 h-4" /><span className="hidden sm:inline">Call:</span><span>+1 (603) 417-0825</span></Button>
               <Button variant="secondary" href="https://wa.me/16034170825" className="px-5 py-2.5 text-base flex items-center gap-2" target="_blank" rel="noreferrer"><MessageCircle className="w-4 h-4" /><span className="hidden sm:inline">WhatsApp:</span><span>+1 (603) 417-0825</span></Button>
             </div>
@@ -270,8 +275,7 @@ export default function Page() {
 </section>
 
 {/* Trainer + Find your courses */}
-{/* Trainer + Find your courses */}
-<section id="trainer" className="container py-12">
+<section id="trainer" className="container py-12 scroll-mt-28 md:scroll-mt-40">
   <h2 className="text-2xl md:text-4xl font-bold text-center">Meet Your Trainer & Find Your Track</h2>
   <p className="text-center mt-2 text-slate-600">
     Learn directly from Ankit — a Senior Architect and a Python mentor. Choose the path that matches your goals.
