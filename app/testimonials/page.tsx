@@ -73,11 +73,11 @@ export default function TestimonialsPage() {
 
   // 🖼️ Screenshots go to /public/testimonials and list them here
   const shots = [
-    { src: "/testimonials/Satya.jpeg", alt: "WhatsApp feedback\nShared by carrer-switcher (Non-IT to IT)" },
-    { src: "/testimonials/Effective_approachable.jpeg", alt: "WhatsApp feedback\nShared by current batch student" },
+    { src: "/testimonials/Satya.jpeg", alt: "WhatsApp feedback\nShared by carrer-switcher (Non-IT to IT) now an engineer in Linkedin" },
     { src: "/testimonials/Archana_1.jpeg", alt: "WhatsApp feedback\nShared by currently enrolled MS student" },
     { src: "/testimonials/Archana_2.jpeg", alt: "WhatsApp feedback\nShared by currently enrolled MS student" },
     { src: "/testimonials/Passion.jpeg", alt: "WhatsApp feedback\nShared by current batch student" },
+    { src: "/testimonials/Effective_approachable.jpeg", alt: "WhatsApp feedback\nShared by current batch student" },
     { src: "/testimonials/complex.jpeg", alt: "WhatsApp feedback\nShared by current batch student" },
     { src: "/testimonials/shweta.jpeg", alt: "WhatsApp feedback\nShared by current batch student" },
     { src: "/testimonials/hackerrank.jpeg", alt: "WhatsApp feedback\nShared by current batch student" },
