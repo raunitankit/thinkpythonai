@@ -21,6 +21,15 @@ export default function AssistantPage() {
     },
   ]);
 
+    // 👇 NEW: ref + auto-scroll
+    const chatRef = useRef<HTMLDivElement | null>(null);
+    useEffect(() => {
+      if (chatRef.current) {
+        chatRef.current.scrollTop = chatRef.current.scrollHeight;
+      }
+    }, [history]);
+  
+
   const onSend = () => {
     const q = input.trim();
     if (!q) return;
@@ -75,7 +84,7 @@ export default function AssistantPage() {
           </div>
           <div className="p-4 space-y-4">
             {/* chat window */}
-            <div className="rounded-xl border bg-white p-4 h-[420px] overflow-y-auto space-y-3">
+            <div ref={chatRef} className="rounded-xl border bg-white p-4 h-[420px] overflow-y-auto space-y-3">
               {history.map((m, i) => (
                 <div
                   key={i}

@@ -21,40 +21,35 @@ const normalize = (s: string) => s.toLowerCase().trim();
 export function detectIntent(input: string): Intent {
   const q = normalize(input);
 
-  // Payments / enroll
+  // --- Order matters: check for testimonials BEFORE payments ---
+  if (/\b(testimonial|testimonials|review|reviews|feedback|student (story|stories)|trainer feedback)\b/.test(q)) {
+    return "testimonials";
+  }
+
+  if (/\b(trainer|coach|instructor|about (you|trainer)|know your trainer)\b/.test(q)) {
+    return "trainer";
+  }
+
+  if (/\b(course|courses|track|tracks|syllabus|curriculum|program|starter|pro|elite)\b/.test(q)) {
+    return "courses";
+  }
+
+  if (/\b(kid|kids|school|schools|district|teacher|classroom|iste|csta|po|invoice|invoices)\b/.test(q)) {
+    return "kids";
+  }
+
+  // ✅ Word-boundaries stop matching "fee" inside "feedback"
   if (
-    /payment|pay|zelle|enroll|fees?|pricing|price|how (to )?join|book|register/.test(q)
+    /\b(payment|payments|pay|zelle|enrol+l|enrollment|fee|fees|pricing|price|prices|how (to )?join|book|register)\b/.test(q)
   ) {
     return "payments";
   }
 
-  // Trainer / about trainer
-  if (/trainer|coach|instructor|who (is|are) you|about you|know your trainer/.test(q)) {
-    return "trainer";
-  }
-
-  // Courses / tracks
-  if (/course|track|syllabus|curriculum|learn path|program|pro|elite|starter/.test(q)) {
-    return "courses";
-  }
-
-  // Kids & Schools
-  if (/kid|school|district|teacher|classroom|iste|csta|po|invoice/.test(q)) {
-    return "kids";
-  }
-
-  // Testimonials / reviews
-  if (/testimonial|review|feedback|student (story|stories)|what students say/.test(q)) {
-    return "testimonials";
-  }
-
-  // Contact
-  if (/contact|email|phone|whatsapp|reach|support|help/.test(q)) {
+  if (/\b(contact|email|phone|whatsapp|reach|support|help)\b/.test(q)) {
     return "contact";
   }
 
-  // Home / landing
-  if (/home|homepage|main page|thinkpythonai/.test(q)) {
+  if (/\b(home|homepage|main page|thinkpythonai)\b/.test(q)) {
     return "home";
   }
 
