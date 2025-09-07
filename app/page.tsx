@@ -28,6 +28,9 @@ import {
   Rocket,
   Youtube,
   Phone,
+  Instagram, 
+  Facebook, 
+  Twitter,
 } from "lucide-react";
 
 function JsonLd({ data }: { data: object }) {
@@ -601,8 +604,41 @@ export default function Page() {
           <div className="justify-self-end">
             <Button variant="secondary" href="https://forms.gle/D8W6ePzfzeszgPFr6">Join Live Demo</Button>
           </div>
-        </div>
-      </footer>
+          {/* Social links */}
+          <div className="md:col-span-3 mt-2 flex justify-center gap-3">
+                <a
+                  href="https://youtube.com/@thinkpythonai" target="_blank" rel="noreferrer"
+                  aria-label="YouTube" title="YouTube"
+                  className="inline-flex items-center justify-center w-9 h-9 rounded-full border text-slate-700 hover:bg-white/70"
+                >
+                  <Youtube className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://instagram.com/thinkpythonai" target="_blank" rel="noreferrer"
+                  aria-label="Instagram" title="Instagram"
+                  className="inline-flex items-center justify-center w-9 h-9 rounded-full border text-slate-700 hover:bg-white/70"
+                >
+                  <Instagram className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://facebook.com/thinkpythonai" target="_blank" rel="noreferrer"
+                  aria-label="Facebook" title="Facebook"
+                  className="inline-flex items-center justify-center w-9 h-9 rounded-full border text-slate-700 hover:bg-white/70"
+                >
+                  <Facebook className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://x.com/thinkpythonai" target="_blank" rel="noreferrer"
+                  aria-label="X (Twitter)" title="X (Twitter)"
+                  className="inline-flex items-center justify-center w-9 h-9 rounded-full border text-slate-700 hover:bg-white/70"
+                >
+                  <Twitter className="w-5 h-5" />
+                </a>
+              </div>
+            </div>
+          </footer>
+
+
     </div>
   );
 }
