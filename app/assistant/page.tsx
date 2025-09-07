@@ -1,4 +1,5 @@
 // app/assistant/page.tsx
+import { getIntentAnswer } from "@/components/assistant/intentMap";
 "use client";
 
 import { useState } from "react";
