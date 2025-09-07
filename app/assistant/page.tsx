@@ -1,111 +1,47 @@
-// app/assistant/page.tsx
 "use client";
 
 import { useState } from "react";
-import { getIntentAnswer } from "@/components/assistant/intentMap";
 import Link from "next/link";
-import { detectIntent, type IntentReply } from "@/components/assistant/intentMap";
+import { detectIntent, getIntentAnswer, type IntentReply } from "@/components/assistant/intentMap";
 
 type Msg = { role: "user" | "assistant"; content: React.ReactNode };
 
-function Pill({
-  href,
-  children,
-  variant = "primary",
-  external,
-}: {
-  href: string;
-  children: React.ReactNode;
-  variant?: "primary" | "outline";
-  external?: boolean;
-}) {
-  const base =
-    "inline-flex items-center justify-center px-3 py-2 rounded-xl text-sm font-semibold";
-  const styles =
-    variant === "primary"
-      ? "bg-slate-900 text-white hover:opacity-90"
-      : "border text-slate-800 hover:bg-slate-50";
-  return (
-    <Link
-      href={href}
-      className={`${base} ${styles}`}
-      target={external ? "_blank" : undefined}
-      rel={external ? "noreferrer" : undefined}
-    >
-      {children}
-    </Link>
-  );
-}
-
 export default function AssistantPage() {
   const [input, setInput] = useState("");
-  const [msgs, setMsgs] = useState<Msg[]>([
+  const [history, setHistory] = useState<Msg[]>([
     {
       role: "assistant",
       content: (
         <div>
-          Hi! Ask me about <strong>payments</strong>,{" "}
-          <strong>trainer</strong>, <strong>kids courses</strong>,{" "}
-          <strong>demo</strong>, <strong>pricing</strong>,{" "}
-          <strong>refund policy</strong>, <strong>testimonials</strong>, or{" "}
-          <strong>Digital Citizenship</strong>.
+          Hi! Ask me about{" "}
+          <strong>payments, trainer, courses, kids/schools, testimonials</strong> or{" "}
+          <strong>contact</strong>. I’ll reply with the right links and details.
         </div>
       ),
     },
   ]);
 
-  async function handleSend() {
-    const text = input.trim();
-    if (!text) return;
+  const onSend = () => {
+    const q = input.trim();
+    if (!q) return;
 
-    setMsgs((m) => [...m, { role: "user", content: text }]);
+    const userMsg: Msg = { role: "user", content: q };
+    const intent = detectIntent(q);
+    const reply: IntentReply = getIntentAnswer(intent);
+
+    const botMsg: Msg = {
+      role: "assistant",
+      content: (
+        <div className="space-y-1">
+          <div className="font-semibold">{reply.title}</div>
+          <div className="text-slate-700">{reply.body}</div>
+        </div>
+      ),
+    };
+
+    setHistory((h) => [...h, userMsg, botMsg]);
     setInput("");
-
-    const reply: IntentReply | null = detectIntent(text);
-
-    if (reply) {
-      setMsgs((m) => [
-        ...m,
-        {
-          role: "assistant",
-          content: (
-            <div className="space-y-2">
-              <div className="font-semibold">{reply.title}</div>
-              <div className="prose prose-sm">{reply.body}</div>
-              {reply.links?.length ? (
-                <div className="flex flex-wrap gap-2 pt-1">
-                  {reply.links.map((l) => (
-                    <Pill
-                      key={l.href + l.label}
-                      href={l.href}
-                      variant={l.variant ?? "primary"}
-                      external={l.external}
-                    >
-                      {l.label}
-                    </Pill>
-                  ))}
-                </div>
-              ) : null}
-            </div>
-          ),
-        },
-      ]);
-      return;
-    }
-
-    setMsgs((m) => [
-      ...m,
-      {
-        role: "assistant",
-        content: (
-          <div>
-            I didn’t find a direct link for that. Try asking about{" "}
-            <em>payments, trainer, pricing, kids, demo, refund, testimonials</em>.
-          </div>
-        ),
-      },
-    ]);
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-50 via-sky-50 to-fuchsia-50 text-slate-900">
@@ -120,80 +56,64 @@ export default function AssistantPage() {
             <span className="font-semibold">ThinkPythonAI</span>
           </div>
           <div className="flex items-center gap-2">
-            <a href="/" className="btn btn-secondary">
+            <Link href="/" className="btn btn-secondary">
               Back to Home
-            </a>
+            </Link>
           </div>
         </div>
       </header>
 
       <main className="container py-8">
-        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-          Classroom Assistant
-        </h1>
+        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">Classroom Assistant</h1>
         <p className="mt-2 text-slate-700">
-          Quick links for payments, trainer, demo, pricing, refund policy, kids
-          & schools, and more.
+          Ask about schedule, payments, trainer, courses, kids & schools, or contact info.
         </p>
 
         <div className="mt-6 card">
+          <div className="p-4 border-b text-sm text-slate-600">
+            Tip: try “how to make a payment”, “know your trainer”, “kids & schools”, or “testimonials”.
+          </div>
           <div className="p-4 space-y-4">
-            {msgs.map((m, i) => (
-              <div key={i} className={m.role === "user" ? "text-right" : ""}>
+            {/* chat window */}
+            <div className="rounded-xl border bg-white p-4 h-[420px] overflow-y-auto space-y-3">
+              {history.map((m, i) => (
                 <div
-                  className={`inline-block rounded-2xl px-3 py-2 ${
-                    m.role === "user"
-                      ? "bg-indigo-600 text-white"
-                      : "border bg-white"
+                  key={i}
+                  className={`${
+                    m.role === "user" ? "text-right" : "text-left"
                   }`}
                 >
-                  {m.content}
+                  <div
+                    className={`inline-block rounded-2xl px-3 py-2 ${
+                      m.role === "user"
+                        ? "bg-indigo-600 text-white"
+                        : "bg-slate-100 text-slate-900"
+                    }`}
+                  >
+                    {m.content}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          <div className="p-3 border-t flex items-center gap-2">
-            <input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask about payments, trainer, demo…"
-              className="flex-1 rounded-xl border px-3 py-2"
-              onKeyDown={(e) => e.key === "Enter" && handleSend()}
-            />
-            <button
-              onClick={handleSend}
-              className="px-4 py-2 rounded-xl bg-slate-900 text-white font-semibold"
-            >
-              Send
-            </button>
-          </div>
-
-          {/* Quick intents */}
-          <div className="p-3 border-t flex flex-wrap gap-2">
-            {[
-              "payments",
-              "pricing",
-              "trainer",
-              "kids",
-              "refund",
-              "demo",
-              "testimonials",
-              "digital citizenship",
-              "instagist",
-              "contact",
-            ].map((q) => (
-              <button
-                key={q}
-                onClick={() => {
-                  setInput(q);
-                  setTimeout(handleSend, 0);
+            {/* input row */}
+            <div className="flex gap-2">
+              <input
+                className="flex-1 rounded-xl border px-3 py-2"
+                placeholder="Type your question…"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") onSend();
                 }}
-                className="px-3 py-2 rounded-xl border text-sm hover:bg-slate-50"
+              />
+              <button
+                onClick={onSend}
+                className="px-4 py-2 rounded-xl bg-slate-900 text-white font-semibold hover:opacity-90"
               >
-                {q}
+                Send
               </button>
-            ))}
+            </div>
           </div>
         </div>
       </main>
