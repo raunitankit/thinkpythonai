@@ -1,7 +1,6 @@
 // app/layout.tsx
 import "./globals.css";
 import type { Metadata } from "next";
-import SeoJsonLd from "@/components/SeoJsonLd";
 
 // --- SEO metadata ---
 const siteUrl = "https://www.thinkpythonai.com"; // update if domain differs
