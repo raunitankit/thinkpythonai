@@ -33,6 +33,15 @@ import {
   Twitter,
 } from "lucide-react";
 
+
+// Add facebook and linkedin here later
+const socialLinks = [
+  { name: "YouTube",   href: "https://youtube.com/@thinkpythonai",   bg: "bg-[#FF0000]",                                         Icon: Youtube },
+  { name: "Instagram", href: "https://instagram.com/thinkpythonai",   bg: "bg-gradient-to-br from-pink-500 via-purple-500 to-amber-400", Icon: Instagram },
+  { name: "X (Twitter)", href: "https://x.com/thinkpythonai",         bg: "bg-black",                                              Icon: Twitter },
+  { name: "Facebook",  href: process.env.NEXT_PUBLIC_FACEBOOK_URL || "", bg: "bg-[#1877F2]",                                      Icon: Facebook },
+];
+
 function JsonLd({ data }: { data: object }) {
   return (
     <script
@@ -567,19 +576,40 @@ export default function Page() {
           <div className="card">
             <div className="p-4 border-b font-semibold">Have questions?</div>
             <div className="p-4">
-              <p className="text-slate-600">Message us and we’ll get back in a few hours.</p>
+            <p className="text-slate-600">Message us and we’ll get back in a few hours.</p>
+
+              {/* Contact buttons */}
               <div className="mt-4 flex flex-wrap gap-3 text-sm">
                 <a className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border" href="mailto:thinkpythonai@gmail.com">
-                    thinkpythonai@gmail.com
+                  thinkpythonai@gmail.com
                 </a>
                 <a className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border" href="tel:+16034170825">
-                    <Phone className="w-4 h-4" /> +1 (603) 417-0825
+                  Call: +1 (603) 417-0825
                 </a>
                 <a className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border" href="https://wa.me/16034170825" target="_blank" rel="noreferrer">
-                    <MessageCircle className="w-4 h-4" /> WhatsApp: +1 (603) 417-0825
+                  WhatsApp: +1 (603) 417-0825
                 </a>
               </div>
 
+              {/* Social icons — brand colored */}
+              <div className="mt-4 flex items-center gap-3 flex-wrap">
+                <span className="text-xs text-slate-500 mr-1">Follow us:</span>
+                {socialLinks
+                  .filter((s) => !!s.href) // hides Facebook until URL is set
+                  .map(({ name, href, bg, Icon }) => (
+                    <a
+                      key={name}
+                      href={href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={name}
+                      title={name}
+                      className={`inline-flex items-center justify-center w-9 h-9 rounded-full ${bg} text-white shadow-sm hover:scale-105 transition-transform`}
+                    >
+                      <Icon className="w-5 h-5" />
+                    </a>
+                  ))}
+              </div>
             </div>
           </div>
         </div>
@@ -604,37 +634,6 @@ export default function Page() {
           <div className="justify-self-end">
             <Button variant="secondary" href="https://forms.gle/D8W6ePzfzeszgPFr6">Join Live Demo</Button>
           </div>
-          {/* Social links */}
-          <div className="md:col-span-3 mt-2 flex justify-center gap-3">
-                <a
-                  href="https://youtube.com/@thinkpythonai" target="_blank" rel="noreferrer"
-                  aria-label="YouTube" title="YouTube"
-                  className="inline-flex items-center justify-center w-9 h-9 rounded-full border text-slate-700 hover:bg-white/70"
-                >
-                  <Youtube className="w-5 h-5" />
-                </a>
-                <a
-                  href="https://instagram.com/thinkpythonai" target="_blank" rel="noreferrer"
-                  aria-label="Instagram" title="Instagram"
-                  className="inline-flex items-center justify-center w-9 h-9 rounded-full border text-slate-700 hover:bg-white/70"
-                >
-                  <Instagram className="w-5 h-5" />
-                </a>
-                <a
-                  href="https://x.com/thinkpythonai" target="_blank" rel="noreferrer"
-                  aria-label="X (Twitter)" title="X (Twitter)"
-                  className="inline-flex items-center justify-center w-9 h-9 rounded-full border text-slate-700 hover:bg-white/70"
-                >
-                  <Twitter className="w-5 h-5" />
-                </a>
-                <a
-                  href="https://facebook.com/thinkpythonai" target="_blank" rel="noreferrer"
-                  aria-label="Facebook" title="Facebook"
-                  className="inline-flex items-center justify-center w-9 h-9 rounded-full border text-slate-700 hover:bg-white/70"
-                >
-                  <Facebook className="w-5 h-5" />
-                </a>
-              </div>
             </div>
           </footer>
 
