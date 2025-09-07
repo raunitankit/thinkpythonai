@@ -621,18 +621,18 @@ export default function Page() {
                   <Instagram className="w-5 h-5" />
                 </a>
                 <a
-                  href="https://facebook.com/thinkpythonai" target="_blank" rel="noreferrer"
-                  aria-label="Facebook" title="Facebook"
-                  className="inline-flex items-center justify-center w-9 h-9 rounded-full border text-slate-700 hover:bg-white/70"
-                >
-                  <Facebook className="w-5 h-5" />
-                </a>
-                <a
                   href="https://x.com/thinkpythonai" target="_blank" rel="noreferrer"
                   aria-label="X (Twitter)" title="X (Twitter)"
                   className="inline-flex items-center justify-center w-9 h-9 rounded-full border text-slate-700 hover:bg-white/70"
                 >
                   <Twitter className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://facebook.com/thinkpythonai" target="_blank" rel="noreferrer"
+                  aria-label="Facebook" title="Facebook"
+                  className="inline-flex items-center justify-center w-9 h-9 rounded-full border text-slate-700 hover:bg-white/70"
+                >
+                  <Facebook className="w-5 h-5" />
                 </a>
               </div>
             </div>
