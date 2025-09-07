@@ -41,14 +41,13 @@ export default function QuoteCard({
     try {
       // lazy-load so it doesn’t bloat your main bundle
       const htmlToImage = await import("html-to-image");
-      const fileSaver = await import("file-saver");
-
+      const { saveAs } = await import("file-saver");
       const dataUrl = await htmlToImage.toPng(nodeRef.current as HTMLElement, {
         pixelRatio: 2, // crisp export
       });
       const filename =
         `thinkpythonai-quote-${aspect}-${new Date().toISOString().slice(0,10)}.png`;
-      fileSaver.saveAs(dataUrl, filename);
+      saveAs(dataUrl, filename);
     } catch (e) {
       console.error(e);
       alert("Download failed. Check console for details.");
