@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { detectIntent, getIntentAnswer, type IntentReply } from "@/components/assistant/intentMap";
 
