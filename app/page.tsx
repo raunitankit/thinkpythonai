@@ -30,6 +30,15 @@ import {
   Phone,
 } from "lucide-react";
 
+function JsonLd({ data }: { data: object }) {
+  return (
+    <script
+      type="application/ld+json"
+      // eslint-disable-next-line react/no-danger
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
 const YEAR = new Date().getFullYear();
 
 const features = [
@@ -44,17 +53,17 @@ const tiers = [
   { name: "Pro", price: "$399", caption: "Live cohort + projects", bullets: ["Everything in Starter","Live classes + recordings","3 real-world projects","Certificate of completion"], cta: "Join Pro", highlight: true },
   { name: "Elite", price: "$799", caption: "1:1 mentorship + placement", bullets: ["Everything in Pro","1:1 mentorship (4 sessions)","Career projects & review","Job & freelance roadmap"], cta: "Apply for Elite" },
 ];
-<SeoJsonLd
+<JsonLd
   data={{
     "@context": "https://schema.org",
     "@type": "Course",
-    name: "Practical Python & AI",
+    name: "ThinkPythonAI — Practical Python & AI Training",
     description:
-      "Hands-on Python for automation, data, and AI. Live cohorts + recordings. Portfolio projects and interview prep.",
+      "Learn Python that gets you hired. Hands-on projects in automation, AI, and data.",
     provider: {
       "@type": "Organization",
       name: "ThinkPythonAI",
-      sameAs: "https://www.thinkpythonai.com",
+      url: "https://www.thinkpythonai.com",
     },
   }}
 />
