@@ -1,4 +1,5 @@
 import ScreenshotGallery from "@/components/ScreenshotGallery";
+import HeroTestimonial from "@/components/HeroTestimonial";
 
 export const metadata = {
   title: "Testimonials | ThinkPythonAI",
@@ -8,6 +9,47 @@ export const metadata = {
 
 export default function TestimonialsPage() {
   // Real quotes
+  // Archana and Saty HERO feedback  
+  {/* ① Georgia Tech — HERO */}
+  <HeroTestimonial
+    label="💡 From Confusion to Confidence 🚀"
+    author="Masters Student"
+    role="Georgia Tech, USA"
+    text={
+      "Ankit sir is an absolutely amazing mentor who has transformed my learning journey in ways I never expected!\n\n" +
+      "When I was confused and doubtful about choosing between Python with DevOps or AI, he and his team with their expert guidance helped me understand both paths clearly. " +
+      "I couldn’t wait to start his classes, and once I did, I was completely mesmerized by his teaching approach.\n\n" +
+      "What sets Ankit apart is his dedication to ensuring every student truly understands the concepts. He explains each and every detail with such clarity, " +
+      "and if someone doesn’t grasp something the first time, he patiently teaches it again and again until we completely understand it. " +
+      "His teaching methodology is unlike anything I’ve experienced before.\n\n" +
+      "He provides extensive practice work and challenging exercises that help us achieve perfection in our skills. " +
+      "Among all the courses and trainers I’ve enrolled with, Ankit stands head and shoulders above the rest. " +
+      "I feel incredibly lucky to have found such a kind, patient, and knowledgeable mentor.\n\n" +
+      "He’s like having a dedicated professor who gives us tricky questions, provides numerous practical examples, and offers perfect guidance throughout our IT journey. " +
+      "His support has been invaluable in building my confidence and technical skills.\n\n" +
+      "If his classes are offered again, there’s no question — I will choose only him. Anyone who learns from Ankit will gain tremendous confidence after training and become a hero in coding!\n\n" +
+      "What truly makes him special is his availability and support. When you’re doubtful or stuck, he’s always there to help, unlike many other trainers. " +
+      "Simply put, no one can compare to him — he is the best among everyone I’ve encountered in my learning journey.\n\n" +
+      "I am blessed to have Ankit as my mentor, and I wholeheartedly recommend him to anyone serious about excelling in their IT career."
+    }
+  />
+  
+  {/* ② Satya — LinkedIn (two-part highlight) */}
+  <HeroTestimonial
+    label="💡 From Classroom to LinkedIn 🚀"
+    author="Satya"
+    role="Software Engineer, LinkedIn"
+    text={
+      "Happy Teacher’s Day to the most special teacher in my life — your guidance has been a light in my journey, and I truly feel blessed to have been your student; " +
+      "I am deeply grateful for everything you have done to shape who I am today, and I am sure you will be happy to know that I am now working at LinkedIn, sir.\n\n" +
+      "Thank you so much… Sir. It means a lot to me to be called your favorite student.\n\n" +
+      "Learning Python with you has been an amazing experience. The way you explain concepts with clarity and real-life examples made even the toughest topics simple to understand. " +
+      "Your patience, encouragement, and constant support kept me motivated throughout the sessions.\n\n" +
+      "I have not only gained technical knowledge, but also confidence in problem-solving and a genuine interest in coding.\n\n" +
+      "Thank you once again for everything you have taught me — it will always stay with me."
+    }
+  />
+  
   const quotes = [
     {
       quote:
@@ -33,6 +75,8 @@ export default function TestimonialsPage() {
   const shots = [
     { src: "/testimonials/Satya.jpeg", alt: "WhatsApp feedback\nShared by carrer-switcher (Non-IT to IT)" },
     { src: "/testimonials/Effective_approachable.jpeg", alt: "WhatsApp feedback\nShared by current batch student" },
+    { src: "/testimonials/Archana_1.jpeg", alt: "WhatsApp feedback\nShared by currently enrolled MS student" },
+    { src: "/testimonials/Archana_2.jpeg", alt: "WhatsApp feedback\nShared by currently enrolled MS student" },
     { src: "/testimonials/Passion.jpeg", alt: "WhatsApp feedback\nShared by current batch student" },
     { src: "/testimonials/complex.jpeg", alt: "WhatsApp feedback\nShared by current batch student" },
     { src: "/testimonials/shweta.jpeg", alt: "WhatsApp feedback\nShared by current batch student" },
@@ -47,9 +91,14 @@ export default function TestimonialsPage() {
     { src: "/testimonials/interactive.jpeg", alt: "WhatsApp feedback\nShared by former batch student" },
     { src: "/testimonials/HTD.jpeg", alt: "WhatsApp feedback\nShared by former batch  student" },
     { src: "/testimonials/chandu.jpeg", alt: "WhatsApp feedback\nShared by former batch  student" },
+    { src: "/testimonials/fantastic.jpeg", alt: "WhatsApp feedback\nShared by former batch student" },
+    { src: "/testimonials/Rashmi.jpeg", alt: "WhatsApp feedback\nShared by former batch student" },
+    { src: "/testimonials/Sarah.jpeg", alt: "WhatsApp feedback\nShared by former batch student" },
+    { src: "/testimonials/Mamtha.jpeg", alt: "WhatsApp feedback\nShared by former batch student" },
+    { src: "/testimonials/lots.jpeg", alt: "WhatsApp feedback\nShared by former batch student" },
+    { src: "/testimonials/Pavan.jpeg", alt: "WhatsApp feedback\nShared by current batch student" },
     { src: "/testimonials/Hari.jpeg", alt: "WhatsApp feedback\nShared by former batch student" },
     { src: "/testimonials/clear.jpeg", alt: "WhatsApp feedback\nShared by former batch student" },
-
 
   ];
 

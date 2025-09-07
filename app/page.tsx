@@ -8,6 +8,7 @@ const FortuneCookie = NextDynamic(() => import("@/components/FortuneCookie"), { 
 import Link from "next/link";
 import TrainerCard from "@/components/TrainerCard";
 import CourseTiles from "@/components/CourseTiles";
+import FeaturedTestimonials from "@/components/FeaturedTestimonials";
 
 import Button from "@/components/ui/button";
 import Subscribe from "@/components/Subscribe";
@@ -65,7 +66,13 @@ export default function Page() {
               <Button href="https://forms.gle/D8W6ePzfzeszgPFr6" className="px-5 py-2.5 text-base">Join the Next Live Demo</Button>
               <Button variant="secondary" href="#sample" className="px-5 py-2.5 text-base flex items-center gap-2"><Youtube className="w-4 h-4"/> Watch a Sample Class</Button>
               <Button variant="outline" href="#projects" className="px-5 py-2.5 text-base flex items-center gap-2"><Rocket className="w-4 h-4" />Fun Projects</Button>
-              <Button variant="outline" href="/courses#kids" className="px-5 py-2.5 text-base flex items-center gap-2 border-green-600 text-white hover:bg-green-700">🎓 Kids & Schools</Button>
+              <Button
+                variant="outline"
+                href="/courses#kids"
+                className="px-5 py-2.5 text-base flex items-center gap-2 border-green-600 text-green-700 hover:bg-green-50"
+              >
+                🎓 Kids & Schools
+              </Button>
               <Button variant="outline" href="tel:+16034170825" className="px-5 py-2.5 text-base flex items-center gap-2"><Phone className="w-4 h-4" /><span className="hidden sm:inline">Call:</span><span>+1 (603) 417-0825</span></Button>
               <Button variant="secondary" href="https://wa.me/16034170825" className="px-5 py-2.5 text-base flex items-center gap-2" target="_blank" rel="noreferrer"><MessageCircle className="w-4 h-4" /><span className="hidden sm:inline">WhatsApp:</span><span>+1 (603) 417-0825</span></Button>
             </div>
@@ -154,8 +161,7 @@ export default function Page() {
       </div>
       <div className="p-4 text-sm text-slate-600 space-y-2">
         <p>Paste any public article URL (or your own text), get a quick gist, and play it back with YouTube‑style speeds.<br /> <br />
-          It's like having your personal <strong> webscaper (python) </strong> in your back pocket!</p>
-        <ul className="list-disc pl-5">
+        It’s like having your personal <strong>web scraper (Python)</strong> in your back pocket!  </p>      <ul className="list-disc pl-5">
           <li>URL or Paste‑Text modes</li>
           <li>Voice picker (try spanish or other languages)</li>
           <li>Copy & save gist as .txt</li>
@@ -256,10 +262,35 @@ export default function Page() {
     <TrainerCard />
     <CourseTiles />
   </div>
+  </section>
+{/* Student Spotlight */}
+<section id="spotlight" className="container mt-8 md:mt-10 pl-2 md:pl-4">
+  <h3 className="text-xl md:text-2xl font-bold mb-2">Student Spotlight</h3>
+
+  <div className="rounded-2xl border bg-white/80 backdrop-blur p-5 md:p-6 shadow-sm">
+    <p className="text-slate-800 text-base md:text-lg leading-relaxed">
+      <span className="font-serif text-xl md:text-2xl mr-1">“</span>
+      Ankit’s teaching methodology is unlike anything I’ve experienced—patient, detailed, and practical.
+      His support has been invaluable in building my confidence and technical skills. Among all the
+      courses I’ve taken, he stands head and shoulders above the rest.
+      <span className="font-serif text-xl md:text-2xl ml-1">”</span>
+    </p>
+
+    <div className="mt-3 flex items-center justify-end">
+      <div className="text-right">
+        <span className="font-semibold text-slate-900">— Masters Student</span>
+        <span className="text-slate-600 italic ml-2">Georgia Tech, USA</span>
+      </div>
+    </div>
+  </div>
 </section>
 
+{/* Two featured cards (Satya + Sachin) */}
+<section className="container mt-8 pl-2 md:pl-4">
+  <FeaturedTestimonials />
+{/* Full testimonials grid + the only CTA */}
 <TestimonialsSection />
-
+</section>
       {/* Schools */}
       <section id="schools" className="container py-16 scroll-mt-24">
         <h2 className="text-2xl md:text-4xl font-bold text-center">For Schools & Districts</h2>

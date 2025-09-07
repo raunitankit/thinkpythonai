@@ -21,13 +21,12 @@ export default function TestimonialsSection() {
     ];
   
     return (
-      <section id="testimonials" className="container py-12 scroll-mt-28">
-        <h2 className="text-2xl md:text-4xl font-bold text-center">What Students Say</h2>
-        <p className="text-center mt-2 text-slate-600">
-          Real feedback from freshers, professionals, and parents
+      <section id="testimonials" className="pt-2 pb-12 pl-3 md:pl-5">
+        <p className="text-center text-slate-600 italic mt-2 mb-4">
+          Feedback from freshers, professionals, and parents
         </p>
-  
-        <div className="mt-8 grid md:grid-cols-3 gap-4">
+
+      <div className="grid md:grid-cols-3 gap-4">
           {items.map((t) => (
             <figure
               key={t.quote.slice(0, 30)}
@@ -47,9 +46,9 @@ export default function TestimonialsSection() {
         </div>
   
         <div className="text-center mt-6">
-          <a href="/testimonials" className="underline text-slate-700">
-            See more testimonials →
-          </a>
+        <a href="/testimonials" className="text-indigo-700 font-semibold hover:underline">            
+          See all testimonials →
+        </a>
         </div>
       </section>
     );
