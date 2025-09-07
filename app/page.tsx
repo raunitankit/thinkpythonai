@@ -203,7 +203,6 @@ export default function Page() {
     </div>
 
 {/* Card 2 — Digital Citizenship AI Explorer */}
-{/* Card 2 — Digital Citizenship AI Explorer */}
 <div className="card hover:shadow-md transition-shadow">
   <div className="p-4 border-b">
     <div className="text-base font-semibold flex items-center gap-2">
@@ -235,7 +234,7 @@ export default function Page() {
       href="/digital-citizenship"
       className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-semibold"
     >
-      Explore Digital Citizenship
+      Explore Artificial Intelligence
     </a>
   </div>
 </div>
