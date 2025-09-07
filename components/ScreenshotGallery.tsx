@@ -8,12 +8,11 @@ export default function ScreenshotGallery({ items }: { items: Shot[] }) {
   if (!items?.length) return null;
 
   return (
-    <section className="mt-12">
+    <section className="mt-0">
       {/* Section heading */}
       <h2 className="text-xl md:text-2xl font-bold text-slate-900 text-center">
-        Student Feedback Screenshots
+      Student Feedback — Actual Screenshots ⬇️
       </h2>
-
       {/* Instruction note */}
       <p className="text-slate-600 text-sm mt-2 mb-4 text-center">
         We’ve blurred/removed personal details for privacy.

@@ -53,7 +53,7 @@ export default function TestimonialsPage() {
   const quotes = [
     {
       quote:
-        "Before joining Ankit’s sessions, I always felt Python was too complex and only for hardcore developers. \nWithin just a few classes, he broke it down step by step, with real projects that made me actually enjoy coding. \nNow I can build small automations on my own — something I never thought I’d say! \nAnkit doesn’t just teach Python, he makes sure you understand why things work, and how Python is really the backbone of AI and automation today. \nI’d recommend Ankit and ThinkPythonAI to any student or working professional who wants practical skills they can use immediately.",
+        "Before joining Ankit’s sessions, I always felt Python was too complex and only for hardcore developers. \nWithin just a few classes, he broke it down step by step, with real projects that made me actually enjoy coding. \nNow I can build small automations on my own — something I never thought I’d say! \nAnkit doesn’t just teach Python, he makes sure you understand why things work, and how Python is really the backbone of AI and automation today. \nI’d recommend Ankit and ThinkPythonAI to any student or working professional.",
       by: "Sachin",
       role: "Software engineer in a Pharma company",
     },
@@ -65,7 +65,7 @@ export default function TestimonialsPage() {
     },
     {
       quote:
-        "I can’t recommend ThinkPythonAI training enough! A huge shoutout to my coach Ankit for his incredible way of teaching. \nIt’s not the usual traditional lecture style, instead, he makes every session highly interactive. He keeps asking thought-provoking questions that push you to think logically and stay engaged throughout. \nWhen I started, I had zero knowledge of Python. But thanks to Ankit’s unique approach and guidance, I’m not only learning but actually building the confidence to master it. \nHis teaching style makes the journey exciting, practical, and motivating. \nIf you’re looking to truly understand Python and enjoy the process, Ankit’s ThinkPythonAI training is the way to go!",
+        "I can’t recommend ThinkPythonAI training enough! A huge shoutout to my coach Ankit for his incredible way of teaching. \nIt’s not the usual traditional lecture style, instead, he makes every session highly interactive. He keeps asking thought-provoking questions that push you to think logically and stay engaged throughout. \nWhen I started, I had zero knowledge of Python. But thanks to Ankit’s unique approach and guidance, I’m not only learning but actually building the confidence to master it. \nIf you’re looking to truly understand Python and enjoy the process, Ankit’s ThinkPythonAI training is the way to go!",
       by: "Shweta",
       role: "QA engineer in Silicon Valley",
     },
@@ -103,25 +103,20 @@ export default function TestimonialsPage() {
   ];
 
   return (
-    <main className="container py-10">
-      {/* Back button */}
-      <div className="mb-6">
-        <a
-          href="/"
-          className="inline-block bg-slate-900 text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90"
-        >
-          🔙 Back to ThinkPythonAI
-        </a>
-      </div>
-
-      <h1 className="text-3xl font-extrabold">Testimonials</h1>
-      <p className="text-slate-600 mt-2">
-        Real feedback from freshers, working professionals, and parents — all
-        learning Python and <span className="font-semibold">responsible AI</span>.
-      </p>
+    <main className="container  pt-4 pb-10">
+  {/* Heading + Back button in same row */}
+<div className="flex items-center justify-between mb-4">
+  <h1 className="text-3xl font-extrabold">Testimonials</h1>
+  <a
+    href="/"
+    className="inline-block bg-slate-900 text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90"
+  >
+    🔙 Back to ThinkPythonAI
+  </a>
+</div>
 
       {/* Text quotes */}
-      <section className="mt-8 grid md:grid-cols-3 gap-4">
+      <section className="mt-4 grid md:grid-cols-3 gap-4">
         {quotes.map((t) => (
           <figure
             key={t.quote.slice(0, 30)}
@@ -141,7 +136,7 @@ export default function TestimonialsPage() {
       </section>
 
 {/* Screenshot gallery */}
-<section className="mt-10">
+<section className="mt-2">
   <div className="p-4 border-b font-semibold card">Screenshots (WhatsApp & Forms)</div>
   <div className="p-4 card">
     <ScreenshotGallery items={shots} />
