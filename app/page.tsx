@@ -351,7 +351,7 @@ export default function Page() {
           ))}
         </div>
       </section>
-      <SeoJsonLd
+      <JsonLd
   data={{
     "@context": "https://schema.org",
     "@type": "FAQPage",
