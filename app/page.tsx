@@ -10,6 +10,12 @@ import TrainerCard from "@/components/TrainerCard";
 import CourseTiles from "@/components/CourseTiles";
 import FeaturedTestimonials from "@/components/FeaturedTestimonials";
 
+export const metadata = {
+  title: "Python & AI Courses for Students, Professionals, and Schools",
+  description:
+    "Live cohorts + recordings. Build automation, data dashboards, and AI mini-apps. First two classes free. Taught by a Sr. Automation Architect.",
+};
+
 import Button from "@/components/ui/button";
 import Subscribe from "@/components/Subscribe";
 import {
@@ -38,7 +44,20 @@ const tiers = [
   { name: "Pro", price: "$399", caption: "Live cohort + projects", bullets: ["Everything in Starter","Live classes + recordings","3 real-world projects","Certificate of completion"], cta: "Join Pro", highlight: true },
   { name: "Elite", price: "$799", caption: "1:1 mentorship + placement", bullets: ["Everything in Pro","1:1 mentorship (4 sessions)","Career projects & review","Job & freelance roadmap"], cta: "Apply for Elite" },
 ];
-
+<SeoJsonLd
+  data={{
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name: "Practical Python & AI",
+    description:
+      "Hands-on Python for automation, data, and AI. Live cohorts + recordings. Portfolio projects and interview prep.",
+    provider: {
+      "@type": "Organization",
+      name: "ThinkPythonAI",
+      sameAs: "https://www.thinkpythonai.com",
+    },
+  }}
+/>
 export default function Page() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-50 via-sky-50 to-fuchsia-50 text-slate-900">
@@ -323,7 +342,40 @@ export default function Page() {
           ))}
         </div>
       </section>
-
+      <SeoJsonLd
+  data={{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "Who is this for?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "Working professionals, freshers, career switchers, high-school students, and schools looking for practical Python & AI.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Are classes recorded?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes, all sessions are recorded and available for 90 days.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What’s your refund policy?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "First two live classes are free—request a full refund before the third class begins.",
+        },
+      },
+    ],
+  }}
+/>
       {/* FAQ */}
       <section id="faq" className="container py-16 scroll-mt-24">
         <h2 className="text-2xl md:text-4xl font-bold text-center">Frequently Asked Questions</h2>

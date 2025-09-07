@@ -2,6 +2,13 @@ import ScreenshotGallery from "@/components/ScreenshotGallery";
 import HeroTestimonial from "@/components/HeroTestimonial";
 
 export const metadata = {
+  title: "Student Testimonials — Python & AI Training Outcomes",
+  description:
+    "Real reviews from freshers, working professionals, and parents who took ThinkPythonAI courses. Screenshots + long-form feedback.",
+  alternates: { canonical: "https://www.thinkpythonai.com/testimonials" },
+};
+
+export const metadata = {
   title: "Testimonials | ThinkPythonAI",
   description:
     "Real stories from freshers, working professionals, and parents. Python and AI training that’s practical and respectful.",
