@@ -1,8 +1,8 @@
 // app/assistant/page.tsx
-import { getIntentAnswer } from "@/components/assistant/intentMap";
 "use client";
 
 import { useState } from "react";
+import { getIntentAnswer } from "@/components/assistant/intentMap";
 import Link from "next/link";
 import { detectIntent, type IntentReply } from "@/components/assistant/intentMap";
 

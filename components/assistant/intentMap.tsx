@@ -1,26 +1,17 @@
-// components/assistant/intentMap.ts
 import type { ReactNode } from "react";
 
-export type IntentReply = {
+export type IntentAnswer = {
   title: string;
   body: ReactNode;
-  links: Array<{
-    href: string;
-    label: string;
-    variant?: "primary" | "outline";
-    external?: boolean;
-  }>;
+  actions?: { label: string; href: string }[];
 };
 
-function norm(s: string) {
-  return s.toLowerCase();
-}
+const norm = (s: string) => s.toLowerCase().trim();
 
-export function detectIntent(raw: string): IntentReply | null {
+export function getIntentAnswer(raw: string): IntentAnswer | null {
   const q = norm(raw);
 
-  // Payments / pricing / fees
-  if (/(payment|pay|zelle|fees?)/.test(q)) {
+  if (/\b(pay|payment|payments|enroll|enrol|zelle|fee|fees|pricing)\b/.test(q)) {
     return {
       title: "Payments & ways to enroll",
       body: (
@@ -30,126 +21,83 @@ export function detectIntent(raw: string): IntentReply | null {
           First 2 live classes are free—see the refund policy for details.
         </>
       ),
-      links: [
-        { href: "#pricing", label: "See Pricing" },
-        { href: "#refund-policy", label: "Refund Policy", variant: "outline" },
-        { href: "mailto:thinkpythonai@gmail.com", label: "Email Us", variant: "outline", external: true },
-        { href: "tel:+16034170825", label: "Call +1 (603) 417-0825", variant: "outline", external: true },
-        { href: "https://wa.me/16034170825", label: "WhatsApp", variant: "outline", external: true },
+      actions: [
+        { label: "Pricing", href: "/#pricing" },
+        { label: "Refund policy", href: "/#refund-policy" },
+        { label: "Join Live Demo", href: "https://forms.gle/D8W6ePzfzeszgPFr6" },
       ],
     };
   }
 
-  // Trainer / about trainer
-  if (/(trainer|instructor|about (you|trainer)|mentor)/.test(q)) {
+  if (/\b(trainer|instructor|coach|about trainer|know your trainer|teacher)\b/.test(q)) {
     return {
       title: "Know your trainer",
       body: (
         <>
-          Learn directly from <strong>Ankit</strong> — Sr. Automation Architect (Director-level).  
-          20+ years across development, QA, CI/CD and DevOps. Believes Python is the backbone of AI.
+          Ankit — Senior Automation Architect (Director level). 20+ years across
+          Dev/QA/DevOps. Teaches hands-on Python & AI; students consistently rate the
+          sessions highly. Believes <strong>Python is the backbone of AI</strong>.
         </>
       ),
-      links: [{ href: "#trainer", label: "Meet Your Trainer" }],
+      actions: [{ label: "Jump to Trainer", href: "/#trainer" }],
     };
   }
 
-  // Kids & Schools
-  if (/(kids|school|schools|district|k-12|k12)/.test(q)) {
+  if (/\b(kid|kids|school|schools|district|teacher|students)\b/.test(q)) {
     return {
-      title: "Kids & Schools",
+      title: "For Kids & Schools",
       body: (
         <>
-          We run after-school clubs, semester electives, and teacher PD. Projects align to
-          ISTE & CSTA standards, with rubrics and outcomes.
+          Flexible delivery for public & private schools: after-school clubs, electives,
+          or teacher PD. Aligned to ISTE & CSTA; rubrics and outcomes included.
         </>
       ),
-      links: [
-        { href: "/courses#kids", label: "Kids & Schools" },
-        { href: "#schools", label: "For Schools (Overview)", variant: "outline" },
+      actions: [
+        { label: "Kids & Schools", href: "/courses#kids" },
+        { label: "Schools section", href: "/#schools" },
       ],
     };
   }
 
-  // Live demo
-  if (/(demo|join demo|live demo|book a seat)/.test(q)) {
+  if (/\b(refund|trial|free class|money back)\b/.test(q)) {
     return {
-      title: "Join the next live demo",
-      body: <>See how we teach, what you’ll build, and how we support placements.</>,
-      links: [
-        { href: "https://forms.gle/D8W6ePzfzeszgPFr6", label: "Book a Seat", external: true },
-        { href: "#sample", label: "Watch a Sample", variant: "outline" },
+      title: "Trial & Refund Policy",
+      body: (
+        <>
+          Attend the first two live classes and request a <strong>full refund before the
+          third class begins</strong> — no questions asked.
+        </>
+      ),
+      actions: [
+        { label: "Refund policy", href: "/#refund-policy" },
+        { label: "Join Live Demo", href: "https://forms.gle/D8W6ePzfzeszgPFr6" },
       ],
     };
   }
 
-  // Pricing
-  if (/(pricing|price|cost|fees)/.test(q)) {
+  if (/\b(testimonial|testimonials|reviews|feedback)\b/.test(q)) {
     return {
-      title: "Simple, transparent pricing",
-      body: <>Choose Starter, Pro, or Elite. Scholarships available.</>,
-      links: [{ href: "#pricing", label: "See Pricing" }],
+      title: "Student feedback",
+      body: <>Read quotes and real WhatsApp/screenshots from students and parents.</>,
+      actions: [{ label: "Open testimonials", href: "/testimonials" }],
     };
   }
 
-  // Refund policy
-  if (/(refund|trial)/.test(q)) {
+  if (/\b(price|pricing|cost|fees|plans|starter|pro|elite)\b/.test(q)) {
     return {
-      title: "Trial & refund policy",
-      body: (
-        <>
-          Attend the first two live classes; if it’s not a fit, request a{" "}
-          <strong>full refund before the third class begins</strong>.
-        </>
-      ),
-      links: [{ href: "#refund-policy", label: "Read Policy" }],
+      title: "Pricing",
+      body: <>Simple, transparent plans: <strong>Starter</strong>, <strong>Pro</strong>, and <strong>Elite</strong>. Scholarships available.</>,
+      actions: [{ label: "See pricing", href: "/#pricing" }],
     };
   }
 
-  // Testimonials
-  if (/(testimonial|feedback|reviews?)/.test(q)) {
+  if (/\b(course|courses|track|curriculum|syllabus)\b/.test(q)) {
     return {
-      title: "What students say",
-      body: <>Real feedback from freshers, working professionals, and parents.</>,
-      links: [{ href: "/testimonials", label: "See Testimonials" }],
-    };
-  }
-
-  // Digital Citizenship
-  if (/(citizenship|digital citizenship|safety|responsible ai)/.test(q)) {
-    return {
-      title: "AI Digital Citizenship Detector",
-      body: (
-        <>
-          Explore online behavior, safety, and respectful use of AI with our interactive Streamlit app.
-        </>
-      ),
-      links: [{ href: "/digital-citizenship", label: "Open App" }],
-    };
-  }
-
-  // InstaGist
-  if (/(instagist|gist|article|summary)/.test(q)) {
-    return {
-      title: "InstaGist 🚀",
-      body: <>Paste a URL or text, get a friendly gist, and listen to it at variable speeds.</>,
-      links: [{ href: "/instagist", label: "Try InstaGist" }],
-    };
-  }
-
-  // Contact
-  if (/(contact|email|phone|whatsapp|call)/.test(q)) {
-    return {
-      title: "Contact us",
-      body: (
-        <>
-          Reach us by email or message; we usually reply within a few hours.
-        </>
-      ),
-      links: [
-        { href: "mailto:thinkpythonai@gmail.com", label: "Email", variant: "outline", external: true },
-        { href: "tel:+16034170825", label: "Call +1 (603) 417-0825", variant: "outline", external: true },
-        { href: "https://wa.me/16034170825", label: "WhatsApp", variant: "primary", external: true },
+      title: "Find your track",
+      body: <>Beginner → Advanced Python, Automation, AI & Agents, and portfolio projects.</>,
+      actions: [
+        { label: "Meet Trainer & Tracks", href: "/#trainer" },
+        { label: "Curriculum", href: "/#curriculum" },
       ],
     };
   }
