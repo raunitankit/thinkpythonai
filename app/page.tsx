@@ -105,6 +105,7 @@ export default function Page() {
               <Button variant="outline" href="#trainer" className="px-5 py-2.5 text-base flex items-center gap-2"><span>Know your trainer</span></Button>
               <Button href="https://forms.gle/D8W6ePzfzeszgPFr6" className="px-5 py-2.5 text-base">Join the Next Live Demo</Button>
               <Button variant="secondary" href="#sample" className="px-5 py-2.5 text-base flex items-center gap-2"><Youtube className="w-4 h-4"/> Watch a Sample Class</Button>
+              <Link href="/career" className="px-5 py-2.5 text-base inline-flex items-center gap-2 rounded-lg border hover:bg-slate-100">👩‍💼 Career Coaching (ex-Amazon)</Link>
               <Button variant="outline" href="#projects" className="px-5 py-2.5 text-base flex items-center gap-2"><Rocket className="w-4 h-4" />Fun Projects</Button>
               <Button
                 variant="outline"
@@ -113,9 +114,9 @@ export default function Page() {
               >
                 🎓 Kids & Schools
               </Button>
-              <Button variant="outline" href="tel:+16034170825" className="px-5 py-2.5 text-base flex items-center gap-2"><Phone className="w-4 h-4" /><span className="hidden sm:inline">Call:</span><span>+1 (603) 417-0825</span></Button>
-              <Button variant="secondary" href="https://wa.me/16034170825" className="px-5 py-2.5 text-base flex items-center gap-2" target="_blank" rel="noreferrer"><MessageCircle className="w-4 h-4" /><span className="hidden sm:inline">WhatsApp:</span><span>+1 (603) 417-0825</span></Button>
+              <Button variant="outline" href="tel:+16034170825" className="px-5 py-2.5 text-base flex items-center gap-2"><Phone className="w-4 h-4" /><span className="hidden sm:inline">Call/Text:</span><span>+1 (603) 417-0825</span></Button>
               <Button href="/browser" className="px-5 py-2.5 text-base flex items-center gap-2"> 🧪 Open ThinkPythonAI IDE - Code for fun!</Button>
+              
             </div>
             <div className="mt-2">
               <span className="badge">First 2 classes free*</span>
