@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     "Python for beginners",
     "Automation with Python",
     "Kids coding",
-    "Python course India US",
+    "Python course India US Dubai Canada UK",
   ],
   openGraph: {
     type: "website",
