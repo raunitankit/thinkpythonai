@@ -1,9 +1,10 @@
 // app/layout.tsx
 import "./globals.css";
 import type { Metadata } from "next";
+import AnnouncementBanner from "./AnnouncementBanner";
 
 // --- SEO metadata ---
-const siteUrl = "https://www.thinkpythonai.com"; // update if domain differs
+const siteUrl = "https://www.thinkpythonai.com"; 
 const siteName = "ThinkPythonAI";
 const siteTitle = "ThinkPythonAI — Practical Python & AI Training";
 const siteDesc =
@@ -76,6 +77,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
+        {/* 🔔 Announcement Banner (site-wide, dismissible for 7 days) */}
+        <AnnouncementBanner />
         {/* ...inside RootLayout return... */}
 <SeoJsonLd
   data={{
