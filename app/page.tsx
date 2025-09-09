@@ -115,6 +115,7 @@ export default function Page() {
               </Button>
               <Button variant="outline" href="tel:+16034170825" className="px-5 py-2.5 text-base flex items-center gap-2"><Phone className="w-4 h-4" /><span className="hidden sm:inline">Call:</span><span>+1 (603) 417-0825</span></Button>
               <Button variant="secondary" href="https://wa.me/16034170825" className="px-5 py-2.5 text-base flex items-center gap-2" target="_blank" rel="noreferrer"><MessageCircle className="w-4 h-4" /><span className="hidden sm:inline">WhatsApp:</span><span>+1 (603) 417-0825</span></Button>
+              <Button href="/browser" className="px-5 py-2.5 text-base flex items-center gap-2"> 🧪 Open ThinkPythonAI IDE - Code for fun!</Button>
             </div>
             <div className="mt-2">
               <span className="badge">First 2 classes free*</span>
