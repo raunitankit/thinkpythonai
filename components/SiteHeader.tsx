@@ -92,7 +92,7 @@ export default function SiteHeader() {
           <a href="#faq" className={`${baseLink} text-slate-800`}>FAQ</a>
           <Link href="/testimonials" className={linkClass("/testimonials")}>Testimonials</Link>
           <Link href="/assistant" className={linkClass("/assistant")}>Assistant</Link>
-          <Link href="/teen-gist" className={linkClass("/teen-gist", { includeChildren: true })}>
+          <Link href="/instagist" className={linkClass("/instagist", { includeChildren: true })}>
             InstaGist 🚀
           </Link>
           <a href="#projects" className={`${baseLink} text-slate-800`}>Fun&nbsp;Projects</a>
@@ -175,8 +175,8 @@ export default function SiteHeader() {
               Assistant
             </Link>
             <Link
-              href="/teen-gist"
-              className={linkClass("/teen-gist", { includeChildren: true })}
+              href="/instagist"
+              className={linkClass("/instagist", { includeChildren: true })}
               onClick={() => setOpen(false)}
             >
               InstaGist 🚀
